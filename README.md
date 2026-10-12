@@ -74,6 +74,12 @@ The first start downloads the speech model (466 MB), which Link writes captions 
   protected your PC". Press **More info**, then **Run anyway**. The checksums of both files are in
   [SHA256SUMS.txt](https://github.com/shushu-eco/link/releases/download/installer/SHA256SUMS.txt), and everything in them is built from this repository by
   `tools/package/build.ps1`.
+- **Checking a download.** `SHA256SUMS.txt` is signed with Link's own key (`SHA256SUMS.txt.sig`,
+  Ed25519). The key's public half is `efa86da71378fe24f4838ee3f6b422d981a434a7d193066694465c2332724d9f`;
+  its secret half is not on GitHub. A copy of Link that is installed already can check a newly
+  downloaded file: in Link's folder, `runtime\python\python.exe tools\reels\update.py --check <file>`.
+  This protects against a download that was swapped on this page; it does not make Windows trust the
+  file, which only a paid certificate does.
 - **It updates itself.** When Link starts it looks for a newer version here and takes it, but only one
   signed with Link's own key, which is not kept on GitHub. **Link
   Updater**, beside Link's own icon, shows which version you have and does the same on a press.

@@ -249,6 +249,38 @@ def check_and_apply(log=print):
     return None
 
 
+# ---------------------------------------------------------------- checking a download
+
+DOWNLOADS = MANIFEST.split("/releases/")[0] + "/releases/download/installer/"
+
+
+def check_download(path):
+    """Whether a downloaded Link-Setup.exe or Link-Windows.zip is the one Link's publisher signed.
+    The list of checksums beside the downloads (SHA256SUMS.txt) is signed with Link's key like a
+    release's manifest; the file's own checksum must be the one that list gives for its name.
+    Returns (True or False, a sentence)."""
+    file = Path(path)
+    if not file.is_file():
+        return False, f"{file} is not a file."
+    try:
+        sums = fetch(DOWNLOADS + "SHA256SUMS.txt", 4096, timeout=30)
+        signature = bytes.fromhex(fetch(DOWNLOADS + "SHA256SUMS.txt.sig", 1024, timeout=30).decode("ascii").strip())
+    except (UpdateError, ValueError) as e:
+        return False, f"The signed list of checksums could not be read ({e}). Nothing is known about this file."
+    if not ed25519.verify(bytes.fromhex(PUBLIC_KEY), sums, signature):
+        return False, "The list of checksums is NOT signed with Link's key. Do not trust the downloads there."
+    wanted = {name.strip().lstrip("*"): digest for digest, _, name in (line.partition(" ") for line in sums.decode("utf-8", "replace").splitlines()) if name.strip()}
+    if file.name not in wanted:
+        return False, f"The signed list has no file named {file.name}: check it under the name it was downloaded with."
+    digest = hashlib.sha256()
+    with open(file, "rb") as f:
+        for block in iter(lambda: f.read(1 << 20), b""):
+            digest.update(block)
+    if digest.hexdigest() != wanted[file.name].lower():
+        return False, f"{file.name} is NOT the file Link's publisher signed. Do not run it."
+    return True, f"{file.name} is the file Link's publisher signed."
+
+
 # ---------------------------------------------------------------- for the Updater's window
 
 def link_running():
@@ -388,6 +420,11 @@ def apply_now():
         return restart_link(version)
     return {"ok": True, "message": f"Updated to rwa-{version}.", "version": version}
 
+
+if __name__ == "__main__" and len(sys.argv) > 2 and sys.argv[1] == "--check":
+    good, said = check_download(sys.argv[2])
+    print(said)
+    sys.exit(0 if good else 1)
 
 if __name__ == "__main__":
     if "--status" in sys.argv or "--apply" in sys.argv:

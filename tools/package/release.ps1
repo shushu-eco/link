@@ -68,14 +68,19 @@ if ($Installer) {
     foreach ($f in $setup, $portable) { if (-not (Test-Path $f)) { Write-Host "$f is not there. Build it with tools\package\build.ps1." -ForegroundColor Red; exit 1 } }
     $sums = Join-Path $out "SHA256SUMS.txt"
     [IO.File]::WriteAllText($sums, (($setup, $portable | ForEach-Object { "$((Get-FileHash $_ -Algorithm SHA256).Hash.ToLower())  $(Split-Path $_ -Leaf)" }) -join "`n") + "`n", (New-Object Text.UTF8Encoding $false))
-    $about = "Link for Windows 10 and 11 (64-bit), rwa-$n.`n`n- **Link-Setup.exe**: the installer. It puts Link in your user folder with icons on the Desktop, and fetches the speech model.`n- **Link-Windows.zip**: the same program without installing. Unpack it to a folder with a plain name (C:\\Link) and double-click Start Link.`n`nWindows may say ""Windows protected your PC"", because Link is not signed with a paid certificate: press More info, then Run anyway. SHA256SUMS.txt holds the checksums. Download once; Link keeps itself up to date after that."
+    # the list of checksums is signed with Link's key too: someone who has Link can check a download with it
+    #   (python tools\reels\update.py --check <file>), and anyone can with the public key in update.py
+    python (Join-Path $PSScriptRoot "sign.py") $sums
+    if ($LASTEXITCODE -ne 0) { Write-Host "The checksums were not signed, so nothing is uploaded." -ForegroundColor Red; exit 1 }
+    $sumsSig = "$sums.sig"
+    $about = "Link for Windows 10 and 11 (64-bit), rwa-$n.`n`n- **Link-Setup.exe**: the installer. It puts Link in your user folder with icons on the Desktop, and fetches the speech model.`n- **Link-Windows.zip**: the same program without installing. Unpack it to a folder with a plain name (C:\\Link) and double-click Start Link.`n`nWindows may say ""Windows protected your PC"", because Link is not signed with a paid certificate: press More info, then Run anyway. SHA256SUMS.txt holds the checksums and SHA256SUMS.txt.sig is its signature with Link's key (the README says how to check a download). Download once; Link keeps itself up to date after that."
     # handed over as a file: the quotation marks in it would break it up on its way to gh as an argument
     $aboutFile = Join-Path $out "installer-notes.md"
     [IO.File]::WriteAllText($aboutFile, $about, (New-Object Text.UTF8Encoding $false))
     if ($tags -notcontains "installer") {
-        gh release create installer $setup $portable $sums --repo $Repo --title "Link for Windows: installer and zip" --notes-file $aboutFile --latest=false
+        gh release create installer $setup $portable $sums $sumsSig --repo $Repo --title "Link for Windows: installer and zip" --notes-file $aboutFile --latest=false
     } else {
-        gh release upload installer $setup $portable $sums --repo $Repo --clobber
+        gh release upload installer $setup $portable $sums $sumsSig --repo $Repo --clobber
         gh release edit installer --repo $Repo --notes-file $aboutFile
     }
     if ($LASTEXITCODE -ne 0) { Write-Host "The installer and the zip were not uploaded." -ForegroundColor Red; exit 1 }
