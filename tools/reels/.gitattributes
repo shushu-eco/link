@@ -1,0 +1,5 @@
+# What of Link's own folder stays on the owner's PC. "git archive" passes over what is marked export-ignore:
+# the public copy (tools/package/publish.ps1), the update package (release.ps1) and the installer's
+# files (build.ps1) are all made that way, or go by this.
+# The sound Link Night opens to: where the recording it was cut from came from is not written down.
+night/open.mp3 export-ignore

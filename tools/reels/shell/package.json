@@ -1,0 +1,17 @@
+{
+  "name": "link-shell",
+  "version": "1.0.2",
+  "private": true,
+  "license": "GPL-3.0-only",
+  "description": "Link's window: the dashboard plus a built-in browser panel and recorder",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^44.5.1"
+  },
+  "dependencies": {
+    "@ghostery/adblocker-electron": "^2.18.2"
+  }
+}

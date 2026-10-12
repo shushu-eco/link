@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Link · Music</title>
+<!-- The small music player: its own window above Link's (tools/reels/shell/main.js), dragged anywhere by
+     its body. It shows what Spotify plays and presses Spotify's buttons through the server
+     (tools/reels/spotify_api.py). It plays nothing itself, and recordings never see it. -->
+<link rel="stylesheet" href="/static/fonts/fonts.css">
+<style>
+  :root {
+    --ink: #090c1e; --screen: #0a0d1f; --panel-a: #13243f; --panel-b: #0f1d34; --slate: #3f6f7a; --slate-btn: #4a5f7a;
+    --btn-bg: #111a30; --line-2: #22304a; --text: #f6efdc; --text-2: #b9b3a4; --dim: #6b6a7a; --teal: #9fd8c8;
+    --gold: #f2c744; --green: #3ddc84; --red-soft: #ff8a8a;
+    --f-pixel: VT323, ui-monospace, Consolas, monospace; --f-body: "Nunito Sans", "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; user-select: none; }
+  body { font: 13px/1.25 var(--f-body); color: var(--text); padding: 4px; }
+  /* The whole panel is the handle the window is dragged by; what can be pressed or typed in is not. */
+  .w { position: relative; height: 100%; display: flex; align-items: center; gap: 10px; padding: 8px 30px 10px 8px;
+       border: 2px solid var(--slate); border-radius: 0; background: linear-gradient(var(--panel-a), var(--panel-b));
+       box-shadow: 0 0 0 2px var(--ink); -webkit-app-region: drag; overflow: hidden; }
+  button, input { -webkit-app-region: no-drag; font: inherit; }
+  .cover { flex: none; width: 58px; height: 58px; border-radius: 2px; background: var(--screen) center / cover no-repeat;
+           box-shadow: 0 0 0 2px var(--ink); display: grid; place-items: center; color: var(--dim); }
+  .cover svg { width: 26px; height: 26px; }
+  .cover.art svg { display: none; }
+  .mid { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .title { font-weight: 700; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .artist { color: var(--text-2); font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .artist.bad { color: var(--red-soft); white-space: normal; font-size: 12px; line-height: 1.2; }
+  .row { display: flex; align-items: center; gap: 4px; margin-top: 3px; }
+  .ctl { width: 28px; height: 24px; padding: 0; display: grid; place-items: center; border: 0; border-radius: 2px;
+         background: none; color: var(--teal); cursor: pointer; }
+  .ctl svg { width: 16px; height: 16px; }
+  .ctl.big svg { width: 19px; height: 19px; }
+  .ctl:hover { color: var(--green); background: rgba(255, 255, 255, .06); filter: drop-shadow(0 0 6px rgba(61, 220, 132, .6)); }
+  .ctl:disabled { color: var(--dim); cursor: default; filter: none; background: none; }
+  .time { margin-left: auto; font: 15px/1 var(--f-pixel); color: var(--dim); letter-spacing: .5px; }
+  .bar { position: absolute; left: 8px; right: 8px; bottom: 5px; height: 3px; border-radius: 2px; background: var(--line-2); }
+  .bar i { display: block; height: 100%; width: 0; border-radius: 2px; background: var(--green); box-shadow: 0 0 6px rgba(61, 220, 132, .6); }
+  .x { position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; padding: 0; border: 0; border-radius: 2px;
+       background: none; color: var(--dim); font: 18px/1 var(--f-pixel); cursor: pointer; }
+  .x:hover { color: var(--text); background: rgba(255, 255, 255, .08); }
+  /* Before Spotify is connected: one line of help and one field or button. */
+  .setup { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+  .setup p { margin: 0; font-size: 12px; color: var(--text-2); line-height: 1.25; }
+  .setup p b { color: var(--text); }
+  .setup p.bad { color: var(--red-soft); }
+  .setup .row { margin: 0; gap: 6px; }
+  .setup input { flex: 1; min-width: 0; height: 26px; padding: 0 7px; border: 2px solid var(--slate-btn); border-radius: 2px;
+                 background: var(--screen); color: var(--text); font-size: 12px; outline: none; user-select: text; }
+  .setup input:focus { border-color: var(--green); }
+  .go { height: 26px; padding: 0 10px; border: 2px solid var(--green); border-radius: 2px; background: var(--btn-bg);
+        color: var(--green); font-weight: 700; font-size: 12px; cursor: pointer; white-space: nowrap; }
+  .go:hover { background: rgba(61, 220, 132, .12); }
+  [hidden] { display: none !important; }
+  @media (prefers-reduced-motion: reduce) { .ctl:hover { filter: none; } }
+</style>
+</head>
+<body>
+<div class="w">
+  <div id="cover" class="cover"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 18.5a2.5 2.5 0 1 1-2-2.45V5.5l11-2.5v12.5a2.5 2.5 0 1 1-2-2.45V7.1L9 8.7z"/></svg></div>
+
+  <div id="player" class="mid" hidden>
+    <div id="title" class="title"></div>
+    <div id="artist" class="artist"></div>
+    <div class="row">
+      <button id="prev" class="ctl" title="Previous"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2v14H6zM20 5v14L9.5 12z"/></svg></button>
+      <button id="toggle" class="ctl big" title="Play"></button>
+      <button id="next" class="ctl" title="Next"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 5h2v14h-2zM4 5v14l10.5-7z"/></svg></button>
+      <span id="time" class="time"></span>
+    </div>
+  </div>
+
+  <div id="setup" class="setup" hidden>
+    <p id="setup-text"></p>
+    <div id="id-row" class="row" hidden>
+      <input id="client-id" placeholder="Client ID" spellcheck="false" autocomplete="off">
+      <button id="save-id" class="go">Save</button>
+    </div>
+    <div id="connect-row" class="row" hidden><button id="connect" class="go">Connect to Spotify</button><button id="change-id" class="ctl" style="width:auto;padding:0 6px;font-size:12px" title="Use another Spotify app">Change ID</button></div>
+  </div>
+
+  <button id="hide" class="x" title="Hide the player (the Music button brings it back)">×</button>
+  <div class="bar" id="bar-box" hidden><i id="bar"></i></div>
+</div>
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const PLAY = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg>';
+const PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
+const clock = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+let now = null, seen = 0, waiting = false, changing = false, note = "";
+
+async function ask(body) {
+  const res = await fetch("/api/spotify", body ? { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) } : {});
+  const data = await res.json();
+  return { ...data, error: data.error || null };
+}
+
+function show(s) {
+  const ready = s.client_id && s.connected && !changing;
+  $("player").hidden = !ready;
+  $("setup").hidden = ready;
+  $("bar-box").hidden = !ready;
+  if (!ready) {
+    const needId = !s.client_id || changing;
+    $("id-row").hidden = !needId;
+    $("connect-row").hidden = needId;
+    $("setup-text").className = note ? "bad" : "";
+    if (note) $("setup-text").textContent = note;
+    else $("setup-text").innerHTML = (needId
+      ? "Paste your Spotify app's <b>Client ID</b> (how: Link's README, Music)."
+      : waiting ? "Finish signing in on Spotify's page in your browser, then come back here."
+      : "Connect once and this shows what <b>Spotify</b> plays, with its buttons.");
+    $("cover").className = "cover";
+    $("cover").style.backgroundImage = "";
+    return;
+  }
+  waiting = false;
+  now = s.now || null;
+  seen = performance.now();
+  const n = now || {};
+  const idle = !now || now.idle;
+  $("title").textContent = s.error ? "Spotify" : idle ? (n.ad ? "Advert" : "Nothing playing") : n.title;
+  $("artist").textContent = s.error || (idle ? "Press play, or start a song in Spotify" : n.artist);
+  $("artist").className = "artist" + (s.error ? " bad" : "");
+  $("cover").className = "cover" + (!idle && n.cover ? " art" : "");
+  $("cover").style.backgroundImage = !idle && n.cover ? `url("${n.cover}")` : "";
+  $("toggle").innerHTML = n.playing ? PAUSE : PLAY;
+  $("toggle").title = n.playing ? "Pause" : "Play";
+  $("prev").disabled = $("next").disabled = idle;
+  tick();
+}
+
+// Between two looks at Spotify the time and the line move on by themselves.
+function tick() {
+  if (!now || now.idle) { $("time").textContent = ""; $("bar").style.width = "0"; return; }
+  const at = Math.min(now.length, now.position + (now.playing ? (performance.now() - seen) / 1000 : 0));
+  $("time").textContent = `${clock(at)} / ${clock(now.length)}`;
+  $("bar").style.width = `${now.length ? (at / now.length) * 100 : 0}%`;
+}
+
+async function refresh() {
+  if (document.hidden) return;
+  try { show(await ask()); } catch (e) { show({ client_id: true, connected: true, error: "Link is not answering." }); }
+}
+
+async function press(action) {
+  try {
+    const s = await ask({ action });
+    show(s);
+    setTimeout(refresh, 450);   // Spotify takes a moment to move on to the next song
+  } catch (e) { /* the next look says what is wrong */ }
+}
+
+$("toggle").onclick = () => press(now && now.playing ? "pause" : "play");
+$("prev").onclick = () => press("previous");
+$("next").onclick = () => press("next");
+$("hide").onclick = () => (window.musicWindow ? window.musicWindow.hide() : window.close());
+$("save-id").onclick = async () => {
+  const s = await ask({ action: "client_id", id: $("client-id").value });
+  note = s.error || "";
+  if (!s.error) { changing = false; $("client-id").value = ""; }
+  show(s);
+};
+$("client-id").onkeydown = (e) => { if (e.key === "Enter") $("save-id").click(); };
+$("connect").onclick = async () => {
+  const s = await ask({ action: "connect" });
+  waiting = !s.error;
+  note = s.error || "";
+  show(s);
+};
+$("change-id").onclick = () => { changing = true; note = ""; show({ client_id: false, connected: false }); };
+
+refresh();
+setInterval(refresh, 3000);
+setInterval(tick, 500);
+document.addEventListener("visibilitychange", refresh);
+</script>
+</body>
+</html>

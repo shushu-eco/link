@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Link · Discord</title>
+<!-- The Discord widget: a window of its own above Link's (tools/reels/shell/main.js, "the Discord bot"),
+     dragged by its top bar. It sets up the user's bot and shows what it does: links the crew sent with
+     /record, and the activity feed. -->
+<link rel="stylesheet" href="/static/fonts/fonts.css">
+<style>
+  :root {
+    --ink: #090c1e; --screen: #0a0d1f; --panel-a: #13243f; --panel-b: #0f1d34; --slate: #3f6f7a; --slate-btn: #4a5f7a;
+    --btn-bg: #111a30; --line: #3a3160; --line-2: #22304a; --text: #f6efdc; --text-2: #b9b3a4; --dim: #6b6a7a; --teal: #9fd8c8;
+    --blurple: #5865f2; --blurple-hi: #8e97ff; --green: #3ddc84; --amber: #ffb020; --red-soft: #ff8a8a;
+    --f-pixel: VT323, ui-monospace, Consolas, monospace; --f-body: "Nunito Sans", "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; }
+  body { padding: 4px; font: 13px/1.35 var(--f-body); color: var(--text); }
+  .w { height: 100%; display: flex; flex-direction: column; border: 2px solid var(--slate); border-radius: 0; overflow: hidden;
+       background: linear-gradient(var(--panel-a), var(--panel-b)); box-shadow: 0 0 0 2px var(--ink); }
+  /* The top bar is the handle the window is dragged by. */
+  .bar { display: flex; align-items: center; gap: 9px; padding: 9px 10px 9px 12px; border-bottom: 2px solid var(--line-2); -webkit-app-region: drag; user-select: none; }
+  .bar svg { width: 20px; height: 20px; color: var(--blurple-hi); flex: none; }
+  .bar b { font: 18px/1 var(--f-pixel); letter-spacing: 1px; text-transform: uppercase; }
+  .state { display: flex; align-items: center; gap: 6px; margin-left: auto; font: 15px/1 var(--f-pixel); color: var(--dim); letter-spacing: .5px; }
+  .state i { width: 8px; height: 8px; border-radius: 50%; background: var(--dim); }
+  .state.online { color: var(--green); } .state.online i { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .state.connecting i { background: var(--amber); } .state.error { color: var(--red-soft); } .state.error i { background: var(--red-soft); }
+  button, input, select, a { -webkit-app-region: no-drag; font: inherit; }
+  .x { width: 22px; height: 22px; padding: 0; border: 0; border-radius: 2px; background: none; color: var(--dim); font: 18px/1 var(--f-pixel); cursor: pointer; }
+  .x:hover { color: var(--text); background: rgba(255, 255, 255, .08); }
+  .body { flex: 1; min-height: 0; overflow-y: auto; padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 12px; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+  h3 { margin: 0 0 6px; font: 16px/1 var(--f-pixel); letter-spacing: 1px; color: var(--teal); text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+  h3 .n { color: var(--blurple-hi); }
+  p { margin: 0; color: var(--text-2); font-size: 12.5px; }
+  p b { color: var(--text); }
+  ol { margin: 4px 0 0; padding-left: 18px; color: var(--text-2); font-size: 12.5px; display: flex; flex-direction: column; gap: 4px; }
+  .row { display: flex; gap: 6px; align-items: center; }
+  input, select { flex: 1; min-width: 0; height: 28px; padding: 0 8px; border: 2px solid var(--slate-btn); border-radius: 2px; background: var(--screen); color: var(--text); font-size: 12.5px; outline: none; }
+  input:focus, select:focus { border-color: var(--blurple); }
+  .btn { height: 28px; padding: 0 11px; border: 2px solid var(--blurple); border-radius: 2px; background: var(--btn-bg); color: var(--blurple-hi); font-weight: 700; font-size: 12px; cursor: pointer; white-space: nowrap; text-decoration: none; display: inline-flex; align-items: center; }
+  .btn:hover { background: rgba(88, 101, 242, .16); color: #fff; }
+  .btn.ghost { border-color: var(--slate-btn); color: var(--text-2); }
+  .btn.small { height: 24px; padding: 0 8px; font-size: 11.5px; }
+  .bad { color: var(--red-soft); }
+  .field { display: flex; flex-direction: column; gap: 3px; }
+  .field span { font: 14px/1 var(--f-pixel); color: var(--dim); letter-spacing: .5px; text-transform: uppercase; }
+  .links { display: flex; flex-direction: column; gap: 6px; }
+  .link { padding: 7px 9px; border: 2px solid var(--blurple); border-radius: 0; background: rgba(88, 101, 242, .1); display: flex; flex-direction: column; gap: 5px; animation: link-in .3s ease-out; }
+  .link .url { font-weight: 700; word-break: break-all; }
+  .link .from { font-size: 11.5px; color: var(--text-2); }
+  @keyframes link-in { from { opacity: 0; transform: translateY(-4px); } }
+  .feed { display: flex; flex-direction: column; gap: 2px; }
+  .ev { display: grid; grid-template-columns: 38px 18px 1fr; gap: 6px; align-items: baseline; padding: 4px 2px; border-bottom: 1px solid var(--line-2); font-size: 12.5px; }
+  .ev time { font: 15px/1 var(--f-pixel); color: var(--dim); }
+  .ev .t { color: var(--text-3, #d9d2c0); word-break: break-word; }
+  .ev.bad .t { color: var(--red-soft); }
+  .empty { color: var(--dim); font-size: 12.5px; font-style: italic; }
+  .switches { display: flex; gap: 12px; flex-wrap: wrap; }
+  .switches label { display: flex; align-items: center; gap: 5px; font-size: 12.5px; color: var(--text-2); cursor: pointer; }
+  .switches input { flex: none; width: 15px; height: 15px; accent-color: var(--blurple); }
+  .report { padding: 8px 10px; border: 2px solid var(--line-2); background: rgba(5, 10, 22, .55); display: flex; flex-direction: column; gap: 7px; }
+  .report .when { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; font-size: 12.5px; color: var(--text-2); }
+  .report .when span { font: 14px/1.3 var(--f-pixel); color: var(--dim); letter-spacing: .5px; text-transform: uppercase; }
+  .report .when b { color: var(--text); font-weight: 700; }
+  .btn:disabled { opacity: .5; cursor: default; }
+  .foot { display: flex; gap: 8px; align-items: center; padding: 8px 12px; border-top: 2px solid var(--line-2); }
+  .foot .who { display: flex; align-items: center; gap: 7px; min-width: 0; flex: 1; font-size: 12px; color: var(--text-2); }
+  .foot img { width: 22px; height: 22px; border-radius: 2px; }
+  .foot .who span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="w">
+  <div class="bar">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.6 5.4A17 17 0 0 0 15.4 4l-.5 1a15.6 15.6 0 0 0-5.8 0L8.6 4a17 17 0 0 0-4.2 1.4C1.7 9.4 1 13.3 1.3 17.2a17 17 0 0 0 5.2 2.6l1.1-1.7a11 11 0 0 1-1.7-.8l.4-.3a12.2 12.2 0 0 0 11.4 0l.4.3a11 11 0 0 1-1.7.8l1.1 1.7a17 17 0 0 0 5.2-2.6c.4-4.5-.7-8.4-3.1-11.8zM8.6 14.8c-1 0-1.9-1-1.9-2.1s.8-2.1 1.9-2.1 1.9 1 1.9 2.1-.8 2.1-1.9 2.1zm6.8 0c-1 0-1.9-1-1.9-2.1s.8-2.1 1.9-2.1 1.9 1 1.9 2.1-.8 2.1-1.9 2.1z"/></svg>
+    <b>Discord</b>
+    <span id="state" class="state"><i></i><span id="state-text">OFF</span></span>
+    <button id="hide" class="x" title="Hide (the Discord button brings it back)">×</button>
+  </div>
+
+  <!-- No bot yet: how to make one, and where its token goes -->
+  <div id="setup" class="body" hidden>
+    <div>
+      <h3>Connect your bot</h3>
+      <ol>
+        <li>Open the <a class="btn small ghost" href="https://discord.com/developers/applications" target="_blank">Developer Portal</a> and make a <b>New Application</b>.</li>
+        <li>In <b>Bot</b>, press <b>Reset Token</b> and copy it.</li>
+        <li>Paste it here. It stays on this PC and is never shown again.</li>
+      </ol>
+    </div>
+    <div class="row"><input id="token" type="password" placeholder="Bot token" autocomplete="off" spellcheck="false"><button id="save-token" class="btn">Connect</button></div>
+    <p id="setup-error" class="bad" hidden></p>
+  </div>
+
+  <!-- The bot is on: links from the crew, what happened, and the choices -->
+  <div id="main" class="body" hidden>
+    <p id="trouble" class="bad" hidden></p>
+    <div id="choices" hidden>
+      <h3>Where it works</h3>
+      <p id="invite-text">First <a id="invite" class="btn small" target="_blank">Add the bot to your server</a>, then choose:</p>
+      <div style="display:flex;flex-direction:column;gap:7px;margin-top:8px">
+        <label class="field"><span>Server</span><select id="guild"></select></label>
+        <label class="field"><span>Live alerts go to</span><select id="ch-alerts" data-kind="alerts"></select></label>
+        <label class="field"><span>Tapes ready go to</span><select id="ch-tapes" data-kind="tapes"></select></label>
+        <label class="field"><span>Finished reels go to</span><select id="ch-reels" data-kind="reels"></select></label>
+        <label class="field"><span>Stream chat goes to</span><select id="ch-chat" data-kind="chat"></select></label>
+        <label class="field"><span>Analytics report goes to</span><select id="ch-summary" data-kind="summary"></select></label>
+        <label class="field"><span>Your remote (owner's commands) works in</span><select id="ch-control" data-kind="control"></select></label>
+        <label class="field"><span>Role that may use /record and /clip</span><select id="role"></select></label>
+      </div>
+    </div>
+    <div id="links-box" hidden>
+      <h3>Links from the crew <span class="n" id="links-n"></span></h3>
+      <div id="links" class="links"></div>
+    </div>
+    <div id="report-box" hidden>
+      <h3>Analytics report</h3>
+      <div class="report">
+        <p id="report-text"></p>
+        <div id="report-when" class="when" hidden><span>Channel</span><b id="report-channel"></b><span>Last</span><b id="report-last"></b><span>Next</span><b id="report-next"></b></div>
+        <div class="row">
+          <button id="report-make" class="btn small" title="A new channel, #analytics: everyone reads, only the bot writes">Create #analytics</button>
+          <button id="report-now" class="btn small" title="Read the numbers and post the report now">Post now</button>
+        </div>
+        <p id="report-error" class="bad" hidden></p>
+      </div>
+    </div>
+    <div id="control-box" hidden>
+      <h3>Your remote</h3>
+      <div class="report">
+        <p id="control-text"></p>
+        <div class="row"><button id="control-make" class="btn small" title="A new channel, #control, that only you and the bot can see">Create #control</button></div>
+        <p id="control-error" class="bad" hidden></p>
+      </div>
+    </div>
+    <div>
+      <h3>Activity</h3>
+      <div id="feed" class="feed"></div>
+    </div>
+    <div>
+      <h3>Post in the channel</h3>
+      <div class="switches">
+        <label title="When a recording starts and when it is saved"><input type="checkbox" data-post="alerts"> Live alerts</label>
+        <label title="When a recording is processed, with its best moments"><input type="checkbox" data-post="tapes"> Tapes ready</label>
+        <label title="Each rendered reel, with a copy small enough for Discord"><input type="checkbox" data-post="reels"> Finished reels</label>
+        <label title="While a Kick or Twitch stream is open in the Studio, its chat as it comes in"><input type="checkbox" data-post="chat"> Stream chat</label>
+        <label title="Every 12 hours: how the reels and the Shorts are doing"><input type="checkbox" data-post="summary"> Analytics report</label>
+        <label title="When a reel or Short passes a round number (1,000 views, 5 comments, ...), in the report's channel; checked every half hour"><input type="checkbox" data-post="milestones"> Milestones</label>
+      </div>
+    </div>
+  </div>
+
+  <div id="foot" class="foot" hidden>
+    <div class="who"><img id="avatar" alt="" hidden><span id="where"></span></div>
+    <button id="settings" class="btn small ghost">Settings</button>
+    <button id="disconnect" class="btn small ghost" title="Stops the bot and forgets its token">Disconnect</button>
+  </div>
+</div>
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const api = window.discordWidget;
+let s = null, showChoices = false, listsFor = null, reportError = "", controlError = "";
+const time = (at) => new Date(at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
+// "Today 21:04", "Tomorrow 09:04" or "Mon 21:04"
+const day = (at) => {
+  const days = Math.round((new Date(at).setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0)) / 86400000);
+  return `${days === 0 ? "Today" : days === 1 ? "Tomorrow" : days === -1 ? "Yesterday" : new Date(at).toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" })} ${time(at)}`;
+};
+const option = (value, text, selected) => Object.assign(document.createElement("option"), { value, textContent: text, selected });
+
+function render(next) {
+  s = next;
+  const label = { online: "ONLINE", connecting: "CONNECTING", error: "ERROR", off: "OFF" }[s.state] || s.state;
+  $("state").className = "state " + s.state;
+  $("state-text").textContent = label;
+  $("setup").hidden = s.token;
+  $("main").hidden = !s.token;
+  $("foot").hidden = !s.token;
+  if (!s.token) return;
+  $("trouble").hidden = s.state !== "error";
+  $("trouble").textContent = s.error;
+  const ch = s.channels || {};
+  const ready = s.guild && s.role && ch.alerts && ch.tapes && ch.reels;
+  $("choices").hidden = !(showChoices || (s.state === "online" && !ready));
+  $("invite").href = s.invite || "#";
+  $("invite-text").hidden = !s.invite;
+  if (!$("choices").hidden && s.state === "online") fillLists();
+  // where it posts, and who it is
+  $("avatar").hidden = !s.avatar;
+  if (s.avatar) $("avatar").src = s.avatar;
+  $("where").textContent = s.name ? `${s.name}${s.guild ? ` · ${s.guild.name}` : ""}${ready ? ` · #${ch.alerts.name} #${ch.tapes.name} #${ch.reels.name}` : ""}` : "";
+  // the report: its channel, and when it went out and goes out next
+  const rep = s.report || {}, repCh = ch.summary;
+  $("report-box").hidden = !(s.state === "online" && s.guild);
+  $("report-text").textContent = repCh ? "" : "Every 12 hours, how your reels and Shorts are doing: views, followers, the most seen and what changed. In a channel of its own that only the bot writes in.";
+  $("report-text").hidden = !!repCh;
+  $("report-when").hidden = !repCh;
+  if (repCh) {
+    $("report-channel").textContent = `#${repCh.name}`;
+    $("report-last").textContent = rep.busy ? "Posting…" : rep.last ? day(rep.last) : "Not yet";
+    $("report-next").textContent = !s.posts.summary ? "Off" : !rep.last || rep.next <= Date.now() ? "In a moment" : day(rep.next);
+  }
+  $("report-make").hidden = !!repCh;
+  $("report-now").hidden = !repCh;
+  $("report-now").disabled = !!rep.busy;
+  if (rep.error) reportError = rep.error;
+  $("report-error").hidden = !reportError;
+  $("report-error").textContent = reportError;
+  // the owner's remote: its private channel
+  $("control-box").hidden = !(s.state === "online" && s.guild);
+  $("control-text").innerHTML = "";
+  $("control-text").append(ch.control
+    ? `Run Link from #${ch.control.name}, which only you see: /list, /tape, /open, /rec, /process, /reel, /render, and /auto for the whole way from a link to rendered reels.`
+    : "Run Link from Discord: see your tapes with /list and go from a link to rendered reels with /auto. The commands work for the server's owner only, in a channel nobody else can see.");
+  $("control-make").hidden = !!ch.control;
+  $("control-error").hidden = !controlError;
+  $("control-error").textContent = controlError;
+  // links from the crew
+  $("links-box").hidden = !s.links.length;
+  $("links-n").textContent = s.links.length;
+  $("links").replaceChildren(...s.links.map((l) => {
+    const box = document.createElement("div");
+    box.className = "link";
+    const url = Object.assign(document.createElement("div"), { className: "url", textContent: l.url });
+    const from = Object.assign(document.createElement("div"), { className: "from", textContent: `from ${l.who} · ${time(l.at)}` });
+    const open = Object.assign(document.createElement("button"), { className: "btn small", textContent: /(kick\.com|twitch\.tv)\//i.test(l.url) ? "Open in the Studio" : "Open in URL", onclick: () => api.link(l.id, true) });
+    const drop = Object.assign(document.createElement("button"), { className: "btn small ghost", textContent: "Dismiss", onclick: () => api.link(l.id, false) });
+    const row = Object.assign(document.createElement("div"), { className: "row" });
+    row.append(open, drop);
+    box.append(url, from, row);
+    return box;
+  }));
+  // the feed
+  $("feed").replaceChildren(...(s.feed.length ? s.feed.map((e) => {
+    const row = Object.assign(document.createElement("div"), { className: "ev" + (e.bad ? " bad" : "") });
+    row.append(Object.assign(document.createElement("time"), { textContent: time(e.at) }),
+      Object.assign(document.createElement("span"), { textContent: e.icon }),
+      Object.assign(document.createElement("span"), { className: "t", textContent: e.text }));
+    return row;
+  }) : [Object.assign(document.createElement("div"), { className: "empty", textContent: "Nothing yet. Commands and posts show up here." })]));
+  for (const box of document.querySelectorAll("[data-post]")) box.checked = !!s.posts[box.dataset.post];
+}
+
+// The servers the bot is in, and the chosen one's channels and roles.
+async function fillLists() {
+  const key = `${s.guild ? s.guild.id : ""}`;
+  if (listsFor === key) return;
+  listsFor = key;
+  const l = await api.lists(s.guild && s.guild.id);
+  $("guild").replaceChildren(option("", l.guilds.length ? "Choose a server" : "The bot is in no server yet", !s.guild), ...l.guilds.map((g) => option(g.id, g.name, s.guild && s.guild.id === g.id)));
+  const ch = s.channels || {};
+  for (const box of document.querySelectorAll("select[data-kind]")) {
+    const now = ch[box.dataset.kind];
+    box.replaceChildren(option("", "Choose a channel", !now), ...l.channels.map((c) => option(c.id, `#${c.name}`, now && now.id === c.id)));
+    box.disabled = !s.guild;
+  }
+  $("role").replaceChildren(option("", "Choose a role (e.g. Apostle)", !s.role), ...l.roles.map((r) => option(r.id, r.name, s.role && s.role.id === r.id)));
+  $("role").disabled = !s.guild;
+  if (l.error) { $("trouble").hidden = false; $("trouble").textContent = l.error; }
+}
+
+$("guild").onchange = async () => { listsFor = null; render(await api.choose({ guildId: $("guild").value || null })); };
+for (const box of document.querySelectorAll("select[data-kind]")) box.onchange = async () => render(await api.choose({ channel: { kind: box.dataset.kind, id: box.value || null } }));
+$("role").onchange = async () => render(await api.choose({ roleId: $("role").value || null }));
+$("save-token").onclick = async () => {
+  const r = await api.token($("token").value);
+  $("setup-error").hidden = r.ok;
+  $("setup-error").textContent = r.error || "";
+  if (r.ok) $("token").value = "";
+};
+$("token").onkeydown = (e) => { if (e.key === "Enter") $("save-token").click(); };
+for (const box of document.querySelectorAll("[data-post]")) box.onchange = () => api.posts(box.dataset.post, box.checked);
+const reportAsk = (button, ask) => async () => {
+  button.disabled = true;
+  reportError = "";
+  const r = await ask();
+  button.disabled = false;
+  reportError = r && !r.ok && r.error ? r.error : "";
+  listsFor = null;
+  render(await api.state());
+};
+$("control-make").onclick = async () => {
+  $("control-make").disabled = true;
+  const r = await api.controlChannel();
+  $("control-make").disabled = false;
+  controlError = r && !r.ok && r.error ? r.error : "";
+  listsFor = null;
+  render(await api.state());
+};
+$("report-make").onclick = reportAsk($("report-make"), api.reportChannel);
+$("report-now").onclick = reportAsk($("report-now"), api.report);
+$("settings").onclick = () => { showChoices = !showChoices; listsFor = null; render(s); };
+$("disconnect").onclick = () => api.disconnect();
+$("hide").onclick = () => api.hide();
+api.onState(render);
+api.state().then(render);
+setInterval(() => s && render(s), 30000);   // the times in the feed stay right
+</script>
+</body>
+</html>

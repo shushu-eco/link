@@ -1,0 +1,97 @@
+{
+  "manifest_version": 3,
+  "name": "Link Lite Recorder",
+  "short_name": "Link Lite",
+  "version": "0.5.0",
+  "description": "Records the Kick or Twitch stream in this tab, with its chat speed and your marked highlights, for Link. Nothing is uploaded.",
+  "minimum_chrome_version": "126",
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_title": "Link Lite Recorder",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png",
+      "48": "icons/48.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "tabCapture",
+    "offscreen",
+    "activeTab",
+    "storage",
+    "downloads",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://kick.com/*",
+    "https://www.kick.com/*",
+    "https://www.twitch.tv/*",
+    "https://twitch.tv/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://kick.com/*",
+        "https://www.kick.com/*",
+        "https://www.twitch.tv/*",
+        "https://twitch.tv/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+K"
+      },
+      "description": "Open or close Link's panel on the stream's page"
+    },
+    "toggle-record": {
+      "suggested_key": {
+        "default": "Alt+Shift+L"
+      },
+      "description": "Start recording the stream in this tab, or stop and save"
+    },
+    "mark": {
+      "suggested_key": {
+        "default": "Alt+Shift+M"
+      },
+      "description": "Mark a highlight in the recording"
+    },
+    "save-last": {
+      "suggested_key": {
+        "default": "Alt+Shift+J"
+      },
+      "description": "Save the last minute (when the rewind is on)"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "popup.html",
+        "popup.css",
+        "popup.js",
+        "fonts/*",
+        "icons/*"
+      ],
+      "matches": [
+        "https://kick.com/*",
+        "https://www.kick.com/*",
+        "https://www.twitch.tv/*",
+        "https://twitch.tv/*"
+      ]
+    }
+  ]
+}

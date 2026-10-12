@@ -1,0 +1,168 @@
+<dc-import name="SiteHeader" current="home" release="{{ release }}" hint-size="100%,70px"></dc-import>
+<main class="has-dock" data-screen-label="Home" style="max-width:1200px;margin:0 auto;padding:0 16px">
+
+  <section class="sec hero" style="position:relative;margin-top:28px;border:1px solid #3f6f7a;padding:48px 28px 44px;overflow:hidden">
+    <div aria-hidden="true" style="position:absolute;left:12px;right:12px;top:10px;height:4px;background-image:radial-gradient(circle,#3f6f7a 1.5px,transparent 2px);background-size:10px 4px;background-repeat:repeat-x"></div>
+    <div aria-hidden="true" style="position:absolute;width:640px;height:640px;left:-200px;top:-260px;background:radial-gradient(circle,rgba(127,214,194,.18),transparent 60%);pointer-events:none"></div>
+    <div aria-hidden="true" style="position:absolute;width:520px;height:520px;right:-160px;bottom:-240px;background:radial-gradient(circle,rgba(255,93,93,.14),transparent 60%);pointer-events:none"></div>
+    <div class="hero-grid" style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:40px 48px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#7fd6c2">Browser extension · Chrome, Edge and Brave</span>
+        <h1 style="margin:0;display:flex;flex-direction:column;gap:6px">
+          <span style="display:flex;align-items:baseline;flex-wrap:wrap;gap:0 16px">
+            <span style="font-family:VT323,monospace;font-size:clamp(64px,8vw,96px);line-height:.9;letter-spacing:8px;color:#ff5d5d;text-shadow:2px 2px 0 #090c1e">LINK</span>
+            <span style="font-family:VT323,monospace;font-size:clamp(34px,4vw,48px);line-height:1;letter-spacing:10px;color:#b9b4e0">LITE</span>
+          </span>
+          <span style="font:700 clamp(28px,3.4vw,40px)/1.1 'Nunito Sans',sans-serif;color:#f6efdc">Recorder</span>
+        </h1>
+        <p style="margin:0;max-width:520px;font:400 19px/1.55 'Nunito Sans',sans-serif;color:#c9c5ea;text-wrap:pretty">Records the Kick or Twitch stream in your tab, marks the highlights, and saves one file to your own computer.</p>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px">
+          <span style="font:600 16px/1.4 'Nunito Sans',sans-serif;color:#b9b3a4">Free · open source · no account</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center">
+          <a class="hero-cta" href="{{ ctaHref }}" style="display:inline-flex;align-items:center;padding:14px 26px;background:linear-gradient(#ffe27a,#d9a52a);color:#090c1e;border:2px solid #090c1e;box-shadow:0 0 0 2px #f2c744;font:800 17px 'Nunito Sans',sans-serif;text-decoration:none;transition:box-shadow 120ms" style-hover="box-shadow:0 0 0 2px #f2c744,0 0 28px rgba(242,199,68,.5)"><span class="l-long">{{ ctaLabel }}</span><span class="l-short">{{ ctaMid }}</span></a>
+          <a class="hero-secondary" href="How It Works.dc.html" style="display:inline-flex;align-items:center;padding:14px 22px;background:#0a0d1f;color:#f6efdc;border:2px solid #3a3160;font:700 16px 'Nunito Sans',sans-serif;text-decoration:none;transition:border-color 120ms" style-hover="border-color:#7fd6c2">See how it works</a>
+        </div>
+      </div>
+
+      <figure class="hero-panel" aria-label="The Link Lite panel on a stream page, recording" style="margin:0;position:relative;min-height:380px;background:#0a0d1f;border:2px solid #22304a;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:24px">
+        <div aria-hidden="true" style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,#2c2a5a 0,transparent 45%),radial-gradient(ellipse at 75% 65%,#22304a 0,transparent 45%),radial-gradient(ellipse at 60% 20%,#3a3160 0,transparent 35%);filter:blur(28px);opacity:.9"></div>
+        <div aria-hidden="true" style="position:absolute;left:0;right:0;top:0;height:30px;background:#090c1e;border-bottom:1px solid #22304a;display:flex;align-items:center;gap:8px;padding:0 12px;font-family:VT323,monospace;font-size:16px;letter-spacing:2px;color:#6b6a7a"><span style="width:10px;height:10px;background:#22304a"></span><span style="width:10px;height:10px;background:#22304a"></span>TWITCH.TV/YOURCHANNEL</div>
+        <div style="position:relative;width:100%;max-width:560px;background:linear-gradient(#13243f,#0f1d34);border:2px solid #3f6f7a;box-shadow:0 0 0 2px #090c1e,inset 0 0 0 2px #090c1e,0 20px 50px rgba(0,0,0,.5);padding:16px 18px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px">
+            <span style="display:flex;align-items:baseline;gap:8px"><span style="font-family:VT323,monospace;font-size:28px;line-height:1;letter-spacing:4px;color:#ff5d5d;text-shadow:1px 1px 0 #090c1e">LINK</span><span style="font-family:VT323,monospace;font-size:18px;line-height:1;letter-spacing:5px;color:#b9b4e0">LITE</span></span>
+            <span style="display:inline-flex;align-items:center;gap:8px;font-family:VT323,monospace;font-size:18px;letter-spacing:3px;color:#ff8a8a">{{ recDot }}REC</span>
+            <span style="margin-left:auto;display:inline-flex;gap:8px">
+              <span style="font-family:VT323,monospace;font-size:16px;letter-spacing:2px;background:#0a0d1f;border:2px solid #22304a;padding:2px 8px;color:#bf94ff">TWITCH</span>
+              <span style="font-family:VT323,monospace;font-size:16px;letter-spacing:2px;background:#0a0d1f;border:2px solid #22304a;padding:2px 8px;color:#f6efdc">yourchannel</span>
+            </span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:10px">
+            <div style="background:#0a0d1f;border:2px solid #22304a;padding:10px 12px;display:flex;flex-direction:column;gap:4px"><span style="font-family:VT323,monospace;font-size:36px;line-height:1;color:#ffd27a;font-variant-numeric:tabular-nums">{{ timer }}</span><span style="font-family:VT323,monospace;font-size:16px;letter-spacing:2px;color:#b9b3a4">RECORDING</span></div>
+            <div style="background:#0a0d1f;border:2px solid #22304a;padding:10px 12px;display:flex;flex-direction:column;gap:4px"><span class="marks" style="display:inline-block;font-family:VT323,monospace;font-size:36px;line-height:1;color:#ffd27a;font-variant-numeric:tabular-nums">3</span><span style="font-family:VT323,monospace;font-size:16px;letter-spacing:2px;color:#b9b3a4">MARKS</span></div>
+            <div style="background:#0a0d1f;border:2px solid #22304a;padding:10px 12px;display:flex;flex-direction:column;gap:4px"><span class="watch" style="display:inline-block;font-family:VT323,monospace;font-size:36px;line-height:1;color:#ffd27a;font-variant-numeric:tabular-nums">10,742</span><span style="font-family:VT323,monospace;font-size:16px;letter-spacing:2px;color:#b9b3a4">WATCHING</span></div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+            <span style="display:inline-flex;align-items:center;padding:10px 20px;background:#c8282e;color:#f6efdc;border:2px solid #ff8a8a;font:800 15px 'Nunito Sans',sans-serif">Stop</span>
+            <span style="display:inline-flex;align-items:center;padding:10px 20px;background:#0a0d1f;color:#f6efdc;border:2px solid #3a3160;font:700 15px 'Nunito Sans',sans-serif">Mark <span style="margin-left:8px;font-family:VT323,monospace;font-size:16px;letter-spacing:1px;color:#7fd6c2">ALT+SHIFT+M</span></span>
+            <span style="margin-left:auto;font-family:VT323,monospace;font-size:16px;letter-spacing:2px;color:#3ddc84">REWIND ON</span>
+          </div>
+        </div>
+      </figure>
+      <figure class="hero-capsule" aria-label="The Link Lite panel on a stream page, recording"><div class="cap">
+        <div class="cap-row"><span style="display:flex;align-items:baseline;gap:6px"><span style="font-family:VT323,monospace;font-size:22px;line-height:1;letter-spacing:3px;color:#ff5d5d;text-shadow:1px 1px 0 #090c1e">LINK</span><span style="font-family:VT323,monospace;font-size:15px;line-height:1;letter-spacing:4px;color:#b9b4e0">LITE</span></span><span style="display:inline-flex;align-items:center;gap:6px;font-family:VT323,monospace;font-size:16px;letter-spacing:2px;color:#ff8a8a">{{ recDot }}REC</span><span class="cap-chip" style="margin-left:auto;color:#bf94ff">TWITCH</span></div>
+        <div class="cap-row"><span class="cap-chip" style="color:#f6efdc">yourchannel</span><span style="margin-left:auto;font-family:VT323,monospace;font-size:16px;letter-spacing:2px;color:#3ddc84">REWIND ON</span></div>
+        <div class="cap-grid"><div class="cap-cell"><b class="timer">0:16</b><small>RECORDING</small></div><div class="cap-cell"><b class="marks">3</b><small>MARKS</small></div><div class="cap-cell"><b class="watch">10,742</b><small>WATCHING</small></div></div>
+        <div class="cap-row" style="justify-content:space-between"><span class="cap-btn stop">Stop</span><span class="cap-btn">Mark <span style="margin-left:8px;font-family:VT323,monospace;font-size:16px;letter-spacing:1px;color:#7fd6c2">ALT+SHIFT+M</span></span></div>
+      </div></figure>
+    </div>
+  </section>
+
+  <section class="sec feat-sec" style="margin-top:88px;display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#7fd6c2">What it does</span>
+      <h2 style="margin:0;font:700 clamp(26px,3.2vw,36px)/1.15 'Nunito Sans',sans-serif;color:#f6efdc">One recording, with the moments already marked.</h2>
+    </div>
+    <div class="features" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px">
+      <sc-for list="{{ features }}" as="f" hint-placeholder-count="6">
+        <article style="background:linear-gradient(#13243f,#0f1d34);border:2px solid #3f6f7a;box-shadow:0 0 0 2px #090c1e,inset 0 0 0 2px #090c1e;padding:26px 24px;display:flex;flex-direction:column;gap:10px">
+          <span style="font-family:VT323,monospace;font-size:16px;letter-spacing:3px;color:#7fd6c2">{{ f.k }}</span>
+          <h3 style="margin:0;font:700 21px/1.25 'Nunito Sans',sans-serif;color:#f6efdc">{{ f.t }}</h3>
+          <p style="margin:0;font:400 16px/1.6 'Nunito Sans',sans-serif;color:#f6efdc;opacity:.88;text-wrap:pretty">{{ f.d }}</p>
+        </article>
+      </sc-for>
+    </div>
+    <div class="feat-marks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <section class="sec duo" style="margin-top:88px">
+    <sc-for list="{{ faces }}" as="a" hint-placeholder-count="2">
+      <div class="duo-face duo-{{ a.key }}" style="--f:{{ a.f }}">
+        <div class="duo-main">
+          <div class="duo-glow" aria-hidden="true"></div>
+          <div style="position:relative;display:flex;flex-direction:column;gap:14px">
+            <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:{{ a.kickerColor }}">{{ a.kicker }}</span>
+            <h2 style="margin:0;font:700 clamp(28px,3.6vw,42px)/1.1 'Nunito Sans',sans-serif;color:#f6efdc">{{ a.name }}</h2>
+            <p style="margin:0;max-width:620px;font:400 17px/1.6 'Nunito Sans',sans-serif;color:#f6efdc;text-wrap:pretty">{{ a.blurb }}</p>
+          </div>
+          <ol class="duo-tabs" aria-hidden="true"><sc-for list="{{ a.slides }}" as="s"><li style="--g:{{ s.g }}">{{ s.name }}</li></sc-for></ol>
+          <div class="duo-screen">
+            <sc-for list="{{ a.slides }}" as="s" hint-placeholder-count="6">
+              <article class="duo-slide" style="--g:{{ s.g }}">
+                <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+                  <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;color:#f2c744">{{ s.n }} · {{ s.name }}</span>
+                  <h3 style="margin:0;font:700 22px/1.25 'Nunito Sans',sans-serif;color:#f6efdc">{{ s.t }}</h3>
+                  <p style="margin:0;font:400 16px/1.6 'Nunito Sans',sans-serif;color:#f6efdc;opacity:.88;text-wrap:pretty">{{ s.d }}</p>
+                </div>
+                <div class="duo-read"><span style="font-family:VT323,monospace;font-size:40px;line-height:1;color:#ffd27a;font-variant-numeric:tabular-nums;white-space:nowrap">{{ s.big }}</span><span style="font-family:VT323,monospace;font-size:16px;letter-spacing:2px;color:#b9b3a4;white-space:nowrap">{{ s.small }}</span></div>
+              </article>
+            </sc-for>
+          </div>
+          <div style="position:relative;display:flex;flex-wrap:wrap;gap:12px">
+            <sc-for list="{{ a.links }}" as="l"><a href="{{ l.href }}" style="display:inline-flex;align-items:center;padding:12px 20px;background:#0a0d1f;color:#f6efdc;border:2px solid #3a3160;font:700 16px 'Nunito Sans',sans-serif;text-decoration:none;transition:border-color 120ms" style-hover="border-color:#7fd6c2">{{ l.label }}</a></sc-for>
+          </div>
+        </div>
+        <div class="duo-terms">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px">
+            <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#7fd6c2">{{ a.terms.kicker }}</span>
+            <span class="duo-tag" style="display:{{ a.terms.tagShow }}">{{ a.terms.tag }}</span>
+          </div>
+          <div style="display:flex;align-items:baseline;flex-wrap:wrap;gap:12px"><span class="terms-big" style="font-family:VT323,monospace;font-size:72px;line-height:1;letter-spacing:2px;color:#f2c744;font-variant-numeric:tabular-nums">{{ a.terms.amount }}</span><span style="font-family:VT323,monospace;font-size:20px;letter-spacing:3px;color:#b9b4e0">{{ a.terms.unit }}</span></div>
+          <ul class="terms-points" style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font:400 16px/1.5 'Nunito Sans',sans-serif;color:#f6efdc">
+            <sc-for list="{{ a.terms.points }}" as="p"><li style="display:flex;gap:10px"><span style="color:#3ddc84;font-family:VT323,monospace;font-size:18px">■</span><span><span class="l-long">{{ p.l }}</span><span class="l-short">{{ p.s }}</span></span></li></sc-for>
+          </ul>
+          <p style="margin:0;font:400 16px/1.55 'Nunito Sans',sans-serif;color:#b9b3a4">{{ a.terms.note }}</p>
+        </div>
+      </div>
+    </sc-for>
+  </section>
+
+  <section class="sec" style="margin-top:88px;display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#7fd6c2">How it works</span>
+      <h2 style="margin:0;font:700 clamp(26px,3.2vw,36px)/1.15 'Nunito Sans',sans-serif;color:#f6efdc">Three steps.</h2>
+    </div>
+    <ol class="rail" style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:18px">
+      <li style="border:2px solid #22304a;padding:24px;display:flex;gap:18px;align-items:flex-start"><span class="num" style="font-family:VT323,monospace;font-size:44px;line-height:1;color:#ffd27a;font-variant-numeric:tabular-nums">1</span><div style="display:flex;flex-direction:column;gap:6px"><strong style="font:700 19px/1.3 'Nunito Sans',sans-serif;color:#f6efdc">Open a stream</strong><span style="font:400 16px/1.55 'Nunito Sans',sans-serif;color:#c9c5ea">On Kick or Twitch, in your own browser tab. Press the Link button and the panel opens on the page.</span></div></li>
+      <li style="border:2px solid #22304a;padding:24px;display:flex;gap:18px;align-items:flex-start"><span class="num" style="font-family:VT323,monospace;font-size:44px;line-height:1;color:#ffd27a;font-variant-numeric:tabular-nums">2</span><div style="display:flex;flex-direction:column;gap:6px"><strong style="font:700 19px/1.3 'Nunito Sans',sans-serif;color:#f6efdc">Press Record</strong><span style="font:400 16px/1.55 'Nunito Sans',sans-serif;color:#c9c5ea">Mark a highlight with a hotkey whenever something happens. Stop when you are done.</span></div></li>
+      <li style="border:2px solid #22304a;padding:24px;display:flex;gap:18px;align-items:flex-start"><span class="num" style="font-family:VT323,monospace;font-size:44px;line-height:1;color:#ffd27a;font-variant-numeric:tabular-nums">3</span><div style="display:flex;flex-direction:column;gap:6px"><strong style="font:700 19px/1.3 'Nunito Sans',sans-serif;color:#f6efdc">Get one file with your marks</strong><span style="font:400 16px/1.55 'Nunito Sans',sans-serif;color:#c9c5ea">An mp4 in your Downloads folder, and the list of marks ready for your editor.</span></div></li>
+    </ol>
+    <a href="How It Works.dc.html" style="font:600 16px/1.5 'Nunito Sans',sans-serif">Read the full guide</a>
+  </section>
+
+  <section class="sec" style="margin-top:88px;display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#7fd6c2">Open source</span>
+      <h2 style="margin:0;font:700 clamp(26px,3.2vw,36px)/1.15 'Nunito Sans',sans-serif;color:#f6efdc">Free. And you can read every line.</h2>
+    </div>
+    <ol class="rail" style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:18px">
+      <li style="border:2px solid #22304a;padding:24px;display:flex;gap:18px;align-items:flex-start"><span class="num" style="font-family:VT323,monospace;font-size:44px;line-height:1;color:#ffd27a;font-variant-numeric:tabular-nums">1</span><div style="display:flex;flex-direction:column;gap:6px"><strong style="font:700 19px/1.3 'Nunito Sans',sans-serif;color:#f6efdc">Free for everyone</strong><span style="font:400 16px/1.55 'Nunito Sans',sans-serif;color:#c9c5ea">No licence key, no account and no limit. Every feature and every skin is included.</span></div></li>
+      <li style="border:2px solid #22304a;padding:24px;display:flex;gap:18px;align-items:flex-start"><span class="num" style="font-family:VT323,monospace;font-size:44px;line-height:1;color:#ffd27a;font-variant-numeric:tabular-nums">2</span><div style="display:flex;flex-direction:column;gap:6px"><strong style="font:700 19px/1.3 'Nunito Sans',sans-serif;color:#f6efdc">The code is public</strong><span style="font:400 16px/1.55 'Nunito Sans',sans-serif;color:#c9c5ea">All of Link is on GitHub. Anyone can check what it does on your computer, and that nothing is uploaded.</span></div></li>
+      <li style="border:2px solid #22304a;padding:24px;display:flex;gap:18px;align-items:flex-start"><span class="num" style="font-family:VT323,monospace;font-size:44px;line-height:1;color:#ffd27a;font-variant-numeric:tabular-nums">3</span><div style="display:flex;flex-direction:column;gap:6px"><strong style="font:700 19px/1.3 'Nunito Sans',sans-serif;color:#f6efdc">Yours to change</strong><span style="font:400 16px/1.55 'Nunito Sans',sans-serif;color:#c9c5ea">Under the GPL-3.0 licence you may use it, change it and pass it on, as long as your version stays open too.</span></div></li>
+    </ol>
+    <a href="Open Source.dc.html" style="font:600 16px/1.5 'Nunito Sans',sans-serif">Everything about Link being open source</a>
+  </section>
+
+  <section class="sec rights" style="margin-top:88px;border-top:1px solid #3f6f7a;border-bottom:1px solid #3f6f7a;padding:40px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px 48px;align-items:start">
+    <h2 style="margin:0;font:700 clamp(24px,3vw,32px)/1.2 'Nunito Sans',sans-serif;color:#f6efdc;text-wrap:pretty">Use it for streams you have the right to record.</h2>
+    <p style="margin:0;font:400 17px/1.6 'Nunito Sans',sans-serif;color:#c9c5ea;text-wrap:pretty">Link records what is playing in your own tab. It is made for your own stream, streams you have permission to clip, and work you do for a streamer. The recording stays on your computer. Following the rules of the platform you record from, and what you do with the file, are your responsibility.</p>
+  </section>
+
+  <section class="sec faq" style="margin-top:88px;display:flex;flex-direction:column;gap:24px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#7fd6c2">Questions</span>
+      <h2 style="margin:0;font:700 clamp(26px,3.2vw,36px)/1.15 'Nunito Sans',sans-serif;color:#f6efdc">Asked most often.</h2>
+    </div>
+    <div style="background:linear-gradient(#13243f,#0f1d34);border:2px solid #3f6f7a;box-shadow:0 0 0 2px #090c1e,inset 0 0 0 2px #090c1e;padding:6px">
+      <sc-for list="{{ faqs }}" as="q" hint-placeholder-count="5">
+        <details style="border-bottom:2px solid #22304a">
+          <summary style="list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;padding:18px 20px;font:700 17px/1.4 'Nunito Sans',sans-serif;color:#f6efdc;transition:color 120ms" style-hover="color:#9fd8c8"><span style="font-family:VT323,monospace;font-size:22px;color:#f2c744;line-height:1">+</span>{{ q.q }}</summary>
+          <p style="margin:0;padding:0 20px 20px 58px;font:400 16px/1.6 'Nunito Sans',sans-serif;color:#c9c5ea;text-wrap:pretty">{{ q.a }}</p>
+        </details>
+      </sc-for>
+      <a href="Support.dc.html" style="display:block;padding:16px 20px;font:600 16px/1.4 'Nunito Sans',sans-serif">All questions, grouped by topic</a>
+    </div>
+  </section>
+</main>
+<div class="dock" aria-hidden="true"><span class="dock-terms"><b>FREE</b><span>open source</span></span><a class="dock-cta" href="{{ ctaHref }}" tabindex="-1">{{ ctaShort }}</a></div>
+<dc-import name="SiteFooter" hint-size="100%,220px"></dc-import>

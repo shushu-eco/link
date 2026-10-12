@@ -1,0 +1,14 @@
+# What the public copy of Link (github.com/shushu-eco/link) leaves out. tools/package/publish.ps1 makes
+# that copy with "git archive", which passes over everything marked export-ignore here: the owner's
+# own posts, plans and notes, which are not part of the software.
+discord/* export-ignore
+discord/server-icon-512.png -export-ignore
+ANNOUNCE_scheduler_texts.md export-ignore
+LINK_overview.md export-ignore
+site/DESIGN_PROMPT.md export-ignore
+site/MOBILE_DESIGN_PROMPT.md export-ignore
+store/TEST_REPORT.md export-ignore
+# the files a user double-clicks must have Windows' line ends, whoever checks them out
+*.cmd text eol=crlf
+# the list of words publish.ps1 keeps out of the public copy names them, so it stays here too
+tools/package/private-words.txt export-ignore

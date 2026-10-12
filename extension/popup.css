@@ -1,0 +1,343 @@
+/* Link Lite Recorder's popup, in Link's own look (tools/reels/ui/static/style.css): slate frames, gold for
+   the main action, the pixel face for labels and numbers. */
+@font-face { font-family: "VT323"; font-display: block; src: url("fonts/vt323-latin.woff2") format("woff2"); }
+@font-face { font-family: "Nunito Sans"; font-weight: 400 700; font-display: block; src: url("fonts/nunito-sans-latin.woff2") format("woff2"); }
+:root, [data-skin="classic"] {
+  --bar-a: #1c1740; --bar-b: #120f2a; --bg-a: #1c3f55; --bg-b: #0e2433; --bg-c: #091c1c; --panel-a: #13243f; --panel-b: #0f1d34;
+  --on-gold: #1a1200; --fold: rgba(9, 14, 36, .5);
+  --ink: #090c1e; --screen: #0a0d1f; --line: #3a3160; --line-2: #22304a; --slate: #3f6f7a;
+  --gold: #f2c744; --gold-hi: #ffe27a; --gold-lo: #d9a52a; --crimson: #c8282e;
+  --red: #ff5d5d; --red-soft: #ff8a8a; --green: #3ddc84; --teal: #9fd8c8; --amber-soft: #ffd27a;
+  --text: #f6efdc; --text-2: #b9b3a4; --dim: #6b6a7a;
+  --f-pixel: VT323, ui-monospace, Consolas, monospace; --f-body: "Nunito Sans", "Segoe UI", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { width: 320px; background: linear-gradient(var(--bg-a), var(--bg-b) 60%, var(--bg-c)); color: var(--text); font: 14px/1.4 var(--f-body); }
+header { display: flex; align-items: center; gap: 9px; padding: 10px 12px; background: linear-gradient(var(--bar-a), var(--bar-b)); border-bottom: 3px solid var(--slate); box-shadow: 0 3px 0 var(--ink); }
+header img { image-rendering: pixelated; }
+.wordmark { display: flex; flex-direction: column; line-height: .9; }
+.wordmark .name { font: 26px/0.9 var(--f-pixel); letter-spacing: 3px; color: var(--red); text-shadow: 2px 2px 0 var(--ink); }
+.wordmark .lite { font: 15px/1 var(--f-pixel); letter-spacing: 5px; color: var(--text-2); }
+.season { margin-left: auto; width: 39px; height: 36px; flex: none; }   /* the jack-o'-lantern: each of its pixels three across */
+.season[hidden] { display: none; }
+main { padding: 12px; display: flex; flex-direction: column; gap: 10px; min-height: 96px; }
+.panel { background: linear-gradient(var(--panel-a), var(--panel-b)); border: 2px solid var(--slate); box-shadow: 0 0 0 2px var(--ink), inset 0 0 0 2px var(--ink); padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.pix { font: 17px/1.1 var(--f-pixel); letter-spacing: 1px; text-transform: uppercase; color: var(--teal); }
+.who { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+.who b { font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.site { font: 15px/1 var(--f-pixel); letter-spacing: 1px; padding: 2px 6px; border: 2px solid; flex: none; }
+.site.kick { color: #53fc18; } .site.twitch { color: #bf94ff; }
+.help { margin: 0; font-size: 12.5px; color: var(--text-2); }
+.help.warn { color: var(--amber-soft); } .help.bad { color: var(--red-soft); }
+button { font: 700 14px var(--f-body); color: var(--text); background: var(--screen); border: 2px solid var(--line); padding: 8px 12px; cursor: pointer; }
+button:hover:not(:disabled) { border-color: var(--teal); }
+button:disabled { opacity: .5; cursor: default; }
+button.primary { background: linear-gradient(var(--gold-hi), var(--gold-lo)); color: var(--on-gold); border-color: var(--ink); box-shadow: 0 0 0 2px var(--gold-lo); }
+button.rec { border-color: var(--red-soft); background: var(--crimson); color: #fff; }
+.row { display: flex; gap: 8px; } .row > button { flex: 1; }
+.readout { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+.readout > div { background: var(--screen); border: 2px solid var(--line-2); padding: 5px 6px; text-align: center; }
+.readout .value { font: 22px/1 var(--f-pixel); letter-spacing: 1px; color: var(--amber-soft); }
+.readout .value.red { color: var(--red-soft); }
+.readout .label { margin-top: 3px; font-size: 10.5px; color: var(--text-2); text-transform: uppercase; letter-spacing: .5px; }
+label.check { display: flex; gap: 8px; align-items: flex-start; font-size: 12.5px; color: var(--text-2); cursor: pointer; }
+label.check input { margin-top: 2px; accent-color: var(--gold); }
+kbd { font: 14px/1 var(--f-pixel); padding: 1px 5px; border: 1px solid var(--line); background: var(--screen); color: var(--text); }
+footer { padding: 8px 12px 10px; border-top: 2px solid var(--line-2); font-size: 11px; color: var(--dim); }
+/* As the panel on the stream's page: as wide as its frame, with a close button. */
+html.embedded body { width: auto; }
+/* No scrollbar: the frame is made as tall as the page. Where the window is too low for that, the wheel still scrolls it. */
+html.embedded { overflow-x: hidden; overflow-y: auto; scrollbar-width: none; }
+.close { padding: 2px 8px; font: 18px/1.1 var(--f-pixel); color: var(--text-2); background: none; border: 2px solid var(--line); }
+.close[hidden] { display: none; }
+.close:hover { color: var(--red-soft); border-color: var(--red-soft) !important; }
+/* The note for the last mark, the smaller buttons, the choices and the list of recordings. */
+.note-row { margin: 0 12px 10px; padding: 8px 10px; background: var(--screen); border: 2px solid var(--gold-lo); display: flex; flex-direction: column; gap: 6px; }
+.note-row[hidden] { display: none; }
+.note-row label { font: 16px/1.1 var(--f-pixel); letter-spacing: 1px; text-transform: uppercase; color: var(--gold-hi); }
+.note-row .row > button { flex: none; }
+input[type="text"], select { font: 14px var(--f-body); color: var(--text); background: var(--ink); border: 2px solid var(--line); padding: 6px 8px; min-width: 0; flex: 1; }
+input[type="text"]:focus, select:focus { outline: none; border-color: var(--teal); }
+select { flex: none; cursor: pointer; }
+button.small { padding: 4px 9px; font-size: 12.5px; }
+button.quiet { background: none; color: var(--text-2); }
+#more { padding: 0 12px; display: flex; flex-direction: column; gap: 8px; }
+#more:empty { display: none; }
+details { border: 2px solid var(--line-2); background: var(--fold); }
+details > summary { padding: 6px 10px; cursor: pointer; font: 16px/1.2 var(--f-pixel); letter-spacing: 1px; text-transform: uppercase; color: var(--teal); list-style: none; }
+details > summary::after { content: "  \25BE"; }   /* the dropdown's mark, at the end of the words */
+details[open] > summary::after { content: "  \25B4"; }
+details > .inside { padding: 4px 10px 10px; display: flex; flex-direction: column; gap: 8px; }
+.made { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-2); }
+.made .what { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.made b { color: var(--text); }
+.made .del { padding: 4px 7px; }
+.made .stars { padding: 4px 7px; color: var(--gold-hi); white-space: nowrap; }
+.made .stars.on { border-color: var(--gold-lo); }
+/* a recording's marks: the time, then what was noted */
+.marks { display: flex; flex-direction: column; gap: 4px; padding: 8px 10px; background: var(--ink); border: 2px solid var(--gold-lo); font-size: 12.5px; color: var(--text-2); }
+.marks .mark { display: flex; gap: 10px; align-items: baseline; }
+.marks .mark b { font: 16px/1 var(--f-pixel); letter-spacing: 1px; color: var(--gold-hi); min-width: 52px; }
+.marks .mark.auto b { color: var(--amber-soft); }
+.marks .mark span { flex: 1; min-width: 0; overflow-wrap: anywhere; color: var(--text); }
+.marks .mark.auto span { color: var(--text-2); }
+.marks .row { margin-top: 4px; gap: 6px; flex-wrap: wrap; }
+.made .del:hover, .made .del.sure { color: var(--red-soft); border-color: var(--red-soft); }
+#more + footer, #more { margin-bottom: 10px; }
+/* What Link Lite shows but does not do: more streams at once. Greyed, with where to hear when it comes. */
+.locked { border: 2px dashed var(--line); background: var(--fold); }
+.locked > summary { color: var(--text-2); }
+.locked input[disabled] { flex: none; opacity: .45; cursor: not-allowed; border-style: dashed; }
+.help.good { color: var(--green); }
+button.discord { align-self: flex-start; border-color: #5865f2; color: #c9cdfb; }
+button.discord:hover { background: #5865f2; color: #fff; }
+/* ---- the bar: the panel under a stream. One row; a second line when something has to be said; the rest behind "More". */
+.tools[hidden] { display: none; }
+.line2:empty { display: none; }
+html.embedded body { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 8px 10px; background: linear-gradient(var(--bar-a), var(--bar-b)); border: 2px solid var(--slate); }
+html.embedded header { padding: 0; border: 0; box-shadow: none; background: none; gap: 7px; flex: none; }
+html.embedded header img { width: 26px; height: 26px; }
+html.embedded .wordmark .name { font-size: 21px; letter-spacing: 2px; }
+html.embedded .wordmark .lite { font-size: 12px; letter-spacing: 4px; }
+html.embedded .season { width: 20px; height: 18px; margin-left: 0; }   /* in the bar: small, beside the name */
+html.embedded main { flex: 1; min-width: 0; min-height: 0; padding: 0; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+html.embedded footer { display: none; }
+html.embedded button { padding: 6px 10px; font-size: 13px; white-space: nowrap; }
+html.embedded button.small { padding: 4px 8px; font-size: 12px; }
+html.embedded select { padding: 5px 6px; font-size: 13px; }
+html.embedded .who { flex: none; }
+html.embedded .who b { max-width: 150px; font-size: 14px; }
+.tools { display: flex; align-items: center; gap: 6px; margin-left: auto; flex: none; }
+.state { font: 18px/1 var(--f-pixel); letter-spacing: 1px; text-transform: uppercase; color: var(--teal); white-space: nowrap; }
+.state.red { color: var(--red-soft); }
+.chip { font: 18px/1 var(--f-pixel); letter-spacing: 1px; padding: 5px 8px; background: var(--screen); border: 2px solid var(--line-2); color: var(--amber-soft); white-space: nowrap; }
+.chip.red { color: var(--red-soft); }
+.chip small { margin-left: 6px; font: 10.5px var(--f-body); letter-spacing: .5px; text-transform: uppercase; color: var(--text-2); }
+.line2 { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 12.5px; color: var(--text-2); }
+.line2 p { margin: 0; }
+.line2 .good { color: var(--green); } .line2 .good b { color: var(--text); }
+.line2 .bad { color: var(--red-soft); } .line2 .warn { color: var(--amber-soft); }
+html.embedded .note-row { flex-basis: 100%; margin: 0; padding: 5px 8px; flex-direction: row; align-items: center; gap: 10px; }
+html.embedded .note-row .row { flex: 1; }
+html.embedded .note-row label { white-space: nowrap; }
+html.embedded #more { flex-basis: 100%; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 8px; align-items: start; }
+html.embedded #more[hidden] { display: none; }
+/* With recordings there are three folded parts, in two columns that do not push each other: the streams
+   and under them the recordings on the left, the choices on the right. Shut, they lie as they always did. */
+html.embedded #more > .fold-skins { grid-column: 1 / -1; }   /* the skins: a row over the rest */
+html.embedded #more:has(.fold-recent) { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto 1fr; }
+html.embedded #more:has(.fold-recent) > .fold-skins { grid-row: 1; }
+html.embedded #more:has(.fold-recent) > .fold-streams { grid-column: 1; grid-row: 2; }
+html.embedded #more:has(.fold-recent) > .fold-recent { grid-column: 1; grid-row: 3; }
+html.embedded #more:has(.fold-recent) > .fold-options { grid-column: 2; grid-row: 2 / span 2; }
+/* ---- movement: what comes into the bar arrives, it does not jump; buttons answer the press. */
+@keyframes arrive { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.line2:not(:empty), .note-row:not([hidden]), html.embedded #more:not([hidden]) { animation: arrive .2s cubic-bezier(.2, .8, .2, 1); }
+button, select, input[type="text"] { transition: border-color .12s ease-out, background-color .12s ease-out, color .12s ease-out, box-shadow .12s ease-out; }
+button:active:not(:disabled) { transform: translateY(1px); }
+button.primary:hover:not(:disabled) { box-shadow: 0 0 0 2px var(--gold-hi), 0 0 12px rgba(242, 199, 68, .35); }
+button.rec:hover:not(:disabled) { box-shadow: 0 0 12px rgba(255, 93, 93, .45); }
+#ghost.on { color: var(--gold-hi); border-color: var(--gold-lo); }
+/* two readings in one chip, in turn */
+.chip.swap { display: inline-grid; justify-items: center; }
+.chip.swap > span { grid-area: 1 / 1; white-space: nowrap; animation: turn-a 8s infinite; animation-delay: var(--at, 0ms); }
+.chip.swap > span + span { animation-name: turn-b; }
+@keyframes turn-a { 0%, 44% { opacity: 1; transform: none; } 50%, 94% { opacity: 0; transform: translateY(-4px); } 100% { opacity: 1; transform: none; } }
+@keyframes turn-b { 0%, 44% { opacity: 0; transform: translateY(4px); } 50%, 94% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(4px); } }
+@media (prefers-reduced-motion: reduce) {
+  .line2, .note-row, #more { animation: none !important; }
+  .chip.swap > span { animation: none; } .chip.swap > span + span { display: none; }
+}
+/* the bar, tighter: every state in one row at the width of an ordinary player */
+html.embedded body { gap: 6px 8px; padding: 7px 9px; }
+html.embedded main { gap: 6px; }
+html.embedded button { padding: 6px 9px; }
+html.embedded .wordmark .name { font-size: 19px; letter-spacing: 1px; }
+html.embedded .wordmark .lite { font-size: 11px; letter-spacing: 3px; }
+html.embedded .chip { font-size: 17px; padding: 5px 7px; }
+html.embedded .who { gap: 6px; }
+html.embedded .who b { max-width: 130px; }
+html.embedded .site { font-size: 14px; padding: 2px 5px; }
+.tools { gap: 5px; }
+.chip.dim { color: var(--text-2); cursor: help; }
+/* "TURBO", wherever the full program is named: small, red, in the pixel face, made heavy with a second
+   strike of itself (the face has no bold) and a dark edge, as the red "LINK" of the wordmark is. */
+.link-turbo { white-space: nowrap; }
+.link-turbo b { color: var(--text); }
+.turbo { font: 1.2em/1 var(--f-pixel); letter-spacing: 1px; color: var(--red); text-shadow: 1px 0 0 var(--red), 1px 1px 0 var(--ink), 2px 1px 0 var(--ink); vertical-align: -0.04em; }
+.locked .link-turbo { opacity: 1; }
+/* The panel's rows, the same in both its shapes: its name and its own buttons make the first row, what
+   the stream offers comes under them in a row of its own, then what has to be said, then the folded parts. */
+html.embedded .tools { order: 1; }
+html.embedded main, html.embedded .line2, html.embedded .note-row, html.embedded #more { order: 2; }
+html.embedded main { flex-basis: 100%; }
+html.embedded .line2:empty { display: none; }   /* an empty row would still take its gap */
+/* ---- skins: the panel in another dress. A skin is a list of colours first; whatever carries its name
+   (the page, or a skin's own button in the list) is drawn in them. Further down each skin but Classic also has
+   shapes of its own. "TURBO" stays red in every skin. */
+[data-skin="midnight"] {
+  --bar-a: #171c25; --bar-b: #0c0f14; --bg-a: #1b2230; --bg-b: #10141c; --bg-c: #07090d; --panel-a: #161b25; --panel-b: #0f131a;
+  --on-gold: #0b0e13; --fold: rgba(6, 8, 12, .55);
+  --ink: #04060a; --screen: #0a0d12; --line: #2f3847; --line-2: #1d232e; --slate: #56637a;
+  --gold: #e6edf5; --gold-hi: #ffffff; --gold-lo: #9aa7b8; --teal: #8fb8ff; --amber-soft: #cfe0ff;
+  --text: #eef2f7; --text-2: #9aa3b0; --dim: #5d6673;
+}
+[data-skin="sakura"] {
+  --bar-a: #3d1932; --bar-b: #24101e; --bg-a: #4a2140; --bg-b: #2b1326; --bg-c: #170a14; --panel-a: #381a30; --panel-b: #261121;
+  --on-gold: #3a0a22; --fold: rgba(23, 9, 18, .55);
+  --ink: #150810; --screen: #1e0d18; --line: #6b3350; --line-2: #452137; --slate: #c76b98;
+  --gold: #ff9ec7; --gold-hi: #ffd3e6; --gold-lo: #e0679f; --teal: #ffc2dc; --amber-soft: #ffe3ee;
+  --text: #fff1f6; --text-2: #d1aebd; --dim: #8a6878;
+}
+/* A skin's background moves: slow marbling in the skin's own colours, drawn small by popup.js and
+   stretched soft, with faint lines across it as on an old screen. It lies behind everything and is kept
+   dim (--flow is how much of it shows; Classic: none), so it is felt more than seen. */
+[data-skin="midnight"], [data-skin="sakura"] { --flow: .55; }   /* Halloween sets its own */
+body { position: relative; isolation: isolate; }
+.flow { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: var(--flow, 0); transition: opacity .4s ease-out; }
+.flow[hidden] { display: none; }
+body::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: var(--flow, 0);
+  background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, .2) 0 1px, transparent 1px 3px); }
+/* the list of skins: each button is the panel in small, in its own colours */
+.skins { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 6px; }
+html.embedded button.skin, button.skin { display: flex; flex-direction: column; align-items: stretch; gap: 5px; padding: 6px 6px 5px; text-align: left; white-space: nowrap;
+  background: linear-gradient(var(--bar-a), var(--bar-b)); border: 2px solid var(--slate); color: var(--text); }
+button.skin i { display: block; height: 5px; background: linear-gradient(to right, var(--gold) 62%, var(--line-2) 62%); }
+button.skin span { font: 17px/1 var(--f-pixel); letter-spacing: 1px; text-transform: uppercase; color: var(--gold-hi); }
+button.skin small { font: 10.5px var(--f-body); letter-spacing: .5px; text-transform: uppercase; color: var(--text-2); }
+button.skin:hover:not(:disabled) { border-color: var(--gold-hi); }
+button.skin.on { box-shadow: 0 0 0 2px var(--ink), 0 0 0 4px var(--gold-hi); }
+/* ---- the sound bar: how loud the stream is heard while its tab is captured. A small speaker (press: mute)
+   and a slider. Under the toolbar button it is a row of its own. */
+.sound { display: flex; align-items: center; gap: 8px; margin: 0 12px 10px; }
+.sound[hidden] { display: none; }
+.sound button { flex: none; padding: 4px 5px; border: 0; background: none; color: var(--teal); line-height: 0; }
+.sound button:hover { color: var(--gold-hi); }
+.sound svg { display: block; width: 18px; height: 14px; }
+.sound .x, .sound.off .waves { display: none; }
+.sound.off .x { display: inline; }
+.sound.off button { color: var(--red-soft); }
+.sound input { flex: 1; min-width: 0; height: 14px; margin: 0; padding: 0; appearance: none; -webkit-appearance: none; background: none; cursor: pointer; }
+.sound input:focus { outline: none; }
+.sound input::-webkit-slider-runnable-track { height: 4px; background: linear-gradient(to right, var(--gold) var(--v, 100%), var(--line-2) var(--v, 100%)); }
+.sound input::-webkit-slider-thumb { -webkit-appearance: none; width: 6px; height: 12px; margin-top: -4px; background: var(--gold-hi); box-shadow: 0 0 0 1px var(--ink); }
+.sound.off input::-webkit-slider-thumb { background: var(--red-soft); }
+.sound input:focus-visible::-webkit-slider-thumb { background: var(--teal); }
+/* On a stream's page it takes no room of its own: it lies in the strip between the panel's last row and
+   its bottom edge, so the panel is as wide and as tall as it is without it. */
+html.embedded body { position: relative; }
+html.embedded .sound { position: absolute; left: 0; right: 0; bottom: 0; height: 7px; margin: 0; padding: 0 9px; gap: 5px; animation: arrive .2s cubic-bezier(.2, .8, .2, 1); }
+html.embedded .sound button { padding: 0; height: 7px; }
+html.embedded .sound svg { width: 9px; height: 7px; }
+html.embedded .sound input { height: 7px; }
+html.embedded .sound input::-webkit-slider-runnable-track { height: 3px; }
+html.embedded .sound input::-webkit-slider-thumb { width: 4px; height: 7px; margin-top: -2px; }
+/* ---- a skin's own shapes. Beyond its colours, a skin but Classic has its own name colour, its own mark for a
+   running recording, its own Stop, its own tags for the two sites, its own lettering and corners, and
+   something of its own that moves. Classic keeps what it always had: these are its values. */
+:root {
+  --name: var(--red); --name-edge: 2px 2px 0 var(--ink); --lite: var(--text-2);
+  --rec: var(--red-soft); --stop-a: var(--crimson); --stop-b: var(--crimson); --stop-edge: var(--red-soft); --stop-text: #fff;
+  --kick: #53fc18; --twitch: #bf94ff; --tag-bg: transparent; --tag-text: currentColor;
+  --r: 0px; --r-chip: 0px;
+}
+.wordmark .name { color: var(--name); text-shadow: var(--name-edge); }
+.wordmark .lite { color: var(--lite); }
+.state.red, .chip.red, .readout .value.red { color: var(--rec); }
+button.rec { background: linear-gradient(var(--stop-a), var(--stop-b)); border-color: var(--stop-edge); color: var(--stop-text); }
+.site { background: var(--tag-bg); border-radius: var(--r-chip); }
+.site.kick { color: var(--kick); } .site.twitch { color: var(--twitch); }
+button, input[type="text"], select, details, .panel, .note-row, .marks { border-radius: var(--r); }
+.chip, .readout > div { border-radius: var(--r-chip); }
+html.embedded body { border-radius: var(--r); }
+/* the mark of a running recording, and Stop's square: drawn, so a skin can draw its own */
+.dot, .sq { display: inline-block; width: .56em; height: .56em; margin-right: .42em; background: currentColor; vertical-align: .06em; flex: none; }
+.dot { border-radius: 50%; animation: rec-blink 1.6s steps(1) infinite; }
+@keyframes rec-blink { 0%, 60% { opacity: 1; } 61%, 100% { opacity: .35; } }
+/* what moves over a skin's background: stars, petals, webs. Behind everything that can be pressed. */
+.deco { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; display: none; }
+.hang { position: absolute; z-index: 3; pointer-events: none; display: none; }
+
+/* ---- Midnight: a clear night. Ice-white name with a glow, a crescent moon for a recording, cold steel
+   for Stop, the sites' tags as plates of ice, every button in the pixel face, stars that come and go. */
+[data-skin="midnight"] {
+  --name: #eaf2ff; --name-edge: 0 0 9px rgba(143, 184, 255, .75), 2px 2px 0 #04060a; --lite: #8fb8ff;
+  --rec: #8fb8ff; --stop-a: #3f66c4; --stop-b: #24418a; --stop-edge: #cfe0ff; --stop-text: #ffffff;
+  --kick: #0a0d12; --twitch: #0a0d12; --tag-bg: #cfe0ff;
+}
+html[data-skin="midnight"] .site { border-color: #cfe0ff; }
+html[data-skin="midnight"] .site.twitch { background: #8fb8ff; border-color: #8fb8ff; }
+html[data-skin="midnight"] button:not(.skin) { font: 19px/1 var(--f-pixel); letter-spacing: 1.5px; text-transform: uppercase; }
+html[data-skin="midnight"].embedded button:not(.skin) { font-size: 17px; padding: 6px 9px 5px; }
+html[data-skin="midnight"].embedded button.small { font-size: 15px; padding: 4px 8px 3px; }
+html[data-skin="midnight"] .who b { font: 400 19px/1 var(--f-pixel); letter-spacing: 1px; }
+html[data-skin="midnight"] .dot { width: 14px; height: 14px; border-radius: 0; background: url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 7 7%22 shape-rendering=%22crispEdges%22><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%223%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%224%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%221%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%223%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%220%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%221%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%222%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%220%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%221%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%222%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%221%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%222%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%223%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%222%22 y=%226%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%223%22 y=%226%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/><rect x=%224%22 y=%226%22 width=%221%22 height=%221%22 fill=%22%23eaf2ff%22/></svg>") center / contain no-repeat; image-rendering: pixelated; vertical-align: -1px; animation: moon 4s ease-in-out infinite; }
+@keyframes moon { 0%, 100% { filter: drop-shadow(0 0 2px rgba(143, 184, 255, .9)); } 50% { filter: drop-shadow(0 0 6px rgba(207, 224, 255, 1)); } }
+html[data-skin="midnight"] .sq { background: none; box-shadow: inset 0 0 0 2px currentColor; }
+html[data-skin="midnight"] .deco { display: block; image-rendering: pixelated;
+  background: url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 5 5%22 shape-rendering=%22crispEdges%22><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%223%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%224%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/></svg>") 12px 9px / 5px 5px no-repeat, url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 5 5%22 shape-rendering=%22crispEdges%22><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%223%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%224%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/></svg>") 71% 16px / 5px 5px no-repeat, url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 5 5%22 shape-rendering=%22crispEdges%22><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%223%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%224%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/></svg>") 38% 62% / 5px 5px no-repeat, url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 5 5%22 shape-rendering=%22crispEdges%22><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%223%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%224%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/></svg>") 92% 55% / 5px 5px no-repeat, url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 5 5%22 shape-rendering=%22crispEdges%22><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%223%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%224%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/></svg>") 55% 88% / 5px 5px no-repeat, url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 5 5%22 shape-rendering=%22crispEdges%22><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%223%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%224%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/></svg>") 8% 78% / 5px 5px no-repeat;
+  animation: twinkle 5s ease-in-out infinite; }
+html[data-skin="midnight"] .deco::before { content: ""; position: absolute; inset: 0;
+  background: url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 5 5%22 shape-rendering=%22crispEdges%22><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%223%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%224%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/></svg>") 24% 30% / 3px 3px no-repeat, url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 5 5%22 shape-rendering=%22crispEdges%22><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%223%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%224%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/></svg>") 63% 44% / 3px 3px no-repeat, url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 5 5%22 shape-rendering=%22crispEdges%22><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%223%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%224%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/></svg>") 84% 12px / 3px 3px no-repeat, url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 5 5%22 shape-rendering=%22crispEdges%22><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%223%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%224%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/></svg>") 47% 14% / 3px 3px no-repeat, url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 5 5%22 shape-rendering=%22crispEdges%22><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%223%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%224%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/></svg>") 17% 52% / 3px 3px no-repeat, url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 5 5%22 shape-rendering=%22crispEdges%22><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%223%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%224%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/><rect x=%222%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23cfe0ff%22/></svg>") 76% 80% / 3px 3px no-repeat;
+  animation: twinkle 3.4s ease-in-out -1.2s infinite; }
+@keyframes twinkle { 0%, 100% { opacity: .75; } 50% { opacity: .2; } }
+
+/* ---- Sakura: spring. A pink name, a blossom for a recording, a round rose Stop, the sites' tags as soft
+   pills, round corners everywhere, and petals coming down. */
+[data-skin="sakura"] {
+  --name: #ffb7d5; --name-edge: 2px 2px 0 #7a2350; --lite: #ffd3e6;
+  --rec: #ff7fb3; --stop-a: #ff6fa8; --stop-b: #d93d7d; --stop-edge: #ffd3e6; --stop-text: #fff;
+  --kick: #c9f7b8; --twitch: #e3ccff; --tag-bg: rgba(255, 255, 255, .08);
+  --r: 12px; --r-chip: 10px;
+}
+html[data-skin="sakura"] .site { border-width: 1.5px; padding: 2px 8px; border-radius: 999px; }
+html[data-skin="sakura"] button:not(.skin) { border-radius: 999px; padding-left: 14px; padding-right: 14px; }
+html[data-skin="sakura"].embedded button:not(.skin) { padding-left: 11px; padding-right: 11px; }
+html[data-skin="sakura"] .close { border-radius: 50%; padding: 2px 7px; }
+html[data-skin="sakura"] button[data-skin], button[data-skin="sakura"] { border-radius: 12px; }
+html[data-skin="sakura"] .dot { width: 14px; height: 14px; border-radius: 0; background: url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 7 7%22 shape-rendering=%22crispEdges%22><rect x=%221%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%224%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%225%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%220%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%221%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%224%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%225%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%226%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%223%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffe08a%22/><rect x=%225%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%226%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%222%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23ffe08a%22/><rect x=%223%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23ffe08a%22/><rect x=%224%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23ffe08a%22/><rect x=%220%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%221%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%223%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23ffe08a%22/><rect x=%225%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%226%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%220%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%221%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%222%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%224%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%225%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%226%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%221%22 y=%226%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%222%22 y=%226%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%224%22 y=%226%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/><rect x=%225%22 y=%226%22 width=%221%22 height=%221%22 fill=%22%23ff9ec7%22/></svg>") center / contain no-repeat; image-rendering: pixelated; vertical-align: -2px; animation: bloom 5s linear infinite; }
+@keyframes bloom { to { transform: rotate(360deg); } }
+html[data-skin="sakura"] .sq { border-radius: 2px; width: .6em; height: .6em; }
+html[data-skin="sakura"] .deco { display: block; image-rendering: pixelated; opacity: .7; }
+html[data-skin="sakura"] .deco::before, html[data-skin="sakura"] .deco::after { content: ""; position: absolute; left: 0; right: 0; top: -100%; height: 200%;
+  background: url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 4%22 shape-rendering=%22crispEdges%22><rect x=%221%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%220%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%221%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%223%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%220%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/></svg>") 9% 12% / 8px 8px no-repeat, url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 4%22 shape-rendering=%22crispEdges%22><rect x=%221%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%220%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%221%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%223%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%220%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/></svg>") 31% 58% / 8px 8px no-repeat, url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 4%22 shape-rendering=%22crispEdges%22><rect x=%221%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%220%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%221%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%223%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%220%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/></svg>") 52% 27% / 8px 8px no-repeat, url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 4%22 shape-rendering=%22crispEdges%22><rect x=%221%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%220%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%221%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%223%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%220%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/></svg>") 74% 71% / 8px 8px no-repeat, url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 4%22 shape-rendering=%22crispEdges%22><rect x=%221%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%220%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%221%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%223%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%220%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/></svg>") 90% 38% / 8px 8px no-repeat, url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 4%22 shape-rendering=%22crispEdges%22><rect x=%221%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%222%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%220%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%221%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%222%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%223%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/><rect x=%220%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23ffb7d5%22/></svg>") 64% 93% / 8px 8px no-repeat;
+  animation: petals 14s linear infinite; }
+html[data-skin="sakura"] .deco::after { left: -18px; animation-duration: 21s; animation-delay: -6s; opacity: .6; transform-origin: center; }
+@keyframes petals { from { transform: translate(0, 0); } to { transform: translate(22px, 50%); } }
+
+/* ---- Halloween: an experiment. Night purple and pumpkin orange, webs in the corners, a spider on its
+   thread that lets itself down and climbs again, a spider for a running recording, stitched edges. */
+[data-skin="hallow"] {
+  --bar-a: #1d1030; --bar-b: #0d0716; --bg-a: #24123a; --bg-b: #130a20; --bg-c: #08040d; --panel-a: #1c0f2e; --panel-b: #120920;
+  --on-gold: #1c0a00; --fold: rgba(8, 4, 13, .6);
+  --ink: #050208; --screen: #0e0718; --line: #4a2a6e; --line-2: #2c1844; --slate: #ff8a1f;
+  --gold: #ff8a1f; --gold-hi: #ffb347; --gold-lo: #d9620a; --teal: #a6ff4d; --amber-soft: #ffc98a;
+  --text: #f4ecff; --text-2: #b7a6cf; --dim: #6f5f88;
+  --name: #ff8a1f; --name-edge: 2px 2px 0 #050208, 0 0 10px rgba(255, 138, 31, .55); --lite: #a6ff4d;
+  --rec: #ff8a1f; --stop-a: #b3121f; --stop-b: #6e0812; --stop-edge: #ff8a1f; --stop-text: #ffe9d2;
+  --kick: #a6ff4d; --twitch: #d6a8ff; --tag-bg: #050208;
+  --flow: .6;
+}
+html[data-skin="hallow"] button:not(.skin) { font: 19px/1 var(--f-pixel); letter-spacing: 1px; text-transform: uppercase; }
+html[data-skin="hallow"].embedded button:not(.skin) { font-size: 17px; padding: 6px 9px 5px; }
+html[data-skin="hallow"].embedded button.small { font-size: 15px; padding: 4px 8px 3px; }
+html[data-skin="hallow"] .who b { font: 400 19px/1 var(--f-pixel); letter-spacing: 1px; }
+html[data-skin="hallow"] .chip, html[data-skin="hallow"] details, html[data-skin="hallow"] .readout > div { border-style: dashed; }
+html[data-skin="hallow"] .site { border-style: dashed; }
+html[data-skin="hallow"] .dot { width: 18px; height: 14px; border-radius: 0; background: url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 9 7%22 shape-rendering=%22crispEdges%22><rect x=%220%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%228%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%221%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%223%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%224%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%225%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%227%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%223%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%224%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%225%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%226%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%220%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%221%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%222%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%223%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23fff2a8%22/><rect x=%224%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%225%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23fff2a8%22/><rect x=%226%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%227%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%228%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%222%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%223%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%224%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%225%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%226%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%221%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%223%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%224%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%225%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%227%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%220%22 y=%226%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/><rect x=%228%22 y=%226%22 width=%221%22 height=%221%22 fill=%22%23ff8a1f%22/></svg>") center / contain no-repeat; image-rendering: pixelated; vertical-align: -2px; animation: crawl 1.2s steps(2) infinite; }
+@keyframes crawl { 50% { transform: translateY(-1px) scaleX(.9); } }
+html[data-skin="hallow"] .deco { display: block; image-rendering: pixelated; opacity: .5;
+  background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' shape-rendering='crispEdges'><g fill='none' stroke='%23e9e2ff' stroke-width='1'><path d='M0 0H24M0 0V24M0 0L24 24M0 0L24 10M0 0L10 24'/><path d='M7 0Q6 6 0 7M14 0Q12 12 0 14M21 0Q18 18 0 21'/></g></svg>") left top / 54px 54px no-repeat, url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' shape-rendering='crispEdges'><g fill='none' stroke='%23e9e2ff' stroke-width='1' transform='translate%2824 0%29 scale%28-1 1%29'><path d='M0 0H24M0 0V24M0 0L24 24M0 0L24 10M0 0L10 24'/><path d='M7 0Q6 6 0 7M14 0Q12 12 0 14M21 0Q18 18 0 21'/></g></svg>") right top / 54px 54px no-repeat, url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 11 5%22 shape-rendering=%22crispEdges%22><rect x=%220%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%2210%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%220%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%221%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%224%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%226%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%229%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%2210%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%223%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%224%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%225%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%226%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%227%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%228%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%229%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%2210%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%221%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%222%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%223%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%224%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%225%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%226%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%227%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%228%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%229%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%223%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%227%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/></svg>") 62% 70% / 22px 10px no-repeat, url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 11 5%22 shape-rendering=%22crispEdges%22><rect x=%220%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%2210%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%220%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%221%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%224%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%226%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%229%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%2210%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%220%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%221%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%223%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%224%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%225%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%226%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%227%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%228%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%229%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%2210%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%221%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%222%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%223%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%224%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%225%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%226%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%227%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%228%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%229%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%223%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/><rect x=%227%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%232a1740%22/></svg>") 22% 84% / 16px 7px no-repeat; }
+html[data-skin="hallow"] .hang { display: block; top: 0; left: 46%; width: 18px; height: 60px; margin-top: -46px; image-rendering: pixelated;
+  background: linear-gradient(#e9e2ff, #e9e2ff) center top / 1px 46px no-repeat, url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 9 7%22 shape-rendering=%22crispEdges%22><rect x=%220%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%228%22 y=%220%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%221%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%223%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%224%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%225%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%227%22 y=%221%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%222%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%223%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%224%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%225%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%226%22 y=%222%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%220%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%221%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%222%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%223%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23ff3b3b%22/><rect x=%224%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%225%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23ff3b3b%22/><rect x=%226%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%227%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%228%22 y=%223%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%222%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%223%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%224%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%225%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%226%22 y=%224%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%221%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%223%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%224%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%225%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%227%22 y=%225%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%220%22 y=%226%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/><rect x=%228%22 y=%226%22 width=%221%22 height=%221%22 fill=%22%23e9e2ff%22/></svg>") center bottom / 18px 14px no-repeat;
+  animation: dangle 9s ease-in-out infinite; }
+@keyframes dangle { 0%, 12% { transform: translateY(0); } 40%, 62% { transform: translateY(20px); } 88%, 100% { transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .dot, .deco, .deco::before, .deco::after, .hang { animation: none !important; } }
+/* The capsule: one column. */
+@media (max-width: 320px) {
+  html.embedded #more:has(.fold-recent) { grid-template-columns: 1fr; grid-template-rows: none; }
+  html.embedded #more:has(.fold-recent) > details { grid-column: auto; grid-row: auto; }
+  html.embedded .note-row { flex-direction: column; align-items: stretch; gap: 6px; }
+}
+}

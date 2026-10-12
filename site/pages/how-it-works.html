@@ -1,0 +1,43 @@
+<dc-import name="SiteHeader" current="how" hint-size="100%,70px"></dc-import>
+<main class="has-dock" data-screen-label="How it works" style="max-width:1200px;margin:0 auto;padding:0 16px">
+  <div style="margin-top:44px;display:flex;flex-direction:column;gap:14px;max-width:760px">
+    <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#7fd6c2">Guide · Link Lite Recorder</span>
+    <h1 style="margin:0;font:800 clamp(34px,5vw,52px)/1.05 'Nunito Sans',sans-serif;color:#f6efdc">How it works</h1>
+    <p style="margin:0;font:400 18px/1.55 'Nunito Sans',sans-serif;color:#c9c5ea;text-wrap:pretty">Everything the extension does, in the order you will meet it. For streams you have the right to record.</p>
+  </div>
+
+  <div class="guide" style="margin-top:44px;display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+    <nav class="toc" aria-label="Sections" style="flex:1 1 220px;max-width:280px;min-width:220px;position:sticky;top:16px;background:#0a0d1f;border:2px solid #22304a;padding:6px">
+      <details class="m-shut" open style="display:block">
+        <summary style="list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:10px 12px;font-family:VT323,monospace;font-size:18px;letter-spacing:3px;color:#7fd6c2"><span class="toc-label">SECTIONS</span><span class="toc-now"></span><span class="toc-caret" style="color:#6b6a7a">▾</span></summary>
+        <ol style="list-style:none;margin:0;padding:4px 0 6px;display:flex;flex-direction:column">
+          <sc-for list="{{ sections }}" as="s" hint-placeholder-count="11">
+            <li><a href="{{ s.href }}" style="display:flex;gap:10px;padding:7px 12px;font:600 15px/1.35 'Nunito Sans',sans-serif;color:#c9c5ea;text-decoration:none;border-left:2px solid transparent;transition:color 120ms,border-color 120ms" style-hover="color:#f6efdc;border-color:#7fd6c2"><span style="font-family:VT323,monospace;font-size:16px;color:#ffd27a;font-variant-numeric:tabular-nums;letter-spacing:1px">{{ s.n }}</span>{{ s.t }}</a></li>
+          </sc-for>
+        </ol>
+      </details>
+    </nav>
+
+    <div class="guide-body" style="flex:3 1 560px;min-width:0;display:flex;flex-direction:column;gap:56px">
+      <sc-for list="{{ sections }}" as="s" hint-placeholder-count="11">
+        <section class="gsec" id="{{ s.id }}" data-sec="{{ s.n }} {{ s.t }}" style="display:flex;flex-direction:column;gap:16px;scroll-margin-top:16px">
+          <div style="display:flex;align-items:baseline;gap:14px;border-bottom:2px solid #22304a;padding-bottom:12px">
+            <span style="font-family:VT323,monospace;font-size:28px;line-height:1;color:#ffd27a;font-variant-numeric:tabular-nums">{{ s.n }}</span>
+            <h2 style="margin:0;font:700 clamp(22px,2.6vw,28px)/1.2 'Nunito Sans',sans-serif;color:#f6efdc">{{ s.t }}</h2>
+          </div>
+          <p style="margin:0;max-width:680px;font:400 17px/1.6 'Nunito Sans',sans-serif;color:#c9c5ea;text-wrap:pretty">{{ s.p }}</p>
+          <figure class="fig" style="margin:0;background:#0a0d1f;border:2px solid #22304a;min-height:180px;display:flex;align-items:center;justify-content:center;padding:28px 16px;position:relative;overflow:hidden">
+            <div aria-hidden="true" style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,#2c2a5a 0,transparent 45%),radial-gradient(ellipse at 75% 65%,#22304a 0,transparent 45%);filter:blur(28px);opacity:.8"></div>
+            <div style="position:relative;background:linear-gradient(#13243f,#0f1d34);border:2px solid #3f6f7a;box-shadow:0 0 0 2px #090c1e,inset 0 0 0 2px #090c1e;padding:14px 16px;display:flex;flex-direction:column;gap:10px;width:100%;max-width:420px">
+              <span style="display:flex;align-items:center;gap:12px"><span style="font-family:VT323,monospace;font-size:22px;letter-spacing:3px;color:#ff5d5d;text-shadow:1px 1px 0 #090c1e">LINK</span><span style="font-family:VT323,monospace;font-size:15px;letter-spacing:4px;color:#b9b4e0">LITE</span><span style="margin-left:auto;font-family:VT323,monospace;font-size:16px;letter-spacing:2px;color:#7fd6c2">{{ s.tag }}</span></span>
+              <span style="font:400 15px/1.5 'Nunito Sans',sans-serif;color:#f6efdc">{{ s.pic }}</span>
+            </div>
+          </figure>
+        </section>
+      </sc-for>
+      <p style="margin:0;font:400 16px/1.6 'Nunito Sans',sans-serif;color:#b9b3a4">Still stuck? <a href="Support.dc.html">Read the questions</a> or write to <a href="mailto:support@linkturbo.app">support@linkturbo.app</a>.</p>
+    </div>
+  </div>
+</main>
+<div class="dock" aria-hidden="true"><span class="dock-terms"><b>FREE</b><span>open source</span></span><a class="dock-cta" href="{{ ctaHref }}" tabindex="-1">{{ ctaShort }}</a></div>
+<dc-import name="SiteFooter" hint-size="100%,220px"></dc-import>

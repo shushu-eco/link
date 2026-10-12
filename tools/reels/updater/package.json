@@ -1,0 +1,8 @@
+{
+  "name": "link-updater",
+  "version": "1.0.0",
+  "description": "Link's updater: a small window that shows which version Link is and brings it up to date",
+  "main": "main.js",
+  "private": true,
+  "license": "GPL-3.0-only"
+}

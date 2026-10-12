@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "link-ui",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["tools/reels/ui/server.py", "--port", "8765"],
+      "port": 8765
+    },
+    {
+      "name": "website-mockups",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8790", "--bind", "127.0.0.1", "--directory", "UI/website-mockups"],
+      "port": 8790
+    },
+    {
+      "name": "linkturbo-site",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["site/serve.js", "8791"],
+      "port": 8791
+    }
+  ]
+}

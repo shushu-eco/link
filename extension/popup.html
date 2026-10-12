@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Link Lite Recorder</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- A skin's background: slow, dim marbling in the skin's own colours. popup.js draws it; Classic has none. -->
+  <canvas id="flow" class="flow" aria-hidden="true" hidden></canvas>
+  <!-- A skin's own ornaments (popup.css draws them): what lies on the background, and what hangs over the panel. -->
+  <div class="deco" aria-hidden="true"></div>
+  <div class="hang" aria-hidden="true"></div>
+  <header>
+    <img src="icons/48.png" width="32" height="32" alt="">
+    <div class="wordmark"><span class="name">LINK</span><span class="lite">LITE</span></div>
+    <!-- For Halloween: a jack-o'-lantern in pixels. popup.js shows it from the first of October to the second of November. -->
+    <svg id="season" class="season" viewBox="0 0 13 12" shape-rendering="crispEdges" role="img" aria-label="Happy Halloween" hidden><title>Happy Halloween</title><rect x="7" y="0" width="2" height="1" fill="#2f9e5b"/><rect x="6" y="1" width="2" height="1" fill="#2f9e5b"/><rect x="3" y="2" width="2" height="1" fill="#ffb347"/><rect x="5" y="2" width="4" height="1" fill="#f28c28"/><rect x="9" y="2" width="2" height="1" fill="#c9641a"/><rect x="2" y="3" width="2" height="1" fill="#ffb347"/><rect x="4" y="3" width="6" height="1" fill="#f28c28"/><rect x="10" y="3" width="2" height="1" fill="#c9641a"/><rect x="1" y="4" width="2" height="1" fill="#ffb347"/><rect x="3" y="4" width="1" height="1" fill="#f28c28"/><rect x="4" y="4" width="1" height="1" fill="#ffe27a"/><rect x="5" y="4" width="4" height="1" fill="#f28c28"/><rect x="9" y="4" width="1" height="1" fill="#ffe27a"/><rect x="10" y="4" width="1" height="1" fill="#f28c28"/><rect x="11" y="4" width="2" height="1" fill="#c9641a"/><rect x="1" y="5" width="1" height="1" fill="#ffb347"/><rect x="2" y="5" width="1" height="1" fill="#f28c28"/><rect x="3" y="5" width="3" height="1" fill="#ffe27a"/><rect x="6" y="5" width="2" height="1" fill="#f28c28"/><rect x="8" y="5" width="3" height="1" fill="#ffe27a"/><rect x="11" y="5" width="1" height="1" fill="#f28c28"/><rect x="12" y="5" width="1" height="1" fill="#c9641a"/><rect x="1" y="6" width="1" height="1" fill="#ffb347"/><rect x="2" y="6" width="5" height="1" fill="#f28c28"/><rect x="7" y="6" width="1" height="1" fill="#ffe27a"/><rect x="8" y="6" width="4" height="1" fill="#f28c28"/><rect x="12" y="6" width="1" height="1" fill="#c9641a"/><rect x="1" y="7" width="1" height="1" fill="#ffb347"/><rect x="2" y="7" width="10" height="1" fill="#f28c28"/><rect x="12" y="7" width="1" height="1" fill="#c9641a"/><rect x="1" y="8" width="1" height="1" fill="#ffb347"/><rect x="2" y="8" width="1" height="1" fill="#f28c28"/><rect x="3" y="8" width="1" height="1" fill="#ffe27a"/><rect x="4" y="8" width="1" height="1" fill="#f28c28"/><rect x="5" y="8" width="1" height="1" fill="#ffe27a"/><rect x="6" y="8" width="1" height="1" fill="#f28c28"/><rect x="7" y="8" width="1" height="1" fill="#ffe27a"/><rect x="8" y="8" width="1" height="1" fill="#f28c28"/><rect x="9" y="8" width="1" height="1" fill="#ffe27a"/><rect x="10" y="8" width="2" height="1" fill="#f28c28"/><rect x="12" y="8" width="1" height="1" fill="#c9641a"/><rect x="1" y="9" width="1" height="1" fill="#ffb347"/><rect x="2" y="9" width="2" height="1" fill="#f28c28"/><rect x="4" y="9" width="6" height="1" fill="#ffe27a"/><rect x="10" y="9" width="1" height="1" fill="#f28c28"/><rect x="11" y="9" width="2" height="1" fill="#c9641a"/><rect x="2" y="10" width="1" height="1" fill="#ffb347"/><rect x="3" y="10" width="7" height="1" fill="#f28c28"/><rect x="10" y="10" width="2" height="1" fill="#c9641a"/><rect x="3" y="11" width="1" height="1" fill="#ffb347"/><rect x="4" y="11" width="5" height="1" fill="#f28c28"/><rect x="9" y="11" width="2" height="1" fill="#c9641a"/></svg>
+    <button id="close" class="close" title="Close this panel. The recording goes on." aria-label="Close" hidden>&#x2715;</button>
+  </header>
+  <main id="main"></main>
+  <!-- The sound bar: how loud the stream is heard while its tab is captured. On a stream's page it lies along
+       the panel's bottom edge, inside its frame, so the panel keeps its shape. popup.js shows it. -->
+  <div id="sound" class="sound" hidden>
+    <button id="mute" type="button" aria-label="Mute what you hear"><svg viewBox="0 0 9 7" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M0 2h2v3H0zM2 1h1v5H2zM3 0h1v7H3z"/><path class="waves" fill="currentColor" d="M5 2h1v3H5zM7 1h1v5H7z"/><path class="x" fill="currentColor" d="M5 2h1v1H5zM7 2h1v1H7zM6 3h1v1H6zM5 4h1v1H5zM7 4h1v1H7z"/></svg></button>
+    <input id="vol" type="range" min="0" max="100" step="1" value="100" aria-label="How loud you hear the stream">
+  </div>
+  <!-- As the bar on a stream's page: the buttons at its end, and a second line for what has to be said. -->
+  <div id="tools" class="tools" hidden>
+    <button id="ghost" class="small quiet" title="Transparent mode: the bar goes faint until the mouse is on it">&#x25D0;</button>
+    <button id="drawer" class="small quiet" title="Choices, your recordings, and what comes with Link">More &#x25BE;</button>
+  </div>
+  <div id="line2" class="line2"></div>
+  <!-- A note for the highlight just marked. Kept apart from the rest, which is drawn again every second. -->
+  <form id="note-row" class="note-row" hidden>
+    <label id="note-label" for="note"></label>
+    <div class="row"><input id="note" type="text" maxlength="80" autocomplete="off" spellcheck="false" placeholder="a few words, e.g. clutch 1v3"><button type="submit">Save</button></div>
+  </form>
+  <div id="more"></div>
+  <footer>
+    <span>Nothing is uploaded. Record only streams you have the right to use.</span>
+  </footer>
+  <script src="popup.js"></script>
+</body>
+</html>

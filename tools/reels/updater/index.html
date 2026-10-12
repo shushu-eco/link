@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- Only Link's own files on this PC: nothing from the internet is ever loaded into this window. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src file: 'unsafe-inline'; font-src file:; script-src file:; img-src file:">
+<title>Link Updater</title>
+<!-- Link's own fonts and styles: the updater is Link's look in a small window. -->
+<link rel="stylesheet" href="../ui/static/fonts/fonts.css">
+<link rel="stylesheet" href="../ui/static/style.css">
+<style>
+  html, body { height: 100%; overflow: hidden; }
+  body { display: block; padding: 6px; box-sizing: border-box; user-select: none; }
+  .box { height: 100%; box-sizing: border-box; padding: 12px 14px; display: flex; flex-direction: column; gap: 9px; -webkit-app-region: drag; }
+  .box button { -webkit-app-region: no-drag; }
+  .top { display: flex; align-items: flex-start; gap: 10px; }
+  .wordmark .name { font-size: 20px; }
+  .wordmark .y2k { font-size: 11px; letter-spacing: 3px; margin-top: 4px; }
+  .top .kicker { margin: 3px 0 0 2px; font: 18px/1 var(--f-pixel); letter-spacing: 1px; color: var(--teal); }
+  .x { margin-left: auto; width: 24px; height: 24px; padding: 0; border: 0; background: none; color: var(--dim); font: 22px/1 var(--f-pixel); cursor: pointer; }
+  .x:hover { color: var(--text); }
+  .lines { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; align-items: baseline; font-size: 13px; color: var(--text-2); }
+  .lines b { font: 20px/1 var(--f-pixel); letter-spacing: .5px; color: var(--text); font-weight: 400; }
+  .lines b.new { color: var(--green); }
+  #say { flex: none; min-height: 34px; font-size: 12.5px; line-height: 1.35; color: var(--text-2); }
+  .log-head { font: 16px/1 var(--f-pixel); letter-spacing: 1px; color: var(--teal); text-transform: uppercase; }
+  #log { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 5px; padding-right: 4px; -webkit-app-region: no-drag; user-select: text; }
+  #log:empty::after { content: "No updates are written down yet."; font-size: 12px; color: var(--dim); }
+  #log .u { display: grid; grid-template-columns: 62px 1fr; gap: 2px 8px; font-size: 12px; line-height: 1.3; color: var(--text-2); }
+  #log .u b { font: 17px/1.1 var(--f-pixel); font-weight: 400; color: var(--text); }
+  #log .u i { grid-column: 2; font: 13px/1 var(--f-pixel); font-style: normal; color: var(--dim); }
+  #log .u.waiting b { color: var(--green); }
+  #log .u.waiting span::before { content: "NEW  "; font: 14px/1 var(--f-pixel); color: var(--green); }
+  #say.good { color: var(--green); }
+  #say.bad { color: var(--amber-soft); }
+  .row { display: flex; gap: 8px; }
+  .row .btn { flex: 1; text-align: center; }
+</style>
+</head>
+<body>
+  <div class="panel box">
+    <div class="top">
+      <div class="wordmark"><span class="name">LINK</span><span class="y2k">2OOO</span></div>
+      <span class="kicker">UPDATER</span>
+      <button class="x" id="x" title="Close">x</button>
+    </div>
+    <div class="lines">
+      <span id="have-is">This Link</span><b id="have">…</b>
+      <span id="newest-is">Newest</span><b id="newest">…</b>
+    </div>
+    <div id="say">Looking for a newer version…</div>
+    <div class="log-head" id="log-head" hidden>Updates</div>
+    <div id="log" hidden></div>
+    <div class="row">
+      <button class="btn primary" id="go" disabled>Update</button>
+      <button class="btn" id="link">Open Link</button>
+    </div>
+  </div>
+<script src="updater.js"></script>
+</body>
+</html>

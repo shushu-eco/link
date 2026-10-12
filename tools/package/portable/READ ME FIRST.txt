@@ -1,0 +1,38 @@
+Link
+====
+
+From a live stream to a clip, on your own computer. Free and open source (GPL-3.0).
+The code, the guide and where to report a problem: https://github.com/shushu-eco/link
+
+To start
+--------
+1. Put this folder somewhere with a plain name, for example C:\Link. A path with an apostrophe
+   or with letters outside English (some Windows user names have them) gives trouble.
+2. Double-click "Start Link". The first time it downloads the speech model, 466 MB, which Link
+   writes captions with. After that Link opens at once.
+
+Windows may say "Windows protected your PC" the first time, because Link is not signed with a
+paid certificate. Press "More info" and then "Run anyway". Everything in this folder can be read
+and checked: Link's own code is in tools\reels, and the programs it comes with are listed in
+licenses\NOTICES.txt.
+
+What is in the folder
+---------------------
+Start Link           starts Link
+Link Updater         shows which version this is and brings it up to date
+Get speech model     downloads the speech model by itself (Start Link does this when it is missing)
+tools\               Link's own code
+runtime\             Python and ffmpeg, which Link runs
+licenses\            Link's licence and those of what it comes with
+
+Link also keeps itself up to date: when it starts it looks for a newer version and takes it.
+
+Where your things are kept
+--------------------------
+Recordings                      your Videos folder
+Tapes, working files, reels     the folder "videos" in here
+Settings and sign-ins           the folder ".link" in your user folder
+
+To remove Link, delete this folder. Your recordings and the ".link" folder stay where they are.
+
+Windows 10 or 11, 64-bit. Record only streams and videos you have the right to use.

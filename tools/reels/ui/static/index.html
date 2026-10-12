@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Link</title>
+  <!-- The window and taskbar icon. The browser caches it by address, so a new picture needs a new file name. -->
+  <link rel="icon" type="image/png" sizes="256x256" href="/static/link_icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/static/link_icon_192.png">
+  <link rel="shortcut icon" href="/static/link_desktop.ico">
+  <!-- The typefaces are part of the program (static/fonts), so nothing is fetched from the internet. -->
+  <link rel="preload" href="/static/fonts/nunito-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/vt323-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/cinzel-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/orbitron-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/static/fonts/fonts.css">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/audio.css">
+  <script>
+    // Decided before the first paint, so the dashboard never flashes ahead of the start-up screen.
+    // Once per window: a reload does not play it again.
+    try {
+      if (!sessionStorage.getItem("link.booted") && !matchMedia("(prefers-reduced-motion: reduce)").matches)
+        document.documentElement.classList.add("booting");
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <div id="boot" class="boot" aria-hidden="true">
+    <div class="boot-sky"></div>
+    <div class="boot-water"><i></i><i></i><i></i></div>
+    <div class="boot-flat"></div>
+    <div class="boot-mark"><span class="boot-word">LINK<span class="boot-2000" aria-label="2000"><i>2</i><i>O</i><i>O</i><i>O</i></span></span></div>
+    <div class="boot-credit"><p id="boot-credit"></p></div>
+  </div>
+
+  <header class="hud">
+    <div class="brand">
+      <svg class="mark" width="36" height="36" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="5" width="7" height="6" fill="#f2c744"/><rect x="4" y="7" width="3" height="2" fill="#1a1200"/><rect x="7" y="5" width="7" height="6" fill="#d8262c"/><rect x="9" y="7" width="3" height="2" fill="#1a1200"/><rect x="7" y="5" width="2" height="2" fill="#f2c744"/><rect x="7" y="9" width="2" height="2" fill="#f2c744"/><rect x="2" y="4" width="7" height="1" fill="#fff2b0"/><rect x="2" y="11" width="12" height="1" fill="#7a5a1c"/></svg>
+      <div class="wordmark"><span class="name">LINK</span><span class="y2k" aria-label="2000"><!-- letter O: Orbitron's zero has a notch that reads as a slash -->2OOO</span></div>
+    </div>
+    <span class="rule"></span>
+    <div id="slots" class="slots"></div>
+    <span class="rule"></span>
+    <div id="hud-mid" class="hud-mid"></div>
+    <span class="spacer"></span>
+    <div class="actions">
+      <label class="check" title="A recording is processed as soon as it is saved"><input type="checkbox" id="auto"><span class="wide-only">Auto-process</span><span class="narrow-only">Auto</span></label>
+      <button id="btn-analytics" class="btn big insta" title="The views, likes and watch time of your reels on Instagram and your Shorts on YouTube"><span class="wide-only">Analytics</span></button>
+      <button id="btn-audio" class="btn big insta audio" title="The mixer: how loud each stream is in its recording, what you hear, the microphone and the music player"><span class="wide-only">Audio</span></button>
+      <button id="btn-discord" class="btn big insta discord" title="Your Discord bot: links from your crew, /clip, and what it posted"><span class="wide-only">Discord</span><i class="dot-new" hidden></i></button>
+      <button id="btn-insta" class="btn big insta" title="Opens your Instagram page in the Studio. Right-click to change the page."><span class="wide-only">Instagram</span></button>
+      <button id="btn-settings" class="btn big insta square" title="Settings: recording, sound, accounts" aria-label="Settings"></button>
+    </div>
+  </header>
+  <!-- The link fields. The Studio and URL show them in their heading, beside the name (renderStudio in
+       app.js); on the other screens they wait here, out of sight. -->
+  <div id="opener-home" hidden>
+  <form id="opener" class="opener">
+    <label class="pix" for="open-url" id="link-label">VIDEO LINK</label>
+    <input id="open-url" type="text" inputmode="url" autocomplete="off" spellcheck="false" placeholder="Paste the link of the video you want to record">
+    <!-- The Studio has a field for each site that streams (see renderMain and openLink in app.js). -->
+    <label class="pix twitch-only" for="open-twitch">TWITCH LINK</label>
+    <input id="open-twitch" class="twitch-only" type="text" inputmode="url" autocomplete="off" spellcheck="false" placeholder="twitch.tv/channel">
+    <button id="btn-open" class="btn" type="submit" title="Opens the link in the Studio, inside Link. It does not start recording.">Open video</button>
+    <button id="btn-studio" class="btn ghost" type="button" title="The screen where the video plays and is recorded" hidden>Studio</button>
+    <span class="pix or">OR</span>
+    <button id="btn-file" class="btn" type="button" title="Takes a video file from this PC instead of recording one. Link finds its moments the same way. The file stays on this PC.">Upload video</button>
+    <span class="help wide-only" id="opener-help">Open a link and record it, or upload a video you already have.</span>
+  </form>
+  </div>
+
+  <!-- Streams that record out of sight, one pill each (see renderPills in app.js): a strip across the
+       window under the top bar. It opens when there is a pill, and the list and the page slide down. -->
+  <div id="pills" class="pills" hidden></div>
+
+  <div class="layout">
+    <aside id="sources"></aside>
+    <button id="side-toggle" class="side-toggle" type="button" title="Hide the list of tapes"><span class="grip">◀</span></button>
+    <div class="content">
+      <div id="banner" class="conflict" hidden>
+        <span class="pix">⚠ THE REELS WERE CHANGED OUTSIDE THIS PAGE</span>
+        <span>Probably by the assistant. You also have unsaved edits here. Which should win?</span>
+        <div class="row">
+          <button id="banner-load" class="btn">Load theirs, drop my edits</button>
+          <button id="banner-keep" class="btn ghost">Keep mine, overwrite on save</button>
+        </div>
+      </div>
+      <main id="main"></main>
+      <div id="dock" class="dock">
+        <section id="job" class="panel job" hidden></section>
+        <div id="dialogue" class="panel dialogue" hidden><span id="dialogue-text"></span><span class="more" id="dialogue-more">▼</span></div>
+      </div>
+    </div>
+  </div>
+
+  <dialog id="lightbox"><img alt=""></dialog>
+  <dialog id="insta-dialog" class="ask">
+    <form id="insta-form" class="panel">
+      <h2>Your Instagram page</h2>
+      <p class="help">Type the page's name or paste its address. The Instagram buttons then open it in the Studio, inside Link.</p>
+      <label class="field"><span>Page name</span><input id="insta-name" placeholder="@yourpage" autocomplete="off" spellcheck="false"></label>
+      <div class="row">
+        <button class="btn primary" type="submit">Save and open</button>
+        <button id="insta-cancel" class="btn ghost" type="button">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+  <dialog id="ask-dialog" class="ask"><form id="ask-form" class="panel"></form></dialog>
+  <dialog id="keep-dialog" class="ask"><form id="keep-form" class="panel"></form></dialog>
+  <dialog id="rec-dialog" class="ask">
+    <form id="rec-form" class="panel">
+      <h2>Recordings that are not tapes yet</h2>
+      <p class="help">These are in your Videos folder. Tick the ones to process; the others stay as they are.</p>
+      <div id="rec-list" class="rec-list"></div>
+      <div class="row">
+        <button class="btn primary" type="submit">Process</button>
+        <button id="rec-cancel" class="btn ghost" type="button">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+  <div id="ctx" class="ctx-menu" role="menu" hidden></div>
+  <div id="toast" class="toast" hidden></div>
+  <!-- The start-up self-check: how each part of Link came up, shown briefly when the window opens (showSelfCheck in app.js). -->
+  <div id="selfcheck" class="selfcheck" hidden></div>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <script src="/static/audio_ui.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

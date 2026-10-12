@@ -1,0 +1,104 @@
+<dc-import name="SiteHeader" current="turbo" hint-size="100%,70px"></dc-import>
+<main data-screen-label="Link TURBO" style="max-width:1200px;margin:0 auto;padding:0 16px">
+
+  <section class="sec hero hero-turbo" style="position:relative;margin-top:28px;border:1px solid #c8282e;padding:52px 28px 48px;overflow:hidden">
+    <div aria-hidden="true" style="position:absolute;left:12px;right:12px;top:10px;height:4px;background-image:radial-gradient(circle,#c8282e 1.5px,transparent 2px);background-size:10px 4px;background-repeat:repeat-x"></div>
+    <div aria-hidden="true" style="position:absolute;width:700px;height:700px;right:-240px;top:-320px;background:radial-gradient(circle,rgba(255,93,93,.16),transparent 60%);pointer-events:none"></div>
+    <div aria-hidden="true" style="position:absolute;width:520px;height:520px;left:-200px;bottom:-260px;background:radial-gradient(circle,rgba(127,214,194,.14),transparent 60%);pointer-events:none"></div>
+    <div style="position:relative;display:flex;flex-direction:column;gap:22px;max-width:760px">
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+        <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#7fd6c2">Step 2 · the full program</span>
+        <span style="font-family:VT323,monospace;font-size:16px;letter-spacing:2px;text-transform:uppercase;background:#0a0d1f;border:2px solid #22304a;padding:2px 8px;color:#ff8a8a">For Windows 10 and 11</span>
+      </div>
+      <h1 class="wordmark-2" style="margin:0;display:flex;align-items:baseline;flex-wrap:wrap;gap:0 18px">
+        <span style="font-family:VT323,monospace;font-size:clamp(64px,8vw,96px);line-height:.9;letter-spacing:8px;color:#ff5d5d;text-shadow:2px 2px 0 #090c1e">LINK</span>
+        <span style="font-family:VT323,monospace;font-size:clamp(64px,8vw,96px);line-height:.9;letter-spacing:8px;color:#ff5d5d;text-shadow:2px 2px 0 #090c1e">TURBO</span>
+      </h1>
+      <p style="margin:0;font:400 19px/1.55 'Nunito Sans',sans-serif;color:#c9c5ea;text-wrap:pretty">A standalone program for Windows. It records up to 3 Kick or Twitch streams at once, finds the moments for you, edits finished 9:16 clips, and posts them. And with Link Night it goes on collecting while you sleep. For streams you have the right to use.</p>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px">
+        <span style="font-family:VT323,monospace;font-size:30px;line-height:1;letter-spacing:2px;color:#f2c744;font-variant-numeric:tabular-nums">FREE</span>
+        <span style="font:600 16px/1.4 'Nunito Sans',sans-serif;color:#b9b3a4">open source · an installer or a zip, and it keeps itself up to date</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center">
+        <a class="hero-cta" href="{{ setup }}" style="display:inline-flex;align-items:center;padding:14px 26px;background:linear-gradient(#ffe27a,#d9a52a);color:#090c1e;border:2px solid #090c1e;box-shadow:0 0 0 2px #f2c744;font:800 17px 'Nunito Sans',sans-serif;text-decoration:none;transition:box-shadow 120ms" style-hover="box-shadow:0 0 0 2px #f2c744,0 0 28px rgba(242,199,68,.5)">Download for Windows</a>
+        <a class="hero-secondary" href="{{ zip }}" style="display:inline-flex;align-items:center;padding:14px 22px;background:#0a0d1f;color:#f6efdc;border:2px solid #3a3160;font:700 16px 'Nunito Sans',sans-serif;text-decoration:none;transition:border-color 120ms" style-hover="border-color:#7fd6c2">Or the zip, without installing</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="margin-top:88px;display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#7fd6c2">Five steps</span>
+      <h2 style="margin:0;font:700 clamp(26px,3.2vw,36px)/1.15 'Nunito Sans',sans-serif;color:#f6efdc">From live stream to posted clip, on one computer.</h2>
+    </div>
+    <ol class="rail rail-5" style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:14px">
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+        <li style="position:relative;background:linear-gradient(#13243f,#0f1d34);border:2px solid #3f6f7a;box-shadow:0 0 0 2px #090c1e,inset 0 0 0 2px #090c1e;padding:24px 22px;display:flex;flex-direction:column;gap:10px">
+          <span style="display:flex;align-items:center;justify-content:space-between"><span style="font-family:VT323,monospace;font-size:20px;letter-spacing:3px;color:#f2c744">{{ s.name }}</span><span class="num" style="font-family:VT323,monospace;font-size:28px;line-height:1;color:#ffd27a;font-variant-numeric:tabular-nums">{{ s.n }}</span></span>
+          <strong style="font:700 18px/1.3 'Nunito Sans',sans-serif;color:#f6efdc">{{ s.t }}</strong>
+          <span style="font:400 16px/1.55 'Nunito Sans',sans-serif;color:#f6efdc;opacity:.88;text-wrap:pretty">{{ s.d }}</span>
+        </li>
+      </sc-for>
+    </ol>
+  </section>
+
+  <section class="sec night" id="night" style="margin-top:88px;position:relative;overflow:hidden;background:linear-gradient(#13243f,#0f1d34);border:2px solid #3f6f7a;box-shadow:0 0 0 2px #090c1e,inset 0 0 0 2px #090c1e;padding:40px 32px;display:flex;flex-direction:column;gap:32px">
+    <div aria-hidden="true" style="position:absolute;width:640px;height:640px;right:-240px;top:-320px;background:radial-gradient(circle,rgba(127,214,194,.16),transparent 60%);pointer-events:none"></div>
+    <div style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:28px 48px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#7fd6c2">Link Night · part of Link <span style="font-family:VT323,monospace;font-size:1em;letter-spacing:3px;color:#ff5d5d">TURBO</span></span>
+        <h2 style="margin:0;font:700 clamp(28px,3.6vw,42px)/1.1 'Nunito Sans',sans-serif;color:#f6efdc;text-wrap:balance">It records while you sleep.</h2>
+        <p style="margin:0;font:400 18px/1.6 'Nunito Sans',sans-serif;color:#f6efdc;opacity:.9;text-wrap:pretty">Choose the hours, press Start night, and go. Link Night records your streams three at a time, checks every recording, and has the moments ranked for you when you are back.</p>
+        <p style="margin:0;font:400 16px/1.6 'Nunito Sans',sans-serif;color:#c9c5ea;text-wrap:pretty">Made for your own material: your own channel and the streams you have the right to use. Night only collects. Nothing is cut into a clip or posted until you have looked at it yourself.</p>
+      </div>
+      <figure aria-label="The Link Night window during a night" style="margin:0;background:#0a0d1f;border:2px solid #22304a;padding:18px;display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px"><span style="font-family:VT323,monospace;font-size:24px;letter-spacing:4px;color:#ff5d5d;text-shadow:1px 1px 0 #090c1e">LINK <span style="color:#b9b4e0;letter-spacing:5px">NIGHT</span></span><span style="font-family:VT323,monospace;font-size:16px;letter-spacing:2px;color:#3ddc84">RUNNING</span></div>
+        <div style="height:18px;background:#090c1e;border:2px solid #22304a"><div class="night-bar" style="height:100%;width:62%;background:#3ddc84"></div></div>
+        <div style="display:flex;justify-content:space-between;font-family:VT323,monospace;font-size:16px;letter-spacing:2px;color:#b9b3a4"><span>HOUR 5 OF 8</span><span>ENDS 07:30</span></div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+          <div style="background:#090c1e;border:2px solid #22304a;padding:8px;display:flex;flex-direction:column;gap:4px;min-width:0"><span style="font-family:VT323,monospace;font-size:16px;letter-spacing:2px;color:#53fc18">KICK</span><span style="font-family:VT323,monospace;font-size:16px;letter-spacing:1px;color:#ff8a8a">● REC</span></div>
+          <div style="background:#090c1e;border:2px solid #22304a;padding:8px;display:flex;flex-direction:column;gap:4px;min-width:0"><span style="font-family:VT323,monospace;font-size:16px;letter-spacing:2px;color:#53fc18">KICK</span><span style="font-family:VT323,monospace;font-size:16px;letter-spacing:1px;color:#ff8a8a">● REC</span></div>
+          <div style="background:#090c1e;border:2px solid #22304a;padding:8px;display:flex;flex-direction:column;gap:4px;min-width:0"><span style="font-family:VT323,monospace;font-size:16px;letter-spacing:2px;color:#53fc18">KICK</span><span style="font-family:VT323,monospace;font-size:16px;letter-spacing:1px;color:#ff8a8a">● REC</span></div>
+        </div>
+        <div class="readouts" style="display:flex;flex-wrap:wrap;gap:10px">
+          <div style="background:#090c1e;border:2px solid #22304a;padding:8px 12px;display:flex;flex-direction:column;gap:2px;flex:1"><span style="font-family:VT323,monospace;font-size:32px;line-height:1;color:#ffd27a;font-variant-numeric:tabular-nums">3</span><span style="font-family:VT323,monospace;font-size:16px;letter-spacing:2px;color:#b9b3a4">STREAMS AT ONCE</span></div>
+          <div style="background:#090c1e;border:2px solid #22304a;padding:8px 12px;display:flex;flex-direction:column;gap:2px;flex:1"><span style="font-family:VT323,monospace;font-size:32px;line-height:1;color:#ffd27a;font-variant-numeric:tabular-nums">1–12</span><span style="font-family:VT323,monospace;font-size:16px;letter-spacing:2px;color:#b9b3a4">HOURS A NIGHT</span></div>
+        </div>
+      </figure>
+    </div>
+    <div style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px">
+      <sc-for list="{{ night }}" as="f" hint-placeholder-count="6">
+        <article style="background:#0a0d1f;border:2px solid #22304a;padding:20px 20px;display:flex;flex-direction:column;gap:8px">
+          <span style="font-family:VT323,monospace;font-size:16px;letter-spacing:3px;color:#7fd6c2">{{ f.k }}</span>
+          <h3 style="margin:0;font:700 19px/1.25 'Nunito Sans',sans-serif;color:#f6efdc">{{ f.t }}</h3>
+          <p style="margin:0;font:400 16px/1.6 'Nunito Sans',sans-serif;color:#f6efdc;opacity:.88;text-wrap:pretty">{{ f.d }}</p>
+        </article>
+      </sc-for>
+    </div>
+  </section>
+
+  <section class="sec" style="margin-top:88px;display:flex;flex-direction:column;gap:16px">
+    <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#7fd6c2">Integrations</span>
+    <h2 style="margin:0;font:700 clamp(24px,3vw,30px)/1.2 'Nunito Sans',sans-serif;color:#f6efdc">Works with</h2>
+    <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px">
+      <li style="background:#0a0d1f;border:2px solid #22304a;padding:16px 14px;display:flex;flex-direction:column;gap:4px"><span style="font-family:VT323,monospace;font-size:22px;letter-spacing:3px;color:#53fc18">KICK</span><span style="font:400 15px/1.4 'Nunito Sans',sans-serif;color:#b9b3a4">Record</span></li>
+      <li style="background:#0a0d1f;border:2px solid #22304a;padding:16px 14px;display:flex;flex-direction:column;gap:4px"><span style="font-family:VT323,monospace;font-size:22px;letter-spacing:3px;color:#bf94ff">TWITCH</span><span style="font:400 15px/1.4 'Nunito Sans',sans-serif;color:#b9b3a4">Record</span></li>
+      <li style="background:#0a0d1f;border:2px solid #22304a;padding:16px 14px;display:flex;flex-direction:column;gap:4px"><span style="font-family:VT323,monospace;font-size:22px;letter-spacing:3px;color:#f6efdc">YOUTUBE</span><span style="font:400 15px/1.4 'Nunito Sans',sans-serif;color:#b9b3a4">Post Shorts</span></li>
+      <li style="background:#0a0d1f;border:2px solid #22304a;padding:16px 14px;display:flex;flex-direction:column;gap:4px"><span style="font-family:VT323,monospace;font-size:22px;letter-spacing:3px;color:#f6efdc">INSTAGRAM</span><span style="font:400 15px/1.4 'Nunito Sans',sans-serif;color:#b9b3a4">Post</span></li>
+      <li style="background:#0a0d1f;border:2px solid #22304a;padding:16px 14px;display:flex;flex-direction:column;gap:4px"><span style="font-family:VT323,monospace;font-size:22px;letter-spacing:3px;color:#f6efdc">DISCORD</span><span style="font:400 15px/1.4 'Nunito Sans',sans-serif;color:#b9b3a4">Notify</span></li>
+      <li style="background:#0a0d1f;border:2px solid #22304a;padding:16px 14px;display:flex;flex-direction:column;gap:4px"><span style="font-family:VT323,monospace;font-size:22px;letter-spacing:3px;color:#f6efdc">SPOTIFY</span><span style="font:400 15px/1.4 'Nunito Sans',sans-serif;color:#b9b3a4">Music</span></li>
+    </ul>
+  </section>
+
+  <section class="sec" style="margin-top:88px;border-top:1px solid #3f6f7a;border-bottom:1px solid #3f6f7a;padding:40px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px 48px;align-items:start">
+    <h2 style="margin:0;font:700 clamp(24px,3vw,32px)/1.2 'Nunito Sans',sans-serif;color:#f6efdc;text-wrap:pretty">Everything runs on your own computer.</h2>
+    <p style="margin:0;font:400 17px/1.6 'Nunito Sans',sans-serif;color:#c9c5ea;text-wrap:pretty">Nothing is uploaded except the clips you choose to post. Recordings, moments and edits stay on your Windows machine. Link <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:2px;color:#ff5d5d">TURBO</span> is for streams you have the right to use.</p>
+  </section>
+
+  <section class="sec" style="margin-top:88px;display:flex;flex-direction:column;align-items:flex-start;gap:18px">
+    <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#7fd6c2">Release</span>
+    <h2 style="margin:0;font:700 clamp(26px,3.2vw,36px)/1.15 'Nunito Sans',sans-serif;color:#f6efdc">What changed in each version is posted in Discord first.</h2>
+    <a href="https://discord.gg/N3jdn6WPJd" style="display:inline-flex;align-items:center;padding:14px 26px;background:#0a0d1f;color:#f6efdc;border:2px solid #3a3160;font:700 16px 'Nunito Sans',sans-serif;text-decoration:none;transition:border-color 120ms" style-hover="border-color:#7fd6c2">Follow the release in Discord</a>
+  </section>
+</main>
+<dc-import name="SiteFooter" hint-size="100%,220px"></dc-import>

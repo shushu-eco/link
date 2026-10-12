@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- Only Link's own files on this PC: nothing from the internet is ever loaded into this window. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src file: 'unsafe-inline'; font-src file:; script-src file:; img-src file:; media-src file:">
+<title>Link Night</title>
+<!-- Link's own fonts and styles: the night window is Link's look in a small window. -->
+<link rel="stylesheet" href="../ui/static/fonts/fonts.css">
+<link rel="stylesheet" href="../ui/static/style.css">
+<style>
+  html, body { height: 100%; overflow: hidden; }
+  body { display: block; padding: 6px; box-sizing: border-box; user-select: none; }
+  .box { height: 100%; box-sizing: border-box; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; -webkit-app-region: drag; }
+  .box button, .box label { -webkit-app-region: no-drag; }
+  .top { display: flex; align-items: flex-start; gap: 10px; }
+  .wordmark .name { font-size: 20px; }
+  .wordmark .y2k { font-size: 11px; letter-spacing: 3px; margin-top: 4px; }
+  .top .kicker { margin: 3px 0 0 2px; font: 18px/1 var(--f-pixel); letter-spacing: 1px; color: var(--teal); }
+  .x { margin-left: auto; width: 24px; height: 24px; padding: 0; border: 0; background: none; color: var(--dim); font: 22px/1 var(--f-pixel); cursor: pointer; }
+  .x:hover { color: var(--text); }
+  /* The night's hours as a bar: it fills, green, as they pass. Amber when the night was interrupted. */
+  .bar { display: flex; align-items: center; gap: 8px; }
+  .bar .track { flex: 1; height: 12px; box-sizing: border-box; border: 1px solid var(--line, #3f6f7a); background: #090c1e; padding: 1px; }
+  .bar .fill { height: 100%; width: 0; background: var(--green); transition: width 1s linear; }
+  .bar.off .fill { background: var(--amber-soft); }
+  .bar b { width: 38px; text-align: right; font: 18px/1 var(--f-pixel); color: var(--text); font-weight: 400; }
+  .lines { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; align-items: center; font-size: 13px; color: var(--text-2); }
+  .lines b { font: 20px/1 var(--f-pixel); letter-spacing: .5px; color: var(--text); font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lines b.on { color: var(--green); }
+  .lines b.off { color: var(--amber-soft); }
+  #sofar { font-size: 17px; }   /* "23 tapes · 10.5 h · 636 moments" has to fit */
+  .hours { display: flex; align-items: center; gap: 8px; }
+  .hours b { min-width: 30px; text-align: center; }
+  .hours button { width: 24px; height: 22px; padding: 0; border: 1px solid var(--line, #3f6f7a); background: none; color: var(--text); font: 18px/1 var(--f-pixel); cursor: pointer; }
+  .hours button:disabled { opacity: .35; cursor: default; }
+  .hours span { color: var(--dim); font-size: 12px; }
+  .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 10px; font-size: 12px; color: var(--text-2); }
+  .opts label { display: flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap; }
+  .opts input { margin: 0; accent-color: var(--green); }
+  .opts label.fixed { opacity: .5; cursor: default; }
+  #power, #room { font-size: 11.5px; line-height: 1.3; color: var(--dim); }
+  #power:empty, #room:empty { display: none; }
+  #room b { font-weight: 600; color: var(--teal); }
+  #room.bad, #room.bad b { color: var(--amber-soft); }
+  #say { flex: 1; font-size: 12.5px; line-height: 1.35; color: var(--text-2); overflow: hidden; }
+  #say.good { color: var(--green); }
+  #say.bad { color: var(--amber-soft); }
+  .row { display: flex; gap: 8px; }
+  .row .btn { flex: 1; text-align: center; }
+</style>
+</head>
+<body>
+  <div class="panel box">
+    <div class="top">
+      <div class="wordmark"><span class="name">LINK</span><span class="y2k">2OOO</span></div>
+      <span class="kicker">NIGHT</span>
+      <button class="x" id="x" title="Close: a night run goes on, and is watched over, without this window">x</button>
+    </div>
+    <div class="bar" id="bar" title="How much of the night's hours has passed"><div class="track"><div class="fill" id="fill"></div></div><b id="pct">0%</b></div>
+    <div class="lines">
+      <span>Hours</span><div class="hours"><button id="less" title="One hour less">-</button><b id="hours">5</b><button id="more" title="One hour more">+</button><span id="until"></span></div>
+      <span>Streams</span><div class="hours"><button id="fewer" title="One stream fewer">-</button><b id="streams">3</b><button id="extra" title="One stream more">+</button><span>side by side</span></div>
+      <span>Now</span><b id="now">…</b>
+      <span>So far</span><b id="sofar">…</b>
+    </div>
+    <div class="opts">
+      <label title="Updates, a picture of this window every 25 minutes, and anything that interrupts a recording, in Discord's #night"><input type="checkbox" id="o-discord">Updates in #night</label>
+      <label title="The streams' own chat is posted in Discord's #chat during the night. The chat's speed is counted either way."><input type="checkbox" id="o-relayChat">Log live chat</label>
+      <label title="An interrupted night is carried on by itself, three times at most. Without this it waits for Continue, /continue or /retry."><input type="checkbox" id="o-autoContinue">Carry on by itself</label>
+      <label title="All three streams are shooters. Without this the third is another popular game."><input type="checkbox" id="o-shootersOnly">Shooters only</label>
+      <label title="When the night has run its hours and its tapes are made, Link is closed and the PC put to sleep, 90 seconds after saying so. Not after Stop."><input type="checkbox" id="o-sleepAfter">Sleep PC when done</label>
+    </div>
+    <div id="room" title="A rough figure: three streams, recording about three quarters of the time, at the size your nights' recordings have had"></div>
+    <div id="power"></div>
+    <div id="say"></div>
+    <div class="row">
+      <button class="btn primary" id="go">Start night</button>
+      <button class="btn" id="second">Report</button>
+    </div>
+  </div>
+<script src="night.js"></script>
+</body>
+</html>

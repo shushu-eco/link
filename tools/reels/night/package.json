@@ -1,0 +1,8 @@
+{
+  "name": "link-night",
+  "version": "1.0.0",
+  "description": "Link's night run: a small window that lets Link collect game streams into tapes while nobody is there",
+  "main": "main.js",
+  "private": true,
+  "license": "GPL-3.0-only"
+}

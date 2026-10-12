@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Link · Audio</title>
+<!-- The mixer: a window of its own above Link's (tools/reels/shell/main.js, "the sound"), dragged by its
+     top bar. One row per open stream, the URL video, the microphone and the music player; the rows
+     themselves are drawn by audio_ui.js, the same as in Settings > Audio. -->
+<link rel="stylesheet" href="/static/fonts/fonts.css">
+<style>
+  :root {
+    --ink: #090c1e; --screen: #0a0d1f; --panel-a: #13243f; --panel-b: #0f1d34; --slate: #3f6f7a; --line: #3a3160; --line-2: #22304a;
+    --text: #f6efdc; --text-2: #b9b3a4; --dim: #6b6a7a; --teal: #9fd8c8; --amber: #ffb020; --amber-soft: #ffd27a;
+    --f-pixel: VT323, ui-monospace, Consolas, monospace; --f-body: "Nunito Sans", "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; }
+  body { padding: 4px; font: 13px/1.35 var(--f-body); color: var(--text); user-select: none; }
+  .w { height: 100%; display: flex; flex-direction: column; border: 2px solid var(--slate); overflow: hidden;
+       background: linear-gradient(var(--panel-a), var(--panel-b)); box-shadow: 0 0 0 2px var(--ink); }
+  /* The top bar is the handle the window is dragged by. */
+  .bar { display: flex; align-items: center; gap: 9px; padding: 9px 10px 9px 12px; border-bottom: 2px solid var(--line-2); -webkit-app-region: drag; }
+  .bar svg { width: 20px; height: 20px; color: #7ff0d0; flex: none; }
+  .bar b { font: 18px/1 var(--f-pixel); letter-spacing: 1px; text-transform: uppercase; }
+  .bar .hint { margin-left: auto; font: 15px/1 var(--f-pixel); color: var(--dim); letter-spacing: .5px; }
+  button, input, select, label { -webkit-app-region: no-drag; font: inherit; }
+  .x { width: 22px; height: 22px; padding: 0; border: 0; border-radius: 2px; background: none; color: var(--dim); font: 18px/1 var(--f-pixel); cursor: pointer; }
+  .x:hover { color: var(--text); background: rgba(255, 255, 255, .08); }
+  .body { flex: 1; min-height: 0; overflow-y: auto; padding: 10px 10px 12px; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+  .foot { display: flex; gap: 8px; align-items: center; padding: 8px 10px; border-top: 2px solid var(--line-2); }
+  .foot label { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 0; font-size: 12.5px; color: var(--text-2); cursor: pointer; }
+  .foot input { width: 15px; height: 15px; margin: 0; accent-color: #7ff0d0; }
+  .btn { height: 24px; padding: 0 9px; border: 2px solid #4a5f7a; border-radius: 2px; background: rgba(9, 12, 30, .85); color: var(--text-2); font-weight: 700; font-size: 11.5px; cursor: pointer; white-space: nowrap; }
+  .btn:hover { border-color: #7ff0d0; color: #fff; }
+</style>
+<link rel="stylesheet" href="/static/audio.css">
+</head>
+<body>
+<div class="w">
+  <div class="bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 4v16M12 4v16M19 4v16"/><rect x="3" y="13" width="4" height="4" fill="currentColor"/><rect x="10" y="6" width="4" height="4" fill="currentColor"/><rect x="17" y="11" width="4" height="4" fill="currentColor"/></svg>
+    <b>Audio</b>
+    <span class="hint" id="hint"></span>
+    <button id="hide" class="x" title="Hide (the Audio button brings it back)">×</button>
+  </div>
+  <div class="body"><div id="mixer"></div></div>
+  <div class="foot">
+    <label title="On: you hear only the stream on the big screen. Off: each stream's speaker button decides."><input type="checkbox" id="solo"> Hear only the big screen</label>
+    <button id="settings" class="btn" title="Every sound setting, in Link's Settings">All settings</button>
+  </div>
+</div>
+<script src="/static/audio_ui.js"></script>
+<script>
+"use strict";
+const api = window.linkAudio;
+const $ = (id) => document.getElementById(id);
+const mixer = LinkMixer.mount($("mixer"), api);
+function render(state) {
+  if (!state) return;
+  mixer.update(state);
+  $("solo").checked = state.solo;
+  const recording = state.channels.filter((c) => c.recording).length;
+  $("hint").textContent = state.hushed ? "SOUND OFF FOR YOU" : recording ? `${recording} RECORDING` : "";
+}
+$("solo").onchange = () => api.set({ solo: $("solo").checked });
+$("settings").onclick = () => api.settings();
+$("hide").onclick = () => api.hide();
+api.onState(render);
+api.onLevels((levels) => mixer.levels(levels));
+api.state().then(render);
+</script>
+</body>
+</html>

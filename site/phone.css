@@ -1,0 +1,213 @@
+/* phone.css — phone rules that sit beside the desktop inline styles.
+   Load after site.css:  <link rel="stylesheet" href="/site.css"><link rel="stylesheet" href="/phone.css">
+   Nothing here touches the desktop: every rule is inside a media query, except the first line,
+   which hides the phone-only elements on desktop. Colours, type and panels are the site's own. */
+
+/* Phone-only elements, hidden on desktop */
+.cta-short,.menu,.hero-capsule,.feat-marks,.dock,.l-short,.toc-now{display:none}
+
+/* Notes on /open-source are <details> now; on desktop they look exactly as before */
+.note>summary{list-style:none;display:flex;flex-direction:column;gap:10px}
+.note>summary::-webkit-details-marker{display:none}
+.note>p{margin-top:10px!important}
+.note .plus{display:none}
+
+/* ───────── 1. Header: one row with a menu (phones and small tablets) ───────── */
+@media (max-width:820px){
+  .hdr{position:sticky;top:0;z-index:20;background:rgba(9,12,30,.94)}
+  .hdr-in{height:56px;padding:0 16px!important;gap:10px!important;flex-wrap:nowrap!important}
+  .brand{font-size:30px!important}
+  .main-nav,.hdr-actions{display:none!important}
+  .cta-short{display:inline-flex;align-items:center;margin-left:auto;margin-right:54px;height:40px;padding:0 14px;background:linear-gradient(#ffe27a,#d9a52a);color:#090c1e;border:2px solid #090c1e;box-shadow:0 0 0 2px #f2c744;font:800 15px 'Nunito Sans',sans-serif;text-decoration:none;white-space:nowrap}
+  .menu{display:block}
+  .menu-btn{list-style:none;cursor:pointer;position:absolute;right:16px;top:6px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#f6efdc;background:#0a0d1f;border:2px solid #3a3160}
+  .menu-btn::-webkit-details-marker{display:none}
+  .menu-ic{position:relative;width:18px;height:2px;background:currentColor;box-shadow:0 -6px 0 currentColor,0 6px 0 currentColor}
+  .menu[open] .menu-ic{background:transparent;box-shadow:none}
+  .menu[open] .menu-ic::before,.menu[open] .menu-ic::after{content:"";position:absolute;left:0;top:0;width:18px;height:2px;background:currentColor;transform:rotate(45deg)}
+  .menu[open] .menu-ic::after{transform:rotate(-45deg)}
+  .menu-panel{border-top:2px solid #22304a;display:flex;flex-direction:column;gap:14px;padding:0 16px 16px;max-height:calc(100vh - 56px);overflow:auto}
+  .menu-nav{display:flex;flex-direction:column}
+  .menu-link{display:flex;align-items:center;gap:6px;min-height:48px;padding:0 4px 0 12px;border-bottom:2px solid #22304a;border-left:2px solid transparent;font:600 17px/1 'Nunito Sans',sans-serif;color:#c9c5ea;text-decoration:none}
+  .menu-link[aria-current="page"]{border-left-color:#7fd6c2;color:#f6efdc}
+  .menu-link::after{content:"›";margin-left:auto;font-family:VT323,monospace;font-size:24px;color:#6b6a7a;padding-right:8px}
+  .menu-actions{display:flex;flex-direction:column;gap:10px}
+  .menu-actions>a{display:flex!important;justify-content:center;min-height:48px;white-space:nowrap}
+}
+
+/* ───────── 2. Phones ───────── */
+@media (max-width:480px){
+  .sec{margin-top:56px!important}
+  main{padding-bottom:0}
+
+  /* Hero (home, TURBO) */
+  .hero{margin-top:16px!important;padding:28px 16px 24px!important}
+  .hero-grid{gap:28px!important}
+  .hero-cta{width:100%;justify-content:center;padding:14px 12px!important;text-align:center}
+  .hero-cta .l-long{display:none}
+  .hero-cta .l-short{display:inline}
+  .hero-secondary{background:none!important;border:0!important;padding:0!important;min-height:44px;color:#9fd8c8!important;text-decoration:underline;text-underline-offset:4px}
+  .hero-secondary::after{content:"→";margin-left:6px;text-decoration:none}
+  .hero-panel{display:none!important}
+  .hero-capsule{display:flex;justify-content:center;margin:0}
+  .cap{width:292px;background:linear-gradient(#13243f,#0f1d34);border:2px solid #3f6f7a;box-shadow:0 0 0 2px #090c1e,inset 0 0 0 2px #090c1e,0 16px 40px rgba(0,0,0,.5);padding:12px;display:flex;flex-direction:column;gap:10px}
+  .cap-row{display:flex;align-items:center;gap:8px;white-space:nowrap}
+  .cap-chip{font-family:VT323,monospace;font-size:16px;letter-spacing:2px;background:#0a0d1f;border:2px solid #22304a;padding:2px 8px}
+  .cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .cap-cell{background:#0a0d1f;border:2px solid #22304a;padding:8px 6px;display:flex;flex-direction:column;gap:2px;min-width:0}
+  .cap-cell b{font:400 26px/1 VT323,monospace;color:#ffd27a;font-variant-numeric:tabular-nums}
+  .cap-cell small{font:400 16px/1 VT323,monospace;letter-spacing:0;color:#b9b3a4;white-space:nowrap}
+  .cap-btn{display:inline-flex;align-items:center;padding:8px 16px;font:800 15px 'Nunito Sans',sans-serif;color:#f6efdc;border:2px solid #3a3160;background:#0a0d1f}
+  .cap-btn.stop{background:#c8282e;border-color:#ff8a8a}
+  .wordmark-2{flex-direction:column;align-items:flex-start!important;gap:6px!important}
+
+  /* Six features: a row to swipe */
+  .feat-sec{timeline-scope:--feat}
+  .features{display:flex!important;gap:12px!important;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 16px;margin:0 -16px;padding:4px 16px 6px;scrollbar-width:none;scroll-timeline:--feat x}
+  .features::-webkit-scrollbar{display:none}
+  .features>article{flex:0 0 82%;scroll-snap-align:start;padding:22px 20px!important}
+  .feat-marks{display:flex;gap:8px;position:relative;width:max-content;margin:-8px auto 0}
+  .feat-marks i{width:10px;height:10px;background:#22304a;box-shadow:0 0 0 2px #090c1e}
+  .feat-marks::after{content:"";position:absolute;left:0;top:0;width:10px;height:10px;background:#f2c744;animation:feat-pos linear both;animation-timeline:--feat;animation-timing-function:steps(6,jump-none)}
+
+  /* Steps: one rail (home, open source, TURBO) */
+  .rail{display:flex!important;flex-direction:column;gap:0!important}
+  .rail>li{position:relative;border:0!important;background:none!important;box-shadow:none!important;padding:0 0 28px 44px!important;display:flex!important;flex-direction:column;gap:8px!important}
+  .rail>li::before{content:"";position:absolute;left:11px;top:4px;bottom:0;width:2px;background:#22304a}
+  .rail>li:last-child{padding-bottom:0!important}
+  .rail>li:last-child::before{display:none}
+  .rail .num{position:absolute;left:0;top:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:#0a0d1f;border:2px solid #3f6f7a;padding:0!important;font-family:VT323,monospace;font-size:17px!important;line-height:1!important;letter-spacing:0!important;color:#ffd27a}
+  .rail-5>li>span:first-child{justify-content:flex-start!important}
+
+  /* Free and open source on home: one block */
+  .terms-block{display:flex!important;flex-direction:column;gap:0!important;background:linear-gradient(#13243f,#0f1d34);border:2px solid #3f6f7a;box-shadow:0 0 0 2px #090c1e,inset 0 0 0 2px #090c1e;padding:24px 18px}
+  .terms-card{background:none!important;border:0!important;box-shadow:none!important;padding:0!important;gap:14px!important}
+  .terms-big{font-size:56px!important}
+  .terms-points{display:grid!important;grid-template-columns:1fr 1fr;gap:8px 12px!important}
+  .terms-points .l-long{display:none}
+  .terms-points .l-short{display:inline}
+  .open-col{padding:18px 0 0!important;margin-top:18px;border-top:1px solid #3f6f7a;gap:12px!important}
+  .open-col>h2{display:none}
+  .open-chips{flex-direction:row!important;flex-wrap:wrap;gap:8px!important}
+  .open-chips>li{align-items:center!important;gap:8px!important;background:#0a0d1f;border:2px solid #22304a;padding:6px 10px 6px 8px}
+  .open-chips .num{border:0!important;padding:0!important;line-height:1!important}
+  .open-chips .l-long{display:none}
+  .open-chips .l-short{display:inline;font:600 15px/1.2 'Nunito Sans',sans-serif;color:#f6efdc}
+
+  .rights{padding:28px 0!important;gap:12px!important}
+
+  /* Link TURBO with what it is joined under it (home) */
+  .duo-main{padding:24px 16px}
+  .duo-terms{padding:24px 18px;gap:14px}
+  .duo-tabs{display:grid!important;grid-template-columns:repeat(3,1fr);gap:6px}
+  .duo-tabs li{text-align:center;font-size:17px;letter-spacing:1px;padding:6px 2px}
+  .duo-slide{flex-direction:column;align-items:flex-start;padding:16px}
+  .duo-read{flex-direction:row;align-items:baseline;gap:10px;text-align:left}
+  .night{padding:24px 16px!important}
+
+  /* TURBO teaser: the flow as one line, no hanging arrows */
+  .teaser{padding:24px 16px!important}
+  .flow{flex-wrap:nowrap!important;gap:3px!important}
+  .flow>li{flex:1 1 0;min-width:0;text-align:center;font-size:16px!important;letter-spacing:0!important;padding:6px 2px!important}
+  .flow>li[aria-hidden]{flex:0 0 auto;padding:6px 0!important}
+
+  /* Link Night readouts side by side */
+  .readouts{display:grid!important;grid-template-columns:1fr 1fr}
+  .readouts span:first-child{font-size:28px!important}
+
+  /* Section list on long pages: shut, sticky under the header */
+  .guide{gap:24px!important;margin-top:24px!important}
+  .toc,nav.toc[aria-label="Sections"]{position:sticky!important;top:56px!important;z-index:10;flex:0 0 auto!important;width:calc(100% + 32px)!important;margin:0 -16px;max-width:none!important;min-width:0!important;padding:0!important;border-left:0!important;border-right:0!important}
+  html:not(.js) .toc,html:not(.js) nav.toc[aria-label="Sections"]{position:static!important}
+  .toc details{position:relative}
+  .toc summary{min-height:48px;padding:0 16px!important;align-items:center;gap:10px}
+  .toc summary:has(.toc-now:not(:empty)) .toc-label{display:none}
+  .toc-now:not(:empty){display:block;flex:1;font:600 16px/1.2 'Nunito Sans',sans-serif;letter-spacing:0;color:#f6efdc;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .toc-caret{margin-left:auto}
+  .toc details[open] .toc-caret{transform:rotate(180deg)}
+  .toc ol{background:#0a0d1f;padding:4px 0 8px!important}
+  html.js .toc ol{position:absolute;left:0;right:0;top:100%;border:2px solid #22304a;border-top:0;max-height:calc(100vh - 120px);overflow:auto;scrollbar-width:thin}
+  .toc ol a{min-height:48px;align-items:center;padding:0 16px!important;font-size:16px!important}
+  .gsec,.doc h2{scroll-margin-top:112px!important}
+  .guide-body{gap:28px!important}
+  .gsec{gap:12px!important}
+  .gsec>div:first-child{padding-bottom:8px!important}
+  .fig{min-height:0!important;padding:0!important;background:none!important;border:0!important}
+  .fig>[aria-hidden]{display:none}
+  .fig>div{max-width:none!important}
+
+  /* Tables in the legal pages: each row becomes a small block */
+  .doc{font-size:17px}
+  .doc .scroll{overflow:visible}
+  .doc table{min-width:0;display:block}
+  .doc thead{display:none}
+  .doc tbody,.doc tr,.doc td{display:block}
+  .doc tr{border:2px solid #22304a;padding:12px;display:flex;flex-direction:column;gap:10px}
+  .doc tr+tr{border-top:0}
+  .doc td{border:0;padding:0}
+  .doc td::before{content:attr(data-th);display:block;font-family:VT323,monospace;font-size:17px;letter-spacing:2px;color:#7fd6c2;text-transform:uppercase;margin-bottom:2px}
+
+  /* Open source page: notes as rows that open and close */
+  .notes{gap:0!important}
+  .note{border-top:2px solid #22304a;padding:0!important;gap:0!important}
+  .note>summary{flex-direction:row;align-items:center;gap:12px;min-height:52px;cursor:pointer}
+  .note>summary h2{font-size:17px!important;flex:1}
+  .note .kick{display:none}
+  .note .plus{display:inline;order:-1;font-family:VT323,monospace;font-size:22px;line-height:1;color:#f2c744}
+  .note>p{margin:0 0 16px 34px!important}
+  .contact-note{padding-top:18px!important}
+
+  /* Thanks: the key box at its natural height */
+  .keyfig{min-height:0!important;padding:0!important;background:none!important;border:0!important}
+  .keyfig>[aria-hidden]{display:none}
+
+  /* Support */
+  .topics{flex-wrap:nowrap!important;overflow-x:auto;margin:6px -16px 0!important;padding:0 16px;scrollbar-width:none}
+  .topics::-webkit-scrollbar{display:none}
+  .topics a{flex:0 0 auto;min-height:44px;display:inline-flex;align-items:center;white-space:nowrap}
+  .contact{gap:12px!important;margin-top:48px!important}
+
+  /* What's new: version and date on one line */
+  .log>li{display:flex!important;flex-direction:column;gap:10px!important;padding:22px 0!important}
+  .log>li>div:first-child{flex-direction:row!important;align-items:center!important;gap:12px!important}
+
+  /* Not found: one screen */
+  .nf{margin-top:20px!important;padding:12px!important;gap:14px!important}
+  .nf-screen{min-height:220px!important}
+  .nf-row{flex-direction:column;align-items:stretch!important;gap:14px!important;padding:0 2px 2px!important}
+  .nf-row a{justify-content:center}
+
+  /* Footer: compact */
+  .ftr{margin-top:48px!important}
+  .ftr-in{display:flex!important;flex-direction:column;gap:2px!important;padding:16px 16px 18px!important}
+  .ftr-brand{flex-direction:row!important;flex-wrap:wrap;align-items:baseline;gap:0 12px!important}
+  .ftr-brand>span{font-size:26px!important}
+  .ftr-brand>a{flex-basis:100%;min-height:44px;display:inline-flex;align-items:center}
+  .ftr-nav{flex-direction:row!important;flex-wrap:wrap;gap:0 18px!important}
+  .ftr-nav>span,.ftr-notes>span:first-child{display:none}
+  .ftr-nav a{min-height:44px;display:inline-flex;align-items:center}
+  .ftr-notes{flex-direction:row!important;flex-wrap:wrap;gap:0 6px!important}
+
+  /* Optional bottom bar (home, how it works, open source): CSS only, appears after ~600px of scrolling.
+     Browsers without scroll-driven animations never show it and reserve no space. */
+  .dock{position:fixed;left:0;right:0;bottom:0;z-index:15;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(9,12,30,.94);border-top:2px solid #22304a;transform:translateY(110%)}
+  @supports (animation-timeline:scroll()){
+    .dock{animation:dock-in linear both;animation-timeline:scroll(root);animation-range:0 700px}
+    .has-dock~.ftr .ftr-in{padding-bottom:88px!important}
+  }
+  .dock-terms{display:flex;align-items:baseline;gap:8px}
+  .dock-terms b{font:400 26px/1 VT323,monospace;letter-spacing:2px;color:#f2c744;font-variant-numeric:tabular-nums}
+  .dock-terms span{font:600 16px/1 'Nunito Sans',sans-serif;color:#b9b3a4}
+  .dock-cta{display:inline-flex;align-items:center;height:44px;padding:0 16px;background:linear-gradient(#ffe27a,#d9a52a);color:#090c1e;border:2px solid #090c1e;box-shadow:0 0 0 2px #f2c744;font:800 15px 'Nunito Sans',sans-serif;text-decoration:none;white-space:nowrap}
+}
+
+/* ───────── 3. Small tablets, 481–820 px ───────── */
+@media (min-width:481px) and (max-width:820px){
+  .features{grid-template-columns:1fr 1fr!important}
+  .rail:not(.rail-5):not(.rail-cards){grid-template-columns:1fr!important}
+  .rail-5,.rail-cards{grid-template-columns:1fr 1fr!important}
+  .notes{grid-template-columns:1fr 1fr!important}
+}
+
+@keyframes feat-pos{from{transform:translateX(0)}to{transform:translateX(90px)}}
+@keyframes dock-in{0%,85%{transform:translateY(110%)}100%{transform:translateY(0)}}

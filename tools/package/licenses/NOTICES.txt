@@ -1,0 +1,56 @@
+Link: what it is made with
+==========================
+
+Link itself is free software under the GNU General Public License, version 3 (LICENSE-Link.txt beside
+this file). Its code: https://github.com/shushu-eco/link
+
+Link comes with the following programs and files made by others. Each stays under its own licence.
+Link runs them as they are; none of them was changed.
+
+Electron and Chromium (Link's window)
+    MIT licence, and the licences of Chromium's parts.
+    Their full texts are in tools\reels\shell\node_modules\electron\dist\LICENSE and
+    LICENSES.chromium.html.
+    https://www.electronjs.org/
+
+Python (runs Link's server and its jobs)
+    Python Software Foundation License. Full text: runtime\python\LICENSE.txt
+    https://www.python.org/
+
+NumPy
+    BSD 3-Clause licence. Full text with the package:
+    runtime\python\Lib\site-packages\numpy-2.5.3.dist-info\licenses\LICENSE.txt
+    https://numpy.org/
+
+OpenCV (opencv-python)
+    Apache License 2.0. Texts with the package: runtime\python\Lib\site-packages\cv2\LICENSE.txt and
+    LICENSE-3RD-PARTY.txt
+    https://opencv.org/
+
+FFmpeg (ffmpeg.exe and ffprobe.exe in runtime\ffmpeg\bin)
+    GNU General Public License version 3. Full text: licenses\ffmpeg\LICENSE
+    This is the "full shared" build 8.1.2 by Gyan Doshi, unchanged. It includes x264, x265,
+    whisper.cpp and other libraries; licenses\ffmpeg\README.txt lists them.
+    The source code of exactly this build: https://github.com/GyanD/codexffmpeg/releases/tag/8.1.2
+    and https://ffmpeg.org/download.html
+    Link starts ffmpeg as a separate program; Link's own code is not part of it.
+
+Ghostery adblocker (@ghostery/adblocker-electron and its parts)
+    Mozilla Public License 2.0. Source: https://github.com/ghostery/adblocker
+    tldts (MIT), @remusao packages (MPL-2.0 / MIT), in tools\reels\shell\node_modules.
+    The filter lists are downloaded by that library when Link runs; they are not part of Link.
+
+Typefaces (tools\reels\ui\static\fonts)
+    Cinzel (Natanael Gama), Nunito Sans (Vernon Adams and others), VT323 (Peter Hull),
+    Orbitron (Matt McInerney). SIL Open Font License 1.1: https://openfontlicense.org/
+
+The speech model (ggml-small.bin, downloaded by the installer if you choose it)
+    OpenAI's Whisper "small" model in whisper.cpp's format. MIT licence.
+    https://github.com/openai/whisper and https://github.com/ggml-org/whisper.cpp
+    Downloaded from https://huggingface.co/ggerganov/whisper.cpp
+
+What Link itself does on your PC
+    It runs a small server that only this PC can reach (127.0.0.1, port 8765) and a window that shows
+    it. Your recordings stay in your Videos folder, your tapes and reels in the "videos" folder next
+    to Link, and your settings and sign-ins in the ".link" folder of your user folder.
+    Uninstalling Link leaves all of those where they are.

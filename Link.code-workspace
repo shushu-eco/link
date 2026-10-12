@@ -1,0 +1,15 @@
+{
+  "folders": [
+    { "name": "Link", "path": "." }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/__pycache__": true,
+      "**/models/*.bin": true
+    },
+    "search.exclude": {
+      "videos/**": true
+    },
+    "editor.rulers": [120]
+  }
+}

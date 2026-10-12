@@ -1,0 +1,49 @@
+# Recordings, sources, working folders and finished reels: large, and made by Link, not part of it
+videos/
+
+# Installed, not written: "npm install" in tools/reels/shell brings these back
+tools/reels/shell/node_modules/
+
+# The speech-recognition model (466 MB download)
+tools/reels/models/
+
+# Character reference images for other projects in this folder
+character/
+
+__pycache__/
+*.pyc
+*.zip
+archive/link_streamlabs_2026-10-02/_preflight/check.mkv
+
+# The owner's working material, not part of Link: post texts (Link writes new ones here),
+# notes, design sources, retired scripts
+strategy/
+research/
+prompts/
+experiments/
+# Only the folder at the top: without the slash this also matches tools/reels/ui on Windows
+/UI/
+archive/
+Link_design_brief.md
+Link_instagram_brief.md
+Link_limits.md
+
+# Test reports and the prompts for testers: notes about this machine, not part of Link
+FEEDBACK_*.md
+PROMPT_*.md
+PROMPT_*.png
+
+# Claude Code's own settings on this machine
+.claude/settings.local.json
+
+# The owner's other projects and the channel's own artwork: not part of Link
+fableCircula/
+linkrewind_profile_*.png
+
+# The installer build (tools\package\build.ps1): the assembled folder, downloads and Link-Setup.exe
+/dist/
+
+# The website as built (made by "node site/build.js", published from the repository linkturbo-site), and
+# whole-page photographs of it (made by "node site/shots.js")
+site/out/
+site/mobile-shots*/
