@@ -3,7 +3,8 @@
 #   powershell -File tools\package\release.ps1            build dist\release\link-rwa-N.zip and latest.json, publish nothing
 #   powershell -File tools\package\release.ps1 -Publish   the same, then make it the newest release of the updates repository
 #
-# An installed Link reads latest.json from the newest release when it starts and, if its own number
+# An installed Link reads latest.json from the newest release when it starts, checks that it is signed
+# with Link's key (latest.json.sig, made by sign.py with the key in %USERPROFILE%\.link) and, if its own number
 # is lower, downloads the zip, checks it against the SHA-256 in latest.json and puts it in place
 # (tools\reels\update.py). The zip is tools\reels as git has it at HEAD: Link's own code, without the
 # speech model and without Electron.
@@ -46,13 +47,17 @@ $manifest = [ordered]@{
 [IO.File]::WriteAllText((Join-Path $out "latest.json"), ($manifest | ConvertTo-Json), (New-Object Text.UTF8Encoding $false))
 Write-Host "rwa-$n ($date), runtime $runtime, $([Math]::Round($manifest.size / 1MB, 2)) MB, sha256 $($manifest.sha256)"
 Write-Host "-> $zip"
+# Signed with Link's own key, which is on this PC alone (tools\package\sign.py): an installed Link takes
+# only a release whose latest.json carries this signature.
+python (Join-Path $PSScriptRoot "sign.py") (Join-Path $out "latest.json")
+if ($LASTEXITCODE -ne 0) { Write-Host "The release was not signed, so it is not put out." -ForegroundColor Red; exit 1 }
 
 if (-not $Publish) { Write-Host "Built only. Run again with -Publish to put it out." ; exit 0 }
 # The releases there are already (asked this way, not with "gh release view": that one writes to the error
 # stream when there is none, which stops this script).
 $tags = @(gh release list --repo $Repo --limit 200 --json tagName --jq ".[].tagName")
 if ($tags -contains "rwa-$n") { Write-Host "rwa-$n is published already: left as it is." } else {
-gh release create "rwa-$n" $zip (Join-Path $out "latest.json") --repo $Repo --title "Link rwa-$n" --notes "Link rwa-$n ($date).`n`n**To install Link, download [Link-Setup.exe](https://github.com/$Repo/releases/download/installer/Link-Setup.exe) or [Link-Windows.zip](https://github.com/$Repo/releases/download/installer/Link-Windows.zip).** The two files below are the update package: copies of Link that are installed already fetch it by themselves when they start, and it does not run on its own." --latest
+gh release create "rwa-$n" $zip (Join-Path $out "latest.json") (Join-Path $out "latest.json.sig") --repo $Repo --title "Link rwa-$n" --notes "Link rwa-$n ($date).`n`n**To install Link, download [Link-Setup.exe](https://github.com/$Repo/releases/download/installer/Link-Setup.exe) or [Link-Windows.zip](https://github.com/$Repo/releases/download/installer/Link-Windows.zip).** The files below are the update package and its signature: copies of Link that are installed already fetch it by themselves when they start, and it does not run on its own." --latest
 if ($LASTEXITCODE -ne 0) { Write-Host "The release was not published." -ForegroundColor Red; exit 1 }
 Write-Host "Published: installed copies of Link update to rwa-$n at their next start." -ForegroundColor Green
 }

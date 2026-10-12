@@ -269,6 +269,11 @@ and SHA-256 against `latest.json`, unpacks it beside the installed files and the
 place, takes away the ones the new version no longer has, writes the new `VERSION`, and starts
 again as the new version; the page says "Link updated itself to rwa-N" once.
 
+- It takes only a release signed with Link's own key. `latest.json` comes with `latest.json.sig`, an
+  Ed25519 signature made on the publisher's PC (`tools/package/sign.py`; the key is in
+  `%USERPROFILE%\.link\release-key.txt` there and nowhere else) and checked against `PUBLIC_KEY` in
+  `update.py` with `ed25519.py`. The manifest names the package's checksum, so the package is covered.
+  Someone who gets into the GitHub account can publish a release, but installed copies refuse it.
 - It never keeps Link from starting: without internet (it waits 6 seconds at most), with a failed
   download or a wrong checksum, Link opens as the version it is. Why is in `link.log`.
 - Nothing is replaced until the package is down, checked and unpacked. If Link is stopped while

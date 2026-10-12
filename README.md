@@ -74,7 +74,8 @@ The first start downloads the speech model (466 MB), which Link writes captions 
   protected your PC". Press **More info**, then **Run anyway**. The checksums of both files are in
   [SHA256SUMS.txt](https://github.com/shushu-eco/link/releases/download/installer/SHA256SUMS.txt), and everything in them is built from this repository by
   `tools/package/build.ps1`.
-- **It updates itself.** When Link starts it looks for a newer version here and takes it. **Link
+- **It updates itself.** When Link starts it looks for a newer version here and takes it, but only one
+  signed with Link's own key, which is not kept on GitHub. **Link
   Updater**, beside Link's own icon, shows which version you have and does the same on a press.
 - **Your things stay yours.** Recordings are in your Videos folder, tapes and reels in `videos` inside
   Link's folder, settings and sign-ins in `.link` in your user folder. An update touches none of them.

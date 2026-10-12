@@ -58,9 +58,19 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
+if str(HERE) not in sys.path:
+    sys.path.insert(0, str(HERE))
+import ed25519  # noqa: E402  (beside this file)
+
 # The newest release's manifest: an asset of the latest release of Link's public repository, where the
 # code, the installer, the zip and the update packages are. The variable is for tests.
 MANIFEST = os.environ.get("LINK_UPDATE_URL", "https://github.com/shushu-eco/link/releases/latest/download/latest.json")
+# A release counts only when its manifest is signed with Link's own key (tools/package/sign.py). The
+# key's secret half is on the publisher's PC alone, so whoever gets into the GitHub account still
+# cannot hand installed copies of Link code of their own. The manifest names the package's checksum,
+# so the signature covers the package too. This is the public half; the variable is for tests and
+# counts only together with LINK_UPDATE_URL.
+PUBLIC_KEY = "efa86da71378fe24f4838ee3f6b422d981a434a7d193066694465c2332724d9f"
 WORK = ROOT / "update"
 MAX_PACKAGE = 60 * 1024 * 1024          # a code package is a few megabytes; more than this is not one
 KEEP_OUT = ("models", "shell/node_modules")   # under tools/reels: never written to, never deleted from
@@ -110,8 +120,17 @@ def fetch(url, limit, timeout=TIMEOUT):
 
 def newest():
     """The manifest of the newest release: {"version", "package", "sha256", "size", "runtime", "installer"}."""
+    raw = fetch(MANIFEST, 64 * 1024)
+    key = os.environ.get("LINK_UPDATE_KEY") if "LINK_UPDATE_URL" in os.environ else None
     try:
-        m = json.loads(fetch(MANIFEST, 64 * 1024))
+        signature = bytes.fromhex(fetch(MANIFEST + ".sig", 1024).decode("ascii").strip())
+        signed = ed25519.verify(bytes.fromhex(key or PUBLIC_KEY), raw, signature)
+    except (UpdateError, ValueError):
+        signed = False
+    if not signed:
+        raise UpdateError("the newest release is not signed with Link's key, so it is not taken")
+    try:
+        m = json.loads(raw)
     except ValueError:
         raise UpdateError("the manifest is not readable") from None
     if not isinstance(m, dict) or not isinstance(m.get("version"), int) or not re.fullmatch(r"[0-9a-f]{64}", str(m.get("sha256", ""))):
@@ -292,7 +311,8 @@ def status():
             if out["behind"] and int(m.get("runtime", 1)) > runtime:
                 out["installer"] = m.get("installer") or ""
         except UpdateError as e:
-            out["error"] = "The newest version could not be looked up. Is this PC online?" if "could not read" in str(e) else str(e)
+            out["error"] = ("The newest version is not signed with Link's key, so it is not taken." if "not signed" in str(e)
+                            else "The newest version could not be looked up. Is this PC online?" if "could not read" in str(e) else str(e))
         return out
     ok, count = git("rev-list", "--count", "HEAD")
     if not ok:
