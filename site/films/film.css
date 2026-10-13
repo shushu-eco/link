@@ -1,0 +1,37 @@
+/* The stage of the Link Night films (site/films/make.js): the real Night window, smaller, on the left;
+   a clock, three channels and a line of words on the right. Nothing moves by itself: film.js draws
+   every frame from the film's own time. */
+* { transition: none !important; animation: none !important; }
+html, body { margin: 0 !important; padding: 0 !important; width: 800px; height: 450px !important; overflow: hidden; display: block !important; background: #070a18 !important; }
+#stage { position: relative; width: 800px; height: 450px; overflow: hidden; background: linear-gradient(var(--sky-a, #0b1026), var(--sky-b, #131a3a)); }
+#stars { position: absolute; inset: 0; opacity: var(--stars, 1);
+  background-image: radial-gradient(circle, #cfd6ff 1px, transparent 1.4px), radial-gradient(circle, #9fd8c8 1px, transparent 1.4px), radial-gradient(circle, #f6efdc 1px, transparent 1.4px);
+  background-size: 173px 131px, 229px 197px, 311px 167px; background-position: 20px 30px, 90px 80px, 150px 12px; }
+#glow { position: absolute; width: 520px; height: 520px; right: -140px; bottom: -300px; background: radial-gradient(circle, rgba(255, 170, 120, var(--dawn, 0)), transparent 62%); }
+#chrome { position: absolute; left: 0; right: 0; top: 0; height: 24px; background: #090c1e; border-bottom: 1px solid #22304a; display: flex; align-items: center; gap: 7px; padding: 0 12px; font: 15px/1 VT323, monospace; letter-spacing: 2px; color: #6b6a7a; }
+#chrome i { width: 8px; height: 8px; background: #22304a; border-radius: 50%; }
+#chrome span { margin-left: 8px; }
+/* the window itself: Link's own page, at its own size (380 x 462), made smaller as a whole */
+#win { position: absolute; left: 44px; top: 38px; width: 380px; height: 462px; padding: 6px; box-sizing: border-box; transform: scale(.86); transform-origin: 0 0; filter: drop-shadow(0 16px 30px rgba(0, 0, 0, .55)); }
+#win .box { -webkit-app-region: none; }
+label:has(#o-shootersOnly) { display: none !important; }   /* how Night comes by its streams is not what these films are about */
+#side { position: absolute; left: 404px; right: 26px; top: 38px; bottom: 26px; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+#cap { margin-top: 6px; max-width: 100%; box-sizing: border-box; padding: 7px 14px 8px; background: #f3e9a6; color: #1a1200; border: 2px solid #1a1200; box-shadow: 0 0 0 2px #f3e9a6, 0 6px 16px rgba(0, 0, 0, .45); font: 700 15px/1.25 ui-monospace, Consolas, monospace; letter-spacing: 1px; text-align: center; }
+#cap:empty { visibility: hidden; }
+#clock { margin-top: 14px; font: 96px/1 VT323, monospace; letter-spacing: 6px; color: #f6efdc; text-shadow: 3px 3px 0 #090c1e; font-variant-numeric: tabular-nums; }
+#when { font: 17px/1 VT323, monospace; letter-spacing: 4px; color: #9fd8c8; text-transform: uppercase; }
+#tiles { margin-top: auto; width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.tile { position: relative; height: 74px; border: 2px solid #22304a; background: #090c1e; overflow: hidden; box-shadow: 0 0 0 2px #090c1e; }
+.tile u { position: absolute; inset: 0; opacity: .0; background: radial-gradient(ellipse at 30% 40%, #5a3f9a 0, transparent 60%), radial-gradient(ellipse at 75% 70%, #2f8f86 0, transparent 55%), radial-gradient(ellipse at 60% 15%, #8a3f5f 0, transparent 50%); filter: blur(8px); }
+.tile:nth-child(2) u { background: radial-gradient(ellipse at 70% 35%, #2f6fb0 0, transparent 60%), radial-gradient(ellipse at 25% 70%, #8a6a2f 0, transparent 55%); }
+.tile:nth-child(3) u { background: radial-gradient(ellipse at 40% 60%, #3f9a5a 0, transparent 60%), radial-gradient(ellipse at 80% 25%, #6a3f9a 0, transparent 55%); }
+.tile.rec u, .tile.tape u { opacity: .85; }
+.tile.tape u { opacity: .3; }
+.tile b { position: absolute; left: 6px; top: 5px; font: 400 15px/1 VT323, monospace; letter-spacing: 2px; color: #3ddc84; }
+.tile em { position: absolute; right: 6px; bottom: 5px; font: 400 15px/1 VT323, monospace; font-style: normal; letter-spacing: 1px; color: #6b6a7a; }
+.tile.rec em { color: #ff8a8a; }
+.tile.tape em { color: #3ddc84; }
+#dark { position: absolute; inset: 0; background: #03040b; opacity: 0; display: flex; align-items: center; justify-content: center; font: 54px/1 VT323, monospace; letter-spacing: 8px; color: #3a3160; }
+#cur { position: absolute; left: 0; top: 0; width: 18px; height: 24px; z-index: 5; filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, .6)); }
+#ring { position: absolute; left: 0; top: 0; width: 26px; height: 26px; margin: -13px 0 0 -13px; border: 2px solid #f2c744; border-radius: 50%; opacity: 0; z-index: 4; }
+.pressed { filter: brightness(1.35); transform: translateY(2px); }

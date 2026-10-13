@@ -2,7 +2,7 @@
 // 404.html. Run: node site/serve.js [port]
 const http = require("http"), fs = require("fs"), path = require("path");
 const OUT = path.join(__dirname, "out"), port = Number(process.argv[2]) || 8791;
-const TYPES = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".png": "image/png", ".woff2": "font/woff2", ".xml": "application/xml", ".txt": "text/plain" };
+const TYPES = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".png": "image/png", ".jpg": "image/jpeg", ".mp4": "video/mp4", ".woff2": "font/woff2", ".xml": "application/xml", ".txt": "text/plain" };
 
 http.createServer((request, response) => {
   const asked = decodeURIComponent(new URL(request.url, "http://x").pathname);

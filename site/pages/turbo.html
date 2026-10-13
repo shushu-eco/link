@@ -26,6 +26,20 @@
     </div>
   </section>
 
+  <section class="sec mag mag-{{ cover.key }} mag-{{ cover.shape }}" aria-label="{{ cover.label }}" style="margin-top:56px">
+    <div class="mag-in" aria-hidden="true">
+      <div class="mag-strip"><span>{{ cover.strip }}</span><span class="mag-strip-en">FREE · OPEN SOURCE · WINDOWS 10 / 11</span></div>
+      <div class="mag-mast"><span class="mag-chip">LINK <i>TURBO</i></span><span class="mag-kana">{{ cover.word }}</span></div>
+      <div class="mag-issue"><b>2026</b><i>10</i><small>{{ cover.price }}</small></div>
+      <p class="mag-head"><sc-for list="{{ cover.head }}" as="h"><span>{{ h.t }}</span></sc-for></p>
+      <div class="mag-burst"><b>{{ cover.badge }}</b><small>{{ cover.badgeSmall }}</small></div>
+      <sc-for list="{{ cover.reels }}" as="r" hint-placeholder-count="4">
+        <figure class="reel {{ r.cls }}"><span class="reel-bg" style="background-image:url(/clips/{{ r.img }}.jpg)"></span><span class="reel-tag">9:16</span><span class="reel-hook">{{ r.hook }}</span><span class="reel-vid"><img src="/clips/{{ r.img }}.jpg" width="1024" height="688" loading="lazy" alt=""></span><span class="reel-cap">{{ r.cap }}</span><span class="reel-bar"><i></i></span>{{ r.sticker }}</figure>
+      </sc-for>
+      <div class="mag-foot"><span>{{ cover.foot }}</span><span class="mag-keys"><b>RECORD</b><b>FIND</b><b>EDIT</b><b>POST</b></span></div>
+    </div>
+  </section>
+
   <section class="sec" style="margin-top:88px;display:flex;flex-direction:column;gap:28px">
     <div style="display:flex;flex-direction:column;gap:10px">
       <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#7fd6c2">Five steps</span>
@@ -66,6 +80,24 @@
         </div>
       </figure>
     </div>
+    <div class="clips" style="position:relative;display:flex;flex-direction:column;gap:36px">
+      <sc-for list="{{ nightClips }}" as="c" hint-placeholder-count="3">
+        <article class="clip" style="display:flex;flex-wrap:wrap;gap:18px 40px;align-items:center">
+          <div class="clip-words" style="flex:1 1 240px;min-width:0;display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:VT323,monospace;font-size:16px;letter-spacing:3px;color:#7fd6c2">{{ c.k }}</span>
+            <h3 style="margin:0;font:700 clamp(21px,2.4vw,26px)/1.25 'Nunito Sans',sans-serif;color:#f6efdc;text-wrap:pretty">{{ c.t }}</h3>
+            <p style="margin:0;font:400 16px/1.6 'Nunito Sans',sans-serif;color:#c9c5ea;text-wrap:pretty">{{ c.d }}</p>
+          </div>
+          <figure class="clip-film" style="flex:2 1 440px;min-width:0;margin:0;background:#0a0d1f;border:2px solid #22304a;box-shadow:0 0 0 2px #090c1e;line-height:0">
+            <video src="/clips/{{ c.file }}.mp4" poster="/clips/{{ c.file }}.jpg" width="1280" height="720" muted loop playsinline preload="none" aria-label="{{ c.alt }}" style="display:block;width:100%;height:auto;aspect-ratio:16/9"></video>
+          </figure>
+        </article>
+      </sc-for>
+    </div>
+    <script>(function(){var vs=document.querySelectorAll(".clip-film video");if(!vs.length)return;
+if(matchMedia("(prefers-reduced-motion:reduce)").matches||!("IntersectionObserver" in window)){vs.forEach(function(v){v.controls=true});return}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting){var p=v.play();if(p&&p.catch)p.catch(function(x){if(x&&x.name==="NotAllowedError")v.controls=true})}else v.pause()})},{threshold:.35});
+vs.forEach(function(v){io.observe(v)})})()</script>
     <div style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px">
       <sc-for list="{{ night }}" as="f" hint-placeholder-count="6">
         <article style="background:#0a0d1f;border:2px solid #22304a;padding:20px 20px;display:flex;flex-direction:column;gap:8px">

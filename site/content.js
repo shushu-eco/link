@@ -22,7 +22,7 @@ const dot = { html: '<span aria-hidden="true" style="width:10px;height:10px;back
 function header({ current = "" }) {
   const line = k => (current === k ? "#7fd6c2" : "transparent");
   const here = k => ({ html: current === k ? 'aria-current="page"' : "" }); // the phone menu marks the page you are on
-  return { ...cta, liteLine: line("home"), turboLine: line("turbo"), howLine: line("how"), supportLine: line("support"),
+  return { ...cta, productLine: line(current === "home" ? "home" : "turbo"), liteLine: line("home"), turboLine: line("turbo"), howLine: line("how"), supportLine: line("support"),
     liteCur: here("home"), turboCur: here("turbo"), howCur: here("how"), supportCur: here("support") };
 }
 
@@ -37,6 +37,13 @@ const home = {
     { k: "EXPORT", t: "For your editor", d: "The marks come with the recording: a list to copy, or a marker file for DaVinci Resolve." },
     { k: "LOCAL", t: "Stays on your computer", d: "Nothing is uploaded. No analytics. Chat is only counted: never who wrote, or what." },
     { k: "FREE", t: "Free and open source", d: "No key, no account, no limit. The code is public, so anyone can check what it does." },
+  ],
+  // The second section of the home page: three short films of the panel at work (site/clips, made from the
+  // GIFs of the profile's README). Each plays by itself, silent, for as long as it is on the screen.
+  clips: [
+    { file: "demo", k: "RECORD · MARK", t: "Mark the moment, in a few words", d: "Press Record, and when something happens press Mark. A few words tell you later what it was.", alt: "The Link Lite panel records a stream; a highlight is marked and given the note clutch" },
+    { file: "marks", k: "YOUR MARKS", t: "Every mark: its time and your note", d: "Each recording keeps its list of marks. Copy it, or take it into DaVinci Resolve as markers.", alt: "The panel's list of recordings, one of them open with its four marks, their times and notes" },
+    { file: "rewind", k: "REWIND", t: "It already happened?", d: "With the rewind on, Link holds the last minutes while you watch. Save last makes a file of them.", alt: "The rewind holds 2:39 of 3:00; Save last is pressed and a file of the last minute is saved" },
   ],
   // The third section of the home page is one block with two faces that take turns: Link TURBO with its
   // services and what it is (free, open source), then the same for Link Lite. Each service is on show for a few seconds
@@ -82,7 +89,36 @@ const home = {
   ],
 };
 
+// The cover under /turbo's hero is one layout (.mag in build.js) that takes a theme: its four pictures, shown
+// as finished 9:16 clips, and its writing. COVER says which one the site shows. A theme also names the shape of
+// its container: "device" is the machine of chrome and bone with the cover on its screen, "flat" the plain page. The pictures are made for
+// Link (site/clips), never taken from a real magazine, poster or game.
+const COVER = "cars";
+const sticker = (colour, big, small) => ({ html: `<figcaption class="${colour}"><b>${big}</b><small>${small}</small></figcaption>` });
+const clip = (cls, img, hook, cap, st) => ({ cls, img, hook: { html: hook }, cap: { html: cap }, sticker: st || { html: "" } });
+const covers = {
+  // a Japanese car magazine from a station kiosk
+  cars: { key: "cars", shape: "device", label: "Link TURBO as the cover of a Japanese car magazine, its pictures four finished 9:16 clips with a hook and captions: it records three streams at once, finds the moments, edits 9:16 clips, records while you sleep, and is free",
+    strip: "21世紀のクリップ製造マシン！", word: "ターボ", price: "定価 0円", head: [{ t: "寝てる間に" }, { t: "録るという" }, { t: "選択。" }], badge: "無料", badgeSmall: "FREE", foot: "投稿までおまかせ",
+    reels: [
+      clip("r1", "car-1", "The one<br>everybody wants", "just look at <b>that</b>"),
+      clip("r2", "car-2", "Snow day,<br>no grip", "he sends it <b>anyway</b>", sticker("g", "3配信を同時録画！", "3 streams at once")),
+      clip("r3", "car-3", "Wait,<br>two of them?", "parked like <b>twins</b>", sticker("y", "見どころを自動検出", "finds the moments")),
+      clip("r4", "car-4", "Four<br>throttles", "listen to <b>this</b>", sticker("p", "9:16クリップに編集", "edits 9:16 clips")),
+    ] },
+  // a machine of chrome and bone with a green screen, and what it logs
+  gothic: { key: "gothic", shape: "device", label: "Link TURBO as a machine of chrome and bone with a green terminal screen, its pictures four finished 9:16 clips with a hook and captions: it records three streams at once, finds the moments, edits 9:16 clips, records while you sleep, and is free",
+    strip: "<<LINK TURBO>> SIGNAL RECEIVED · 3 STREAMS FOUND", word: "TURBO", price: "PRICE 0.00", head: [{ t: "> IT RECORDS" }, { t: "> WHILE YOU" }, { t: "> SLEEP_" }], badge: "FREE", badgeSmall: "0.00", foot: "POSTING · LEFT TO THE MACHINE",
+    reels: [
+      clip("r1", "g-1", "It woke up<br>at 3 AM", "nobody <b>touched it</b>"),
+      clip("r2", "g-2", "One arrow<br>left", "he does not <b>miss</b>", sticker("g", "003 RECORDING ×3", "3 streams at once")),
+      clip("r3", "g-3", "Do not take<br>its hand", "it <b>remembers</b>", sticker("y", "030 MOMENTS FOUND", "finds the moments")),
+      clip("r4", "g-4", "Under<br>the church", "still <b>running</b>", sticker("p", "916 CLIP EDITED", "edits 9:16 clips")),
+    ] },
+};
+
 const turbo = {
+  cover: covers[COVER],
   steps: [
     { n: "01", name: "RECORD", t: "Studio", d: "Up to 3 Kick or Twitch streams at once, on your own computer." },
     { n: "02", name: "FIND", t: "Moments found for you", d: "Up to 30 ranked moments per recording, with the time they happened." },
@@ -92,6 +128,12 @@ const turbo = {
   ],
   // Link Night, as it works in the program today (tools/reels/ui/README.md, "Night run"), told as what it
   // is for: the user's own material. How it comes by its streams is not said here (the user's wish, 2026-10-09).
+  // Three short films of the Night window (site/films/make.js makes them; a made-up night of six hours).
+  nightClips: [
+    { file: "night-1", k: "BEFORE BED", t: "Give it the hours, press Start night", d: "One to twelve hours. Tick Sleep PC when done if the computer should switch itself off afterwards. Then go.", alt: "The Link Night window: the hours are set to six, Sleep PC when done is ticked, Start night is pressed and the first stretch begins" },
+    { file: "night-2", k: "WHILE YOU SLEEP", t: "Three streams at a time, all night", d: "It records in stretches of 30 minutes. After each one the recordings are checked and made into tapes, and the next stretch begins.", alt: "The night passes on a clock from 23:00 to 05:00 while the window's bar fills and its count of tapes and moments grows" },
+    { file: "night-3", k: "THE MORNING", t: "Done, asleep, and waiting for you", d: "When the hours are up the PC goes to sleep by itself. In the morning the tapes are there, with their moments found.", alt: "The night is done, the window counts down to sleep, the screen goes dark; in the morning it shows 27 tapes and their moments" },
+  ],
   night: [
     { k: "HOURS", t: "You choose how long", d: "From 1 to 12 hours. Press Start night and go. It ends by itself." },
     { k: "THREE AT ONCE", t: "Three streams side by side", d: "Recorded in 30-minute stretches, one after the other, for as long as the night lasts." },

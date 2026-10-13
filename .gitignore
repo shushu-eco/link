@@ -46,4 +46,6 @@ linkrewind_profile_*.png
 # The website as built (made by "node site/build.js", published from the repository linkturbo-site), and
 # whole-page photographs of it (made by "node site/shots.js")
 site/out/
+site/films/out/work/
 site/mobile-shots*/
+discord/films/work/
