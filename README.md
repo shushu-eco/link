@@ -36,13 +36,16 @@ Record only streams and videos you have the right to use. The clips belong to th
 
 ## Where things stand
 
-- **Link Lite Recorder 0.5.0** is the version in this repository. The Chrome Web Store brings it once
-  its review is through; to have it today, load it from this repository as said below.
+- **Link Lite Recorder 0.5.0** is the version in this repository and in the
+  [Chrome Web Store](https://chromewebstore.google.com/detail/link-lite-recorder/jjbnifoddmcjocjdmiaondcimkjmkjaa).
 - **Link TURBO** can be downloaded for Windows as an installer or a zip (below), and keeps itself up to
   date after that. It also runs from this repository.
 - One person makes Link. Answers are not instant.
 
 ## Link Lite Recorder: quick start
+
+The easy way is **Add to Chrome** in the [Chrome Web Store](https://chromewebstore.google.com/detail/link-lite-recorder/jjbnifoddmcjocjdmiaondcimkjmkjaa).
+To run it from this repository instead:
 
 1. Download this repository (Code > Download ZIP) and unpack it, or clone it.
 2. Open `chrome://extensions` (or `edge://extensions`, `brave://extensions`) and switch on **Developer mode**.
@@ -102,6 +105,23 @@ follows from "What you need" to "Install" is for running it from the code.
 Everything runs on your own PC. Nothing is uploaded anywhere except the reels you post yourself.
 
 Record only videos you have the right to use. The clips belong to the people who made them.
+
+## Link Night
+
+Give it the hours before you go to bed. Link Night records live streams three at a time, makes each
+stretch into tapes with their moments found, and can put the PC to sleep when it is done.
+
+<img src="docs/night-2.gif" width="800" alt="A night of six hours passes on a clock while the Link Night window's bar fills and its count of tapes and moments grows">
+
+<table>
+<tr>
+<td><img src="docs/night-1.gif" alt="The Link Night window: the hours are set to six, Sleep PC when done is ticked, Start night is pressed"></td>
+<td><img src="docs/night-3.gif" alt="The night is done, the window counts down to sleep; in the morning it shows 27 tapes and their moments"></td>
+</tr>
+<tr><td align="center">Before bed</td><td align="center">The morning</td></tr>
+</table>
+
+The films show a made-up night. Record only streams you have the right to use.
 
 ## What you need
 
@@ -401,6 +421,9 @@ picks the moments and writes the hooks and captions for you to adjust in the Ree
   are welcome as pull requests. The code is developed in a private copy and published here from it
   (`tools/package/publish.ps1`), so a pull request is taken over by hand and may land as part of a
   larger commit.
+- New here? [CONTRIBUTING.md](CONTRIBUTING.md) says how to run each part and what to check before a pull
+  request, and the issues marked
+  [`good first issue`](https://github.com/shushu-eco/link/labels/good%20first%20issue) are small ones to begin with.
 
 ## Licence
 

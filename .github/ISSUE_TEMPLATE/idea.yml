@@ -1,0 +1,26 @@
+name: An idea
+description: Something Link does not do yet, or could do better.
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: part
+    attributes:
+      label: Which part?
+      options:
+        - Link Lite Recorder (the browser extension)
+        - Link TURBO (the Windows program)
+        - Link Night
+        - The website
+    validations:
+      required: true
+  - type: textarea
+    id: want
+    attributes:
+      label: What would you like to be able to do?
+      description: The situation you were in tells more than the feature's name.
+    validations:
+      required: true
+  - type: textarea
+    id: now
+    attributes:
+      label: How do you manage today?

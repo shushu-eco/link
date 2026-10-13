@@ -1,0 +1,46 @@
+name: Something does not work
+description: Link Lite Recorder or Link TURBO did something it should not have.
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: part
+    attributes:
+      label: Which part?
+      options:
+        - Link Lite Recorder (the browser extension)
+        - Link TURBO (the Windows program)
+        - Link Night
+        - The website
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: "The extension: the number at chrome://extensions. Link TURBO: Link Updater shows it (rwa-…)."
+      placeholder: "0.5.0, or rwa-57"
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Browser and site, or Windows version
+      placeholder: "Brave on twitch.tv, or Windows 11"
+  - type: textarea
+    id: did
+    attributes:
+      label: What did you do?
+      description: The steps, one to a line.
+    validations:
+      required: true
+  - type: textarea
+    id: happened
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: more
+    attributes:
+      label: Anything else
+      description: A screenshot helps. Please do not attach a recording of somebody else's stream.

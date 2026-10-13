@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: A question, or just to talk
+    url: https://discord.gg/N3jdn6WPJd
+    about: The Link server on Discord. Questions are answered there faster than here.
+  - name: The guide, with pictures
+    url: https://linkturbo.app/how-it-works
+    about: How Link Lite Recorder is installed and used, step by step.
