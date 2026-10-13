@@ -2,6 +2,11 @@
   <div class="hdr-in" style="max-width:1200px;margin:0 auto;padding:12px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px">
     <a class="brand" href="Home.dc.html" aria-label="Link home" style="font-family:VT323,monospace;font-size:34px;line-height:1;letter-spacing:6px;color:#ff5d5d;text-shadow:2px 2px 0 #090c1e;text-decoration:none">LINK</a>
     <nav class="main-nav" aria-label="Main" style="display:flex;flex-wrap:wrap;gap:4px 22px">
+      <sc-for list="{{ plainNav }}" as="on">
+      <a href="Home.dc.html" style="font:600 16px/1 'Nunito Sans',sans-serif;color:#c9c5ea;text-decoration:none;padding:8px 0;border-bottom:2px solid {{ liteLine }};transition:color 120ms" style-hover="color:#f6efdc">Link Lite</a>
+      <a href="Turbo.dc.html" style="font:600 16px/1 'Nunito Sans',sans-serif;color:#c9c5ea;text-decoration:none;padding:8px 0;border-bottom:2px solid {{ turboLine }};transition:color 120ms" style-hover="color:#f6efdc">Link <span style="font-family:VT323,monospace;font-size:17px;letter-spacing:2px;color:#ff5d5d">TURBO</span></a>
+      </sc-for>
+      <sc-for list="{{ dropNav }}" as="on">
       <div class="nav-drop">
         <a href="Turbo.dc.html" aria-haspopup="true" style="display:inline-flex;align-items:center;gap:7px;font:600 16px/1 'Nunito Sans',sans-serif;color:#c9c5ea;text-decoration:none;padding:8px 0;border-bottom:2px solid {{ productLine }};transition:color 120ms" style-hover="color:#f6efdc">Link <span style="font-family:VT323,monospace;font-size:17px;letter-spacing:2px;color:#ff5d5d">TURBO</span><span class="nav-caret" aria-hidden="true">▾</span></a>
         <div class="drop-panel">
@@ -10,6 +15,7 @@
           <a class="drop-link" href="Home.dc.html" {{ liteCur }}><b>Link <span style="font-family:VT323,monospace;font-size:17px;letter-spacing:2px;color:#b9b4e0">LITE</span></b><small>The browser extension</small></a>
         </div>
       </div>
+      </sc-for>
       <a href="How It Works.dc.html" style="font:600 16px/1 'Nunito Sans',sans-serif;color:#c9c5ea;text-decoration:none;padding:8px 0;border-bottom:2px solid {{ howLine }};transition:color 120ms" style-hover="color:#f6efdc">How it works</a>
       <a href="Support.dc.html" style="font:600 16px/1 'Nunito Sans',sans-serif;color:#c9c5ea;text-decoration:none;padding:8px 0;border-bottom:2px solid {{ supportLine }};transition:color 120ms" style-hover="color:#f6efdc">Support</a>
     </nav>
@@ -25,7 +31,9 @@
       <nav class="menu-nav" aria-label="Main menu">
         <a class="menu-link" href="Home.dc.html" {{ liteCur }}>Link Lite</a>
         <a class="menu-link" href="Turbo.dc.html" {{ turboCur }}>Link <span style="font-family:VT323,monospace;font-size:17px;letter-spacing:2px;color:#ff5d5d">TURBO</span></a>
+        <sc-for list="{{ dropNav }}" as="on">
         <a class="menu-link" href="/turbo#night">Link <span style="font-family:VT323,monospace;font-size:17px;letter-spacing:2px;color:#b9b4e0">NIGHT</span></a>
+        </sc-for>
         <a class="menu-link" href="How It Works.dc.html" {{ howCur }}>How it works</a>
         <a class="menu-link" href="Support.dc.html" {{ supportCur }}>Support</a>
       </nav>

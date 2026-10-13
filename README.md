@@ -8,7 +8,7 @@
 
 Free and open source. Nothing is uploaded, and there is no account.
 
-[**Website**](https://linkturbo.app) &nbsp;·&nbsp; [**Download for Windows**](#download-link-turbo-for-windows) &nbsp;·&nbsp; [**Add to Chrome**](https://chromewebstore.google.com/detail/link-lite-recorder/jjbnifoddmcjocjdmiaondcimkjmkjaa) &nbsp;·&nbsp; [**Discord**](https://discord.gg/N3jdn6WPJd) &nbsp;·&nbsp; [**How it works**](https://linkturbo.app/how-it-works) &nbsp;·&nbsp; [**Licence: GPL-3.0**](LICENSE)
+[![Website](https://img.shields.io/badge/linkturbo.app-0b0e14?style=for-the-badge&logo=googlechrome&logoColor=7fd6c2)](https://linkturbo.app) [![Add to Chrome](https://img.shields.io/badge/Add_to_Chrome-f2c744?style=for-the-badge&logo=chromewebstore&logoColor=0b0e14)](https://chromewebstore.google.com/detail/link-lite-recorder/jjbnifoddmcjocjdmiaondcimkjmkjaa) [![Download for Windows](https://img.shields.io/badge/Download_for_Windows-ff5d5d?style=for-the-badge)](#download-link-turbo-for-windows) [![Discord](https://img.shields.io/badge/Discord-0b0e14?style=for-the-badge&logo=discord&logoColor=7fd6c2)](https://discord.gg/N3jdn6WPJd) [![How it works](https://img.shields.io/badge/How_it_works-0b0e14?style=for-the-badge&logo=readthedocs&logoColor=7fd6c2)](https://linkturbo.app/how-it-works) [![Licence: GPL-3.0](https://img.shields.io/badge/GPL--3.0-0b0e14?style=for-the-badge&logo=gnu&logoColor=7fd6c2)](LICENSE)
 
 <br>
 
@@ -58,10 +58,15 @@ The file is saved to `Downloads/Link`. Everything the extension does is describe
 
 <table>
 <tr>
-<td><img src="store/screenshots/2-marks.png" alt="The marks of a recording, with Copy list and Markers for Resolve"></td>
-<td><img src="store/screenshots/4-free.png" alt="Free and open source: four skins for the panel"></td>
+<td><img src="docs/marks.gif" alt="After the stream: a recording's marks with their times and notes, Copy list, and Markers for Resolve"></td>
+<td><img src="docs/rewind.gif" alt="The rewind keeps the last minutes; Save last makes an mp4 of the minute before"></td>
 </tr>
+<tr><td align="center">Every mark: its time and your note</td><td align="center">It already happened? Save the last minutes</td></tr>
 </table>
+
+<div align="center">
+<img src="docs/skins.gif" width="800" alt="Three of the panel's four skins, each moving in its own way: Midnight, Sakura and Halloween. All are included">
+</div>
 
 ## Download Link TURBO for Windows
 
@@ -95,6 +100,10 @@ Link TURBO is a Windows desktop program that turns a long video into short verti
 window and in the rest of this page it is called Link. The download above is all most people need; what
 follows from "What you need" to "Install" is for running it from the code.
 
+<div align="center">
+<a href="https://linkturbo.app/turbo"><img src="docs/turbo.gif" width="800" alt="Link TURBO: from a live stream to a posted reel, in five steps that light up one after the other: record, find, edit, post, measure"></a>
+</div>
+
 1. Paste a video link. The page opens inside Link, in the **Studio**.
 2. Press **Record**. Link records the picture and sound itself.
    Or skip both: press **Upload video** and choose a video file you already have.
@@ -105,6 +114,10 @@ follows from "What you need" to "Install" is for running it from the code.
 Everything runs on your own PC. Nothing is uploaded anywhere except the reels you post yourself.
 
 Record only videos you have the right to use. The clips belong to the people who made them.
+
+<div align="center">
+<img src="docs/parts.gif" width="800" alt="The parts of Link TURBO that work for you: Analytics with its numbers, Link Night recording through the night, and the Discord remote answering from your phone">
+</div>
 
 ## Link Night
 

@@ -210,21 +210,11 @@ body{isolation:isolate}
 .drop-link:hover,.drop-link:focus-visible{background:#13243f;border-left-color:#7fd6c2}
 .drop-link[aria-current="page"]{border-left-color:#f2c744}
 #night{scroll-margin-top:76px}   /* a jump to it from the menu lands under the header that stays on a phone, not behind it */
-/* The home page's small Night window: it hangs from the hero's lower right corner, and is a way to /turbo#night. */
-.night-chip{position:relative;z-index:2;display:flex;flex-direction:column;gap:9px;width:min(100%,348px);box-sizing:border-box;margin:-38px 28px 0 auto;padding:14px 16px 13px;background:linear-gradient(#13243f,#0f1d34);border:2px solid #3f6f7a;box-shadow:0 0 0 2px #090c1e,inset 0 0 0 2px #090c1e,0 18px 40px rgba(0,0,0,.5);text-decoration:none;color:#f6efdc}
-.night-chip:hover,.night-chip:focus-visible{border-color:#7fd6c2}
-.night-chip i{font-style:normal}
-.nc-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
-.nc-name{font-family:VT323,monospace;font-size:24px;line-height:1;letter-spacing:4px;color:#ff5d5d;text-shadow:1px 1px 0 #090c1e}
-.nc-name i{color:#b9b4e0;letter-spacing:5px}
-.nc-tag{font-family:VT323,monospace;font-size:15px;line-height:1;letter-spacing:2px;color:#7fd6c2;white-space:nowrap}
-.nc-tag i{color:#ff5d5d}
-.nc-bar{display:block;height:12px;background:#090c1e;border:2px solid #22304a}
-.nc-bar .night-bar{display:block;height:100%;width:62%;background:#3ddc84}
-.nc-row{display:flex;justify-content:space-between;gap:10px;font-family:VT323,monospace;font-size:16px;line-height:1;letter-spacing:2px;color:#b9b3a4}
-.nc-rec{color:#ff8a8a}
-.nc-say{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;font:600 15px/1.35 'Nunito Sans',sans-serif;color:#f6efdc}
-.nc-go{color:#9fd8c8;white-space:nowrap}
+/* The home page's small Night window: it hangs from the hero's lower right corner, and is a way to /turbo#night.
+   It is a film (site/films/box.js makes it), so the night in it goes by. */
+.night-chip{position:relative;z-index:2;display:block;width:min(100%,348px);box-sizing:border-box;margin:-38px 28px 0 auto;line-height:0;box-shadow:0 0 0 2px #090c1e,0 18px 40px rgba(0,0,0,.5)}
+.night-chip img{display:block;width:100%;height:auto}
+.night-chip:hover,.night-chip:focus-visible{box-shadow:0 0 0 2px #7fd6c2,0 18px 40px rgba(0,0,0,.5)}
 @media (max-width:480px){.night-chip{width:100%;margin:14px 0 0}}
 /* The home page's films: words and film side by side, every second one the other way round. Narrow, they stack: words, then film. */
 .clip:nth-child(even){flex-direction:row-reverse}

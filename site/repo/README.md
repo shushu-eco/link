@@ -25,7 +25,7 @@ are built from. Problems and ideas go there, or to Discord.
 
 A browser extension for **Chrome, Edge and Brave**. It records the Kick or Twitch stream playing in your tab, lets you mark the highlights as they happen, and saves one mp4 to your own computer. It is free and open source: no licence key, no account, no limit on recordings.
 
-<img src="readme/record.png" alt="The Link Lite panel on a stream's page, recording">
+<img src="https://raw.githubusercontent.com/shushu-eco/link/main/store/screenshots/demo.gif" width="800" alt="Link Lite on a stream's page: Record, a mark with a note, Stop, and the mp4 that is saved">
 
 | | |
 |---|---|
@@ -37,14 +37,16 @@ A browser extension for **Chrome, Edge and Brave**. It records the Kick or Twitc
 
 <table>
 <tr>
-<td><img src="readme/marks.png" alt="The marks of a recording, with Copy list and Markers for Resolve"></td>
-<td><img src="readme/rewind.png" alt="The rewind keeps the last minutes while you watch"></td>
+<td><img src="https://raw.githubusercontent.com/shushu-eco/link/main/docs/marks.gif" alt="After the stream: a recording's marks with their times and notes, Copy list, and Markers for Resolve"></td>
+<td><img src="https://raw.githubusercontent.com/shushu-eco/link/main/docs/rewind.gif" alt="The rewind keeps the last minutes; Save last makes an mp4 of the minute before"></td>
 </tr>
 </table>
 
 ## Link TURBO
 
 The full program for Windows: record up to 3 streams at once, have the moments found for you, edit finished 9:16 clips, post them, and see how they did. **Link Night** records streams while you are away and has the moments ranked when you are back. Free and open source as well. Download it for Windows as [Link-Setup.exe](https://github.com/shushu-eco/link/releases/download/installer/Link-Setup.exe) or [Link-Windows.zip](https://github.com/shushu-eco/link/releases/download/installer/Link-Windows.zip); it keeps itself up to date.
+
+<a href="https://linkturbo.app/turbo"><img src="https://raw.githubusercontent.com/shushu-eco/link/main/docs/turbo.gif" width="800" alt="Link TURBO: from a live stream to a posted reel, in five steps that light up one after the other"></a>
 
 ## Links
 

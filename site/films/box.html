@@ -1,0 +1,58 @@
+<!doctype html>
+<!-- The home page's small Night window, as a film (node site/films/box.js films it into site/clips/night-box.gif).
+     A made-up night of eight hours goes by in it: the bar fills, the hour counts up, the tapes add up, and at
+     the end it says the night is done. window.film.set(seconds) draws that moment. -->
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: "VT323"; src: url("../../extension/fonts/vt323-latin.woff2") format("woff2"); }
+  @font-face { font-family: "Nunito Sans"; font-weight: 400 800; src: url("../../extension/fonts/nunito-sans-latin.woff2") format("woff2"); }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 348px; height: 162px; overflow: hidden; background: #090c1e; }
+  .box { position: relative; width: 348px; height: 162px; display: flex; flex-direction: column; gap: 9px; padding: 14px 16px 13px; background: linear-gradient(#13243f, #0f1d34); border: 2px solid #3f6f7a; box-shadow: inset 0 0 0 2px #090c1e; color: #f6efdc; overflow: hidden; }
+  .stars i { position: absolute; display: block; width: 2px; height: 2px; background: #b9b4e0; }
+  .top, .row, .say { position: relative; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .name { font: 24px/1 "VT323", monospace; letter-spacing: 4px; color: #ff5d5d; text-shadow: 1px 1px 0 #090c1e; }
+  .name i { font-style: normal; color: #b9b4e0; letter-spacing: 5px; }
+  .tag { font: 15px/1 "VT323", monospace; letter-spacing: 2px; color: #7fd6c2; white-space: nowrap; }
+  .tag i { font-style: normal; color: #ff5d5d; }
+  .bar { position: relative; flex: none; height: 12px; background: #090c1e; border: 2px solid #22304a; }
+  .bar i { display: block; height: 100%; width: 0; background: #3ddc84; }
+  .row { font: 16px/1 "VT323", monospace; letter-spacing: 2px; color: #b9b3a4; }
+  .rec { color: #ff8a8a; } .rec.done { color: #3ddc84; }
+  .clock { position: relative; font: 16px/1 "VT323", monospace; letter-spacing: 2px; color: #f2c744; display: flex; justify-content: space-between; }
+  .clock span:last-child { color: #7fd6c2; }
+  .say { font: 600 15px/1.35 "Nunito Sans", sans-serif; color: #f6efdc; }
+  .go { color: #9fd8c8; white-space: nowrap; }
+</style>
+<body>
+<div class="box">
+  <div class="stars" id="stars"></div>
+  <div class="top"><span class="name">LINK <i>NIGHT</i></span><span class="tag">PART OF LINK <i>TURBO</i></span></div>
+  <div class="bar"><i id="fill"></i></div>
+  <div class="row"><span id="hour">HOUR 1 OF 8</span><span class="rec" id="rec">● 3 RECORDING</span></div>
+  <div class="clock"><span id="time">23:00</span><span id="tapes">0 TAPES · 0 MOMENTS</span></div>
+  <div class="say"><span>It records while you sleep.</span><span class="go" id="go">See Link Night ›</span></div>
+</div>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id), LENGTH = 10, HOURS = 8, RUN = 8.2;   // the night takes 8.2 of the film's 10 seconds
+  let seed = 5; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  $("stars").innerHTML = Array.from({ length: 26 }, () => `<i data-p="${(rnd() * 6.28).toFixed(2)}" style="left:${(rnd() * 340).toFixed(0)}px;top:${(rnd() * 154).toFixed(0)}px"></i>`).join("");
+  const stars = [...document.querySelectorAll("#stars i")];
+  window.film = { length: LENGTH, async set(t) {
+    const k = Math.min(1, t / RUN), minutes = k * HOURS * 60, done = k >= 1;
+    $("fill").style.width = (k * 100).toFixed(1) + "%";
+    $("hour").textContent = done ? "NIGHT DONE" : `HOUR ${Math.min(HOURS, Math.floor(minutes / 60) + 1)} OF ${HOURS}`;
+    const clock = (23 * 60 + Math.floor(minutes / 5) * 5) % 1440;
+    $("time").textContent = String(Math.floor(clock / 60)).padStart(2, "0") + ":" + String(clock % 60).padStart(2, "0");
+    const tapes = Math.floor(minutes / 40) * 3;   // three streams, a stretch of 40 minutes each
+    $("tapes").textContent = `${tapes} TAPES · ${tapes * 28} MOMENTS`;
+    $("rec").textContent = done ? "✓ PC ASLEEP" : "● 3 RECORDING";
+    $("rec").className = done ? "rec done" : "rec";
+    $("rec").style.opacity = done || Math.floor(t * 2) % 2 === 0 ? 1 : 0.35;
+    $("go").style.transform = `translateX(${(Math.sin(t / LENGTH * Math.PI * 4) * 2).toFixed(1)}px)`;
+    stars.forEach((s) => { s.style.opacity = (0.15 + 0.35 * (0.5 + 0.5 * Math.sin(t / LENGTH * Math.PI * 4 + Number(s.dataset.p)))).toFixed(2); });
+    return true;
+  } };
+})();
+</script>

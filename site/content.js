@@ -19,10 +19,15 @@ const cta = RELEASE === "before"
 
 const dot = { html: '<span aria-hidden="true" style="width:10px;height:10px;background:#ff5d5d;display:inline-block;animation:blink 1s steps(1) infinite"></span>' };
 
+// What of the newer design the site shows. The header's product list and the cover under /turbo's hero are
+// built and kept here, switched off until they are wanted: the built site is what is live.
+const LIVE = { menu: false, cover: false };
+const when = on => (on ? [1] : []);   // a template shows a part once or not at all: <sc-for list="{{ ... }}">
+
 function header({ current = "" }) {
   const line = k => (current === k ? "#7fd6c2" : "transparent");
   const here = k => ({ html: current === k ? 'aria-current="page"' : "" }); // the phone menu marks the page you are on
-  return { ...cta, productLine: line(current === "home" ? "home" : "turbo"), liteLine: line("home"), turboLine: line("turbo"), howLine: line("how"), supportLine: line("support"),
+  return { ...cta, plainNav: when(!LIVE.menu), dropNav: when(LIVE.menu), productLine: line(current === "home" ? "home" : "turbo"), liteLine: line("home"), turboLine: line("turbo"), howLine: line("how"), supportLine: line("support"),
     liteCur: here("home"), turboCur: here("turbo"), howCur: here("how"), supportCur: here("support") };
 }
 
@@ -118,7 +123,7 @@ const covers = {
 };
 
 const turbo = {
-  cover: covers[COVER],
+  cover: covers[COVER], coverOn: when(LIVE.cover),
   steps: [
     { n: "01", name: "RECORD", t: "Studio", d: "Up to 3 Kick or Twitch streams at once, on your own computer." },
     { n: "02", name: "FIND", t: "Moments found for you", d: "Up to 30 ranked moments per recording, with the time they happened." },

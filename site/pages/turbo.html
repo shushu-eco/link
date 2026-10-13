@@ -26,6 +26,7 @@
     </div>
   </section>
 
+  <sc-for list="{{ coverOn }}" as="on">
   <section class="sec mag mag-{{ cover.key }} mag-{{ cover.shape }}" aria-label="{{ cover.label }}" style="margin-top:56px">
     <div class="mag-in" aria-hidden="true">
       <div class="mag-strip"><span>{{ cover.strip }}</span><span class="mag-strip-en">FREE · OPEN SOURCE · WINDOWS 10 / 11</span></div>
@@ -39,6 +40,7 @@
       <div class="mag-foot"><span>{{ cover.foot }}</span><span class="mag-keys"><b>RECORD</b><b>FIND</b><b>EDIT</b><b>POST</b></span></div>
     </div>
   </section>
+  </sc-for>
 
   <section class="sec" style="margin-top:88px;display:flex;flex-direction:column;gap:28px">
     <div style="display:flex;flex-direction:column;gap:10px">
