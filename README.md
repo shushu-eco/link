@@ -8,7 +8,7 @@
 
 Free and open source. Nothing is uploaded, and there is no account.
 
-[![Website](https://img.shields.io/badge/linkturbo.app-0b0e14?style=for-the-badge&logo=googlechrome&logoColor=7fd6c2)](https://linkturbo.app) [![Add to Chrome](https://img.shields.io/badge/Add_to_Chrome-f2c744?style=for-the-badge&logo=chromewebstore&logoColor=0b0e14)](https://chromewebstore.google.com/detail/link-lite-recorder/jjbnifoddmcjocjdmiaondcimkjmkjaa) [![Download for Windows](https://img.shields.io/badge/Download_for_Windows-ff5d5d?style=for-the-badge)](#download-link-turbo-for-windows) [![Discord](https://img.shields.io/badge/Discord-0b0e14?style=for-the-badge&logo=discord&logoColor=7fd6c2)](https://discord.gg/N3jdn6WPJd) [![How it works](https://img.shields.io/badge/How_it_works-0b0e14?style=for-the-badge&logo=readthedocs&logoColor=7fd6c2)](https://linkturbo.app/how-it-works) [![Licence: GPL-3.0](https://img.shields.io/badge/GPL--3.0-0b0e14?style=for-the-badge&logo=gnu&logoColor=7fd6c2)](LICENSE)
+[![Website](https://img.shields.io/badge/linkturbo.app-0b0e14?style=for-the-badge&logo=googlechrome&logoColor=7fd6c2)](https://linkturbo.app) [![Add to Chrome](https://img.shields.io/badge/Add_to_Chrome-f2c744?style=for-the-badge&logo=chromewebstore&logoColor=0b0e14)](https://chromewebstore.google.com/detail/link-lite-recorder/jjbnifoddmcjocjdmiaondcimkjmkjaa) [![Download for Windows](https://img.shields.io/badge/Download_for_Windows-ff5d5d?style=for-the-badge)](#download-link-turbo-for-windows) [![Link Dev](https://img.shields.io/badge/Link_Dev-0b0e14?style=for-the-badge&logo=googlechrome&logoColor=3ddc84)](https://linkturbo.app/dev) [![Discord](https://img.shields.io/badge/Discord-0b0e14?style=for-the-badge&logo=discord&logoColor=7fd6c2)](https://discord.gg/N3jdn6WPJd) [![How it works](https://img.shields.io/badge/How_it_works-0b0e14?style=for-the-badge&logo=readthedocs&logoColor=7fd6c2)](https://linkturbo.app/how-it-works) [![Licence: GPL-3.0](https://img.shields.io/badge/GPL--3.0-0b0e14?style=for-the-badge&logo=gnu&logoColor=7fd6c2)](LICENSE)
 
 <br>
 
@@ -34,12 +34,28 @@ what you kept and dismissed before.
 
 Record only streams and videos you have the right to use. The clips belong to the people who made them.
 
+## Link Dev, for web developers
+
+<a href="https://linkturbo.app/dev"><img src="https://linkturbo.app/clips/discord/dev-hero.gif" width="800" alt="Link Dev's window beside a page, switching between its Network, Console and Application tabs"></a>
+
+**Link Dev** is a browser extension for people who build websites: DevTools' Network, Console and
+Application tabs in a small window you put anywhere, recording from the moment the page starts. CORS
+errors in plain words, GraphQL calls named by their operation, mocks, redirects to your localhost, and
+secrets hidden in everything you export. Nothing leaves your browser.
+
+- Free, and pay what you want if it helps you: [linkturbo.gumroad.com/l/linkdev](https://linkturbo.gumroad.com/l/linkdev)
+- Everything about it, with its films: [linkturbo.app/dev](https://linkturbo.app/dev)
+- In the Chrome Web Store once Google's review is done.
+- GPL-3.0, like the rest of Link. Its source comes with the download; it is not in this repository yet.
+
 ## Where things stand
 
 - **Link Lite Recorder 0.5.0** is the version in this repository and in the
   [Chrome Web Store](https://chromewebstore.google.com/detail/link-lite-recorder/jjbnifoddmcjocjdmiaondcimkjmkjaa).
 - **Link TURBO** can be downloaded for Windows as an installer or a zip (below), and keeps itself up to
   date after that. It also runs from this repository.
+- **Link Dev 0.2.0** is on [Gumroad](https://linkturbo.gumroad.com/l/linkdev), free; the Chrome Web
+  Store has it in review.
 - One person makes Link. Answers are not instant.
 
 ## Link Lite Recorder: quick start

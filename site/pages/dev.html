@@ -1,0 +1,110 @@
+<dc-import name="SiteHeader" current="dev" hint-size="100%,70px"></dc-import>
+<main data-screen-label="Link Dev" style="max-width:1200px;margin:0 auto;padding:0 16px">
+
+  <section class="sec hero hero-dev" style="position:relative;margin-top:28px;border:1px solid #2f9e63;padding:52px 28px 48px;overflow:hidden">
+    <div aria-hidden="true" style="position:absolute;left:12px;right:12px;top:10px;height:4px;background-image:radial-gradient(circle,#2f9e63 1.5px,transparent 2px);background-size:10px 4px;background-repeat:repeat-x"></div>
+    <div aria-hidden="true" style="position:absolute;width:700px;height:700px;right:-240px;top:-320px;background:radial-gradient(circle,rgba(61,220,132,.14),transparent 60%);pointer-events:none"></div>
+    <div aria-hidden="true" style="position:absolute;width:520px;height:520px;left:-200px;bottom:-260px;background:radial-gradient(circle,rgba(242,199,68,.10),transparent 60%);pointer-events:none"></div>
+    <div style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:32px 40px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+          <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#7fd6c2">For developers · a browser extension</span>
+          <span style="font-family:VT323,monospace;font-size:16px;letter-spacing:2px;text-transform:uppercase;background:#0a0d1f;border:2px solid #22304a;padding:2px 8px;color:#3ddc84">Chrome · Edge · Brave</span>
+        </div>
+        <h1 class="wordmark-2" style="margin:0;display:flex;align-items:center;flex-wrap:wrap;gap:0 18px">
+          <span style="font-family:VT323,monospace;font-size:clamp(64px,8vw,96px);line-height:.9;letter-spacing:8px;color:#ff5d5d;text-shadow:2px 2px 0 #090c1e">LINK</span>
+          <span style="display:inline-flex;align-items:center;gap:16px"><span style="font-family:VT323,monospace;font-size:clamp(64px,8vw,96px);line-height:.9;letter-spacing:8px;color:#3ddc84;text-shadow:2px 2px 0 #090c1e">DEV</span><span aria-hidden="true" style="font-family:VT323,monospace;font-size:clamp(34px,4vw,48px);line-height:1;color:#3ddc84;border:3px solid #2f9e63;background:#0a0d1f;padding:2px 10px 6px;box-shadow:2px 2px 0 #090c1e">&gt;_</span></span>
+        </h1>
+        <p style="margin:0;font:400 19px/1.55 'Nunito Sans',sans-serif;color:#c9c5ea;text-wrap:pretty">F12 is for when you know where to look. Link Dev already saw it happen: DevTools' Network, Console and Application tabs in a small window you put anywhere, recording from the moment the page starts.</p>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px">
+          <span style="font-family:VT323,monospace;font-size:30px;line-height:1;letter-spacing:2px;color:#f2c744;font-variant-numeric:tabular-nums">FREE</span>
+          <span style="font:600 16px/1.4 'Nunito Sans',sans-serif;color:#b9b3a4">{{ get.note }}</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center">
+          <a class="hero-cta" href="{{ get.href }}" style="display:inline-flex;align-items:center;padding:14px 26px;background:linear-gradient(#ffe27a,#d9a52a);color:#090c1e;border:2px solid #090c1e;box-shadow:0 0 0 2px #f2c744;font:800 17px 'Nunito Sans',sans-serif;text-decoration:none;transition:box-shadow 120ms" style-hover="box-shadow:0 0 0 2px #f2c744,0 0 28px rgba(242,199,68,.5)">{{ get.label }}</a>
+          <a class="hero-secondary" href="#films" style="display:inline-flex;align-items:center;padding:14px 22px;background:#0a0d1f;color:#f6efdc;border:2px solid #3a3160;font:700 16px 'Nunito Sans',sans-serif;text-decoration:none;transition:border-color 120ms" style-hover="border-color:#7fd6c2">See it work</a>
+          <a class="hero-star" href="{{ source }}" style="display:inline-flex;align-items:center;gap:8px;padding:14px 22px;background:#0a0d1f;color:#f6efdc;border:2px solid #3a3160;font:700 16px 'Nunito Sans',sans-serif;text-decoration:none;transition:border-color 120ms" style-hover="border-color:#f2c744"><span aria-hidden="true" style="color:#f2c744">★</span>Star Link on GitHub</a>
+        </div>
+        <sc-for list="{{ storeSoon }}" as="on">
+        <span style="font:400 15px/1.5 'Nunito Sans',sans-serif;color:#b9b3a4">In the Chrome Web Store soon. Until then the download comes with two minutes of steps to add it.</span>
+        </sc-for>
+      </div>
+      <figure class="clip-film" style="margin:0;background:#0a0d1f;border:2px solid #22304a;box-shadow:0 0 0 2px #090c1e,0 18px 40px rgba(0,0,0,.45);line-height:0">
+        <video src="/clips/dev-hero.mp4" poster="/clips/dev-hero.jpg" width="1280" height="720" muted loop playsinline preload="none" aria-label="Link Dev's window beside a page, switching between its Network, Console and Application tabs" style="display:block;width:100%;height:auto;aspect-ratio:16/9"></video>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec" id="films" style="margin-top:88px;display:flex;flex-direction:column;gap:28px;scroll-margin-top:76px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#7fd6c2">See it work</span>
+      <h2 style="margin:0;font:700 clamp(26px,3.2vw,36px)/1.15 'Nunito Sans',sans-serif;color:#f6efdc">What DevTools makes you dig for, in plain sight.</h2>
+    </div>
+    <div class="clips" style="display:flex;flex-direction:column;gap:44px">
+      <sc-for list="{{ clips }}" as="c" hint-placeholder-count="9">
+        <article class="clip" style="display:flex;flex-wrap:wrap;gap:18px 40px;align-items:center">
+          <div class="clip-words" style="flex:1 1 240px;min-width:0;display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:VT323,monospace;font-size:16px;letter-spacing:3px;color:#3ddc84">{{ c.k }}</span>
+            <h3 style="margin:0;font:700 clamp(21px,2.4vw,26px)/1.25 'Nunito Sans',sans-serif;color:#f6efdc;text-wrap:pretty">{{ c.t }}</h3>
+            <p style="margin:0;font:400 16px/1.6 'Nunito Sans',sans-serif;color:#c9c5ea;text-wrap:pretty">{{ c.d }}</p>
+          </div>
+          <figure class="clip-film" style="flex:2 1 440px;min-width:0;margin:0;background:#0a0d1f;border:2px solid #22304a;box-shadow:0 0 0 2px #090c1e;line-height:0">
+            <video src="/clips/{{ c.file }}.mp4" poster="/clips/{{ c.file }}.jpg" width="1280" height="720" muted loop playsinline preload="none" aria-label="{{ c.alt }}" style="display:block;width:100%;height:auto;aspect-ratio:16/9"></video>
+          </figure>
+        </article>
+      </sc-for>
+    </div>
+    <script>(function(){var vs=document.querySelectorAll(".clip-film video");if(!vs.length)return;
+if(matchMedia("(prefers-reduced-motion:reduce)").matches||!("IntersectionObserver" in window)){vs.forEach(function(v){v.controls=true});return}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting){var p=v.play();if(p&&p.catch)p.catch(function(x){if(x&&x.name==="NotAllowedError")v.controls=true})}else v.pause()})},{threshold:.35});
+vs.forEach(function(v){io.observe(v)})})()</script>
+  </section>
+
+  <section class="sec" style="margin-top:88px;display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#7fd6c2">What is in it</span>
+      <h2 style="margin:0;font:700 clamp(26px,3.2vw,36px)/1.15 'Nunito Sans',sans-serif;color:#f6efdc">Three DevTools tabs, and the tools they never had.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px">
+      <sc-for list="{{ features }}" as="f" hint-placeholder-count="6">
+        <article style="background:#0a0d1f;border:2px solid #22304a;padding:20px 20px;display:flex;flex-direction:column;gap:8px">
+          <span style="font-family:VT323,monospace;font-size:16px;letter-spacing:3px;color:#3ddc84">{{ f.k }}</span>
+          <h3 style="margin:0;font:700 19px/1.25 'Nunito Sans',sans-serif;color:#f6efdc">{{ f.t }}</h3>
+          <p style="margin:0;font:400 16px/1.6 'Nunito Sans',sans-serif;color:#f6efdc;opacity:.88;text-wrap:pretty">{{ f.d }}</p>
+        </article>
+      </sc-for>
+    </div>
+  </section>
+
+  <section class="sec" style="margin-top:88px;display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#7fd6c2">Three steps</span>
+      <h2 style="margin:0;font:700 clamp(26px,3.2vw,36px)/1.15 'Nunito Sans',sans-serif;color:#f6efdc">Running in a minute. No account.</h2>
+    </div>
+    <ol class="rail" style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px">
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+        <li style="position:relative;background:linear-gradient(#13243f,#0f1d34);border:2px solid #3f6f7a;box-shadow:0 0 0 2px #090c1e,inset 0 0 0 2px #090c1e;padding:24px 22px;display:flex;flex-direction:column;gap:10px">
+          <span style="display:flex;align-items:center;justify-content:space-between"><span style="font-family:VT323,monospace;font-size:20px;letter-spacing:3px;color:#f2c744">{{ s.name }}</span><span class="num" style="font-family:VT323,monospace;font-size:28px;line-height:1;color:#ffd27a;font-variant-numeric:tabular-nums">{{ s.n }}</span></span>
+          <strong style="font:700 18px/1.3 'Nunito Sans',sans-serif;color:#f6efdc">{{ s.t }}</strong>
+          <span style="font:400 16px/1.55 'Nunito Sans',sans-serif;color:#f6efdc;opacity:.88;text-wrap:pretty">{{ s.d }}</span>
+        </li>
+      </sc-for>
+    </ol>
+  </section>
+
+  <section class="sec" style="margin-top:88px;border-top:1px solid #3f6f7a;border-bottom:1px solid #3f6f7a;padding:40px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px 48px;align-items:start">
+    <h2 style="margin:0;font:700 clamp(24px,3vw,32px)/1.2 'Nunito Sans',sans-serif;color:#f6efdc;text-wrap:pretty">Nothing leaves your browser.</h2>
+    <p style="margin:0;font:400 17px/1.6 'Nunito Sans',sans-serif;color:#c9c5ea;text-wrap:pretty">No account, no server, no analytics. Link Dev reads only the sites you turn on, keeps what it records in your browser, and hides your tokens on screen and in every file it saves. It is free and open source, under the GPL-3.0 licence: its code comes with it. What it does with data is written out in the <a href="Privacy.dc.html">privacy policy</a>.</p>
+  </section>
+
+  <section class="sec" style="margin-top:88px;display:flex;flex-direction:column;align-items:flex-start;gap:18px">
+    <span style="font-family:VT323,monospace;font-size:18px;letter-spacing:3px;text-transform:uppercase;color:#7fd6c2">Support it</span>
+    <h2 style="margin:0;font:700 clamp(26px,3.2vw,36px)/1.15 'Nunito Sans',sans-serif;color:#f6efdc">Free to use. If it saves you a debugging session, say thanks.</h2>
+    <p style="margin:0;max-width:760px;font:400 17px/1.6 'Nunito Sans',sans-serif;color:#c9c5ea;text-wrap:pretty">On Gumroad you name your own price, and nothing is fine too. Questions, bugs and wishes go to Discord or support@linkturbo.app.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:14px">
+      <a href="{{ gumroad }}" style="display:inline-flex;align-items:center;padding:14px 26px;background:linear-gradient(#ffe27a,#d9a52a);color:#090c1e;border:2px solid #090c1e;box-shadow:0 0 0 2px #f2c744;font:800 16px 'Nunito Sans',sans-serif;text-decoration:none;transition:box-shadow 120ms" style-hover="box-shadow:0 0 0 2px #f2c744,0 0 28px rgba(242,199,68,.5)">Link Dev on Gumroad</a>
+      <a href="https://discord.gg/N3jdn6WPJd" style="display:inline-flex;align-items:center;padding:14px 26px;background:#0a0d1f;color:#f6efdc;border:2px solid #3a3160;font:700 16px 'Nunito Sans',sans-serif;text-decoration:none;transition:border-color 120ms" style-hover="border-color:#7fd6c2">Ask in Discord</a>
+    </div>
+  </section>
+</main>
+<dc-import name="SiteFooter" hint-size="100%,220px"></dc-import>

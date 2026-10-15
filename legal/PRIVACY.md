@@ -1,6 +1,6 @@
 # Link: privacy policy
 
-Last updated: 12 October 2026
+Last updated: 15 October 2026
 
 ## Who is responsible
 
@@ -13,6 +13,8 @@ Link works on your own computer. Your recordings, the moments Link finds in them
 are never sent to us. We run no analytics, no advertising and no tracking in any Link product or on this
 website. There is no account to create. Link is free and open source: anyone can read
 the code and check what is said here (github.com/shushu-eco/link).
+Link Dev, the developer tools extension, reads only the sites you turn on, to show them to you, and
+sends nothing anywhere.
 
 ## Link Lite Recorder (the browser extension)
 
@@ -59,6 +61,56 @@ the extension by itself.
 | Add its script to open pages (`scripting`) | so it works on a stream page that was already open when the extension started |
 | Storage | to keep your settings and the list of recent recordings |
 | Downloads | to save the recording to your Downloads folder |
+
+## Link Dev (the developer tools extension)
+
+Link Dev shows what a web page does (its network requests, its console and its storage), the way the
+browser's own developer tools do, in a panel you open with a button or Alt+Shift+D.
+
+**What it reads, and only on the sites you turn on**
+
+- Local addresses (localhost and 127.0.0.1) are on from the start. Any other site is read only after you
+  press **Turn on for this site** (or **All sites**) and the browser asks you to allow it. Settings > Sites
+  turns a site off again.
+- On those sites it reads the requests the page makes (addresses, headers, what was sent and what came
+  back), what the page writes to its console, and the page's cookies, local storage, session storage,
+  IndexedDB and Cache storage, so it can show them to you.
+- Secrets (tokens, cookies, passwords and fields whose name says secret) are hidden on screen and in
+  every file you export, until you press the eye.
+
+**What it stores in the browser**
+
+- Your settings and the rules you make (Mock, Block, Delay, Redirect, Headers), in the browser's extension
+  storage.
+- The lists it records for each tab, in the browser's session storage, which is emptied when the browser
+  closes.
+
+This stays on your computer and is removed when you remove the extension.
+
+**What it sends anywhere**
+
+Nothing. Link Dev makes no request of its own to any server, and has no account, analytics or tracking.
+It sends a request only when you ask it to: **Edit and resend** sends the request you edited from the page
+itself, to the address you gave. Files you export (a HAR file, a report, a summary) are saved where you
+choose.
+
+**Your own scripts**
+
+A Mock rule can answer with a small script you write. It runs in a sandboxed page inside the extension,
+never in the web page, and is kept with your settings.
+
+**Permissions it asks for, and why**
+
+| Permission | Why |
+|---|---|
+| Read the tab's requests (`webRequest`) | to list the requests of the sites you turned on |
+| The tab you open it on (`activeTab`) | to know which site you pressed the button on, so it can offer to turn it on |
+| Side panel, storage | to show its panel, and keep your settings and rules |
+| Cookies | to show and edit the cookies of the site in the tab (the Application tab) |
+| Add its script to pages (`scripting`) | to copy request bodies and console lines on the sites you turned on |
+| Change requests (`declarativeNetRequestWithHostAccess`) | for the Block, Redirect and Headers rules you make, on the sites you turned on |
+| Offscreen document | to hold the sandbox your own Mock scripts run in |
+| localhost and 127.0.0.1; any other site only when you allow it | the sites it may read |
 
 ## Link TURBO (the Windows program)
 

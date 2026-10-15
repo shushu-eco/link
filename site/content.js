@@ -11,6 +11,10 @@ const SOURCE = "https://github.com/shushu-eco/link";
 // Link TURBO for Windows: the installer and the zip, always the newest, under one fixed address each.
 const SETUP = "https://github.com/shushu-eco/link/releases/download/installer/Link-Setup.exe";
 const ZIP = "https://github.com/shushu-eco/link/releases/download/installer/Link-Windows.zip";
+// Link Dev, the developer tools extension: on Gumroad (free, pay what you want) until its Chrome Web Store listing
+// is approved. Then set DEV_STORE to the listing's address and the page's main button says Add to Chrome.
+const DEV_GUMROAD = "https://linkturbo.gumroad.com/l/linkdev";
+const DEV_STORE = "";
 
 const cta = RELEASE === "before"
   ? { ctaLabel: "Coming soon · get the date in Discord", ctaMid: "Coming soon · date in Discord", ctaShort: "Coming soon", ctaHref: DISCORD }
@@ -27,12 +31,13 @@ const when = on => (on ? [1] : []);   // a template shows a part once or not at 
 function header({ current = "" }) {
   const line = k => (current === k ? "#7fd6c2" : "transparent");
   const here = k => ({ html: current === k ? 'aria-current="page"' : "" }); // the phone menu marks the page you are on
-  return { ...cta, plainNav: when(!LIVE.menu), dropNav: when(LIVE.menu), productLine: line(current === "home" ? "home" : "turbo"), liteLine: line("home"), turboLine: line("turbo"), howLine: line("how"), supportLine: line("support"),
-    liteCur: here("home"), turboCur: here("turbo"), howCur: here("how"), supportCur: here("support") };
+  return { ...cta, plainNav: when(!LIVE.menu), dropNav: when(LIVE.menu), productLine: line(current === "home" ? "home" : "turbo"), liteLine: line("home"), turboLine: line("turbo"), devLine: line("dev"), howLine: line("how"), supportLine: line("support"),
+    liteCur: here("home"), turboCur: here("turbo"), devCur: here("dev"), howCur: here("how"), supportCur: here("support") };
 }
 
 const home = {
   ...cta,
+  source: SOURCE,
   recDot: dot,
   timer: { html: '<span class="timer">0:16</span>' },
   features: [
@@ -149,6 +154,41 @@ const turbo = {
   ],
 };
 
+// Link Dev (linkdev/ on the link-dev branch; its README and MVP.md say what it does). Its short films are made
+// in linkdev/films (node linkdev/films/make.js site) and copied to site/clips as dev-<name>.mp4 and .jpg.
+const dev = {
+  get: DEV_STORE
+    ? { href: DEV_STORE, label: "Add to Chrome · free", note: "free · open source · Chrome, Edge and Brave" }
+    : { href: DEV_GUMROAD, label: "Get it free on Gumroad", note: "free · open source · pay what you want, if you like it" },
+  gumroad: DEV_GUMROAD,
+  source: SOURCE,   // Link's repository: the hero's Star button (Link Dev's own code is not on GitHub yet)
+  storeSoon: when(!DEV_STORE),
+  clips: [
+    { file: "dev-recorded", k: "ALREADY RECORDING", t: "It failed before you opened F12", d: "Link Dev records from the moment the page starts. When something breaks, press Alt+Shift+D: the request, the console error and the cookies are already there. No reload, no trying again.", alt: "A request fails on a shop page; Alt+Shift+D opens Link Dev, which already holds the failed call with its status and answer" },
+    { file: "dev-cors", k: "CONSOLE", t: "CORS errors, in plain words", d: "Not just “blocked”: which header is missing, which preflight failed, or why * is not allowed with cookies.", alt: "Link Dev's Console names the reason a cross-site call was blocked: the preflight answer has no Access-Control-Allow-Origin header" },
+    { file: "dev-allow", k: "ALLOW IN DEV", t: "Blocked by CORS? See why, then allow it", d: "One click, in development, adds the headers the API forgot, as a rule you can see and switch off.", alt: "Allow in dev is pressed on a CORS error; a Headers rule is made and the call goes through" },
+    { file: "dev-graphql", k: "GRAPHQL", t: "200 OK. But it failed.", d: "GraphQL hides its errors behind a 200. Link Dev names each call by its operation and counts a 200 with errors as failed, with the errors first.", alt: "A GraphQL call answered 200 with errors shows red in Link Dev, named by its operation, with its error message" },
+    { file: "dev-mock", k: "MOCK", t: "Test your error screens", d: "Make any call answer what you want, in one click from the request: status, headers, body and delay.", alt: "A Mock rule answers the orders call with 503, and the shop page shows its error screen" },
+    { file: "dev-scripts", k: "MOCK SCRIPTS", t: "Mocks that think", d: "A few lines of JavaScript work out each answer from the call. They run in a sandbox, never in the page.", alt: "A Mock script works out its answer from the call; Try it shows the answer" },
+    { file: "dev-redirect", k: "REDIRECT", t: "Production calls, your localhost", d: "Replace a part of any address, so the live site talks to the server on your own computer. Page loads too.", alt: "A Redirect rule sends the production API to localhost; the calls in the list are tagged redirect" },
+    { file: "dev-copyas", k: "COPY AS", t: "Copy as cURL, PowerShell, fetch, Python", d: "Seven forms, made to run as they are, on Windows too: cURL for bash and cmd, PowerShell, fetch, Node.js, Python requests and HTTPie.", alt: "Copy as on a request lists seven forms, and one of them is copied" },
+    { file: "dev-secrets", k: "SECRETS", t: "Share your screen. Not your tokens.", d: "Tokens, cookies and passwords are hidden by default: on screen, in HAR files, reports and summaries. The eye shows them when you want.", alt: "Token and cookie values show as dots in Link Dev, on screen and in what it exports" },
+  ],
+  features: [
+    { k: "NETWORK", t: "Every request, kept", d: "Status, headers, payload and response, kept across reloads. A badge counts the failed ones. Edit and resend, and export a HAR file or a summary for a ticket." },
+    { k: "GRAPHQL", t: "Calls named by their operation", d: "query GetOrders, not just /graphql. A 200 with GraphQL errors counts as failed." },
+    { k: "CONSOLE", t: "The page's console, copied", d: "Logs, uncaught errors and rejected promises, written the way DevTools writes them, and a line for every failed request." },
+    { k: "APPLICATION", t: "Cookies and storage", d: "Cookies, local and session storage, IndexedDB and Cache storage: view, edit, add and delete." },
+    { k: "RULES", t: "One click from any request", d: "Mock, Block, Delay, Redirect, or change headers. Each rule can be seen and switched off in Settings." },
+    { k: "PRIVATE", t: "Nothing leaves your browser", d: "No account, no server, no analytics. It reads only the sites you turn on; local addresses are on from the start." },
+  ],
+  steps: [
+    { n: "01", name: "INSTALL", t: "Add it to your browser", d: "Chrome, Edge or Brave, version 126 or newer. No account." },
+    { n: "02", name: "OPEN", t: "Press Alt+Shift+D", d: "Or the Link Dev button. A window you put anywhere, or the side panel." },
+    { n: "03", name: "TURN ON", t: "Your site, and nothing else", d: "Localhost works at once. On any other site, press Turn on for this site." },
+  ],
+};
+
 const guide = [
   ["install", "Install", "Add Link Lite from the Chrome Web Store. It works in Chrome, Edge and Brave. There is no account.", "STORE", "The store listing, with the Add button."],
   ["open", "Open the panel on a stream page", "Go to a Kick or Twitch channel that is live and press the Link button in the browser’s toolbar, or Alt+Shift+K. The panel opens on the page as a small dark capsule, showing the site and the channel’s name. Drag its dotted top edge to move it. More widens it and shows the choices and your recordings.", "IDLE", "Compact panel: KICK · yourchannel · Record."],
@@ -223,6 +263,8 @@ module.exports = {
       description: "A browser extension for Chrome, Edge and Brave. It records the Kick or Twitch stream in your tab, marks the highlights and saves one file to your own computer. Free and open source." },
     "turbo": { template: "turbo", data: { ...turbo, setup: SETUP, zip: ZIP, source: SOURCE }, title: "Link TURBO · free and open source",
       description: "The full program for Windows, to download: records up to 3 streams at once, finds the moments, edits 9:16 clips and posts them. Link Night collects streams while you are away. Free and open source." },
+    "dev": { template: "dev", data: dev, title: "Link Dev · DevTools without F12, free and open source",
+      description: "A browser extension for Chrome, Edge and Brave: DevTools' Network, Console and Application tabs in a window you put anywhere, already recording when something breaks. Mocks, redirects, CORS in plain words. Nothing leaves your browser. Free and open source." },
     "how-it-works": { template: "how-it-works", data: how, title: "How it works · Link Lite Recorder", script: "phone",
       description: "Everything Link Lite Recorder does, in the order you will meet it: recording, marks, the rewind, the file, and getting marks into your editor." },
     "open-source": { template: "open-source", data: open, title: "Free and open source · Link", script: "phone",

@@ -4,8 +4,9 @@
     <nav class="main-nav" aria-label="Main" style="display:flex;flex-wrap:wrap;gap:4px 22px">
       <sc-for list="{{ plainNav }}" as="on">
       <a href="Home.dc.html" style="font:600 16px/1 'Nunito Sans',sans-serif;color:#c9c5ea;text-decoration:none;padding:8px 0;border-bottom:2px solid {{ liteLine }};transition:color 120ms" style-hover="color:#f6efdc">Link Lite</a>
-      <a href="Turbo.dc.html" style="font:600 16px/1 'Nunito Sans',sans-serif;color:#c9c5ea;text-decoration:none;padding:8px 0;border-bottom:2px solid {{ turboLine }};transition:color 120ms" style-hover="color:#f6efdc">Link <span style="font-family:VT323,monospace;font-size:17px;letter-spacing:2px;color:#ff5d5d">TURBO</span></a>
+      <a href="Turbo.dc.html" style="font:600 16px/1 'Nunito Sans',sans-serif;color:#c9c5ea;text-decoration:none;padding:8px 0;border-bottom:2px solid {{ turboLine }};transition:color 120ms" style-hover="color:#f6efdc">Link <span style="font-family:VT323,monospace;font-size:17px;line-height:0;letter-spacing:2px;color:#ff5d5d">TURBO</span></a>
       </sc-for>
+      <a href="Dev.dc.html" style="font:600 16px/1 'Nunito Sans',sans-serif;color:#c9c5ea;text-decoration:none;padding:8px 0;border-bottom:2px solid {{ devLine }};transition:color 120ms" style-hover="color:#f6efdc">Link <span style="font-family:VT323,monospace;font-size:17px;line-height:0;letter-spacing:2px;color:#3ddc84">DEV</span></a>
       <sc-for list="{{ dropNav }}" as="on">
       <div class="nav-drop">
         <a href="Turbo.dc.html" aria-haspopup="true" style="display:inline-flex;align-items:center;gap:7px;font:600 16px/1 'Nunito Sans',sans-serif;color:#c9c5ea;text-decoration:none;padding:8px 0;border-bottom:2px solid {{ productLine }};transition:color 120ms" style-hover="color:#f6efdc">Link <span style="font-family:VT323,monospace;font-size:17px;letter-spacing:2px;color:#ff5d5d">TURBO</span><span class="nav-caret" aria-hidden="true">▾</span></a>
@@ -31,6 +32,7 @@
       <nav class="menu-nav" aria-label="Main menu">
         <a class="menu-link" href="Home.dc.html" {{ liteCur }}>Link Lite</a>
         <a class="menu-link" href="Turbo.dc.html" {{ turboCur }}>Link <span style="font-family:VT323,monospace;font-size:17px;letter-spacing:2px;color:#ff5d5d">TURBO</span></a>
+        <a class="menu-link" href="Dev.dc.html" {{ devCur }}>Link <span style="font-family:VT323,monospace;font-size:17px;letter-spacing:2px;color:#3ddc84">DEV</span></a>
         <sc-for list="{{ dropNav }}" as="on">
         <a class="menu-link" href="/turbo#night">Link <span style="font-family:VT323,monospace;font-size:17px;letter-spacing:2px;color:#b9b4e0">NIGHT</span></a>
         </sc-for>

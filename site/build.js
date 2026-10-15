@@ -10,7 +10,7 @@ const fs = require("fs"), path = require("path");
 const HERE = __dirname, ROOT = path.dirname(HERE), OUT = path.join(HERE, "out");
 const { header, pages, documents } = require("./content.js");
 
-const ADDRESS = { "Home.dc.html": "/", "Turbo.dc.html": "/turbo", "How It Works.dc.html": "/how-it-works", "Support.dc.html": "/support",
+const ADDRESS = { "Home.dc.html": "/", "Turbo.dc.html": "/turbo", "Dev.dc.html": "/dev", "How It Works.dc.html": "/how-it-works", "Support.dc.html": "/support",
   "Open Source.dc.html": "/open-source", "Changelog.dc.html": "/changelog", "Privacy.dc.html": "/privacy", "Terms.dc.html": "/terms", "Copyright.dc.html": "/copyright" };
 const PARTS = { SiteHeader: ["header", header], SiteFooter: ["footer", () => ({})] };
 

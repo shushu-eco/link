@@ -48,6 +48,7 @@
   .hero-cta .l-short{display:inline}
   .hero-secondary{background:none!important;border:0!important;padding:0!important;min-height:44px;color:#9fd8c8!important;text-decoration:underline;text-underline-offset:4px}
   .hero-secondary::after{content:"→";margin-left:6px;text-decoration:none}
+  .hero-star{background:none!important;border:0!important;padding:0!important;min-height:44px;color:#9fd8c8!important;text-decoration:underline;text-underline-offset:4px}
   .hero-panel{display:none!important}
   .hero-capsule{display:flex;justify-content:center;margin:0}
   .cap{width:292px;background:linear-gradient(#13243f,#0f1d34);border:2px solid #3f6f7a;box-shadow:0 0 0 2px #090c1e,inset 0 0 0 2px #090c1e,0 16px 40px rgba(0,0,0,.5);padding:12px;display:flex;flex-direction:column;gap:10px}
